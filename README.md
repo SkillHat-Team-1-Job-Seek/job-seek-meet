@@ -25,8 +25,7 @@ Doc link: https://
 
 ## Branches
 
-- **dev** -> pr this branch for everything `project` related
-- **main** -> **dont touch** this branch, this is what is running in production!
+- **main** -> pr this branch for everything `project` related and wait for review.
 
 ## Contributions
 
@@ -34,19 +33,19 @@ Doc link: https://
 
 1. Clone the repo `git clone https://github.com/SkillHat-Team-1-Job-Seek/job-seek-meet.git`.
 2. Open your terminal & set the origin branch: `git remote add origin https://github.com/SkillHat-Team-1-Job-Seek/job-seek-meet.git`
-3. Pull origin `git pull origin dev`
+3. Pull origin `git pull origin main`
 4. Create a new branch for the task you were assigned to, eg `TicketNumber/(Feat/Bug/Fix/Chore)/Ticket-title` : `git checkout -b BA-001/Feat/Sign-Up-from`
 5. After making changes, do `git add .`
 6. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
-7. To make sure there are no conflicts, run `git pull origin dev`.
+7. To make sure there are no conflicts, run `git pull origin main`.
 8. Push changes to your new branch, run `git push -u origin feat-csv-parser`.
-9. Create a pull request to the `dev` branch not `main`.
+9. Create a pull request to the `main`.
 10. Ensure to describe your pull request.
 11. > If you've added code that should be tested, add some test examples.
 
 # Merging
 
-Wait for review before merge a pull request on a specific branch to the `dev` or `main` branch
+Wait for review before merge a pull request on the `main` branch
 
 ### _Commit CheatSheet_
 
