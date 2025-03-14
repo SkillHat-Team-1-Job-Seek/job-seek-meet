@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Job seek Meet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+**Problem:**  
+As a job seeker, the job search process can feel lonely and isolating.
 
-### `npm start`
+**Solution:**  
+Our web app can help job seekers connect with other job seekers so they can co-work on the job search process to feel less lonely, share ideas, and have accountability.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This can function similar to Meetup.com. The idea is to create community for job seekers.
+\*Note: I added this to Confluence here: https://tcaa11team1.atlassian.net/l/cp/j8QK2Co2
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Live link: is at http://
 
-### `npm test`
+Doc link: https://
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation Instructions
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Commit Standards
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Branches
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **dev** -> pr this branch for everything `project` related
+- **main** -> **dont touch** this branch, this is what is running in production!
 
-### `npm run eject`
+## Contributions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Contribution Guidelines
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone the repo `git clone https://github.com/SkillHat-Team-1-Job-Seek/job-seek-meet.git`.
+2. Open your terminal & set the origin branch: `git remote add origin https://github.com/SkillHat-Team-1-Job-Seek/job-seek-meet.git`
+3. Pull origin `git pull origin dev`
+4. Create a new branch for the task you were assigned to, eg `TicketNumber/(Feat/Bug/Fix/Chore)/Ticket-title` : `git checkout -b BA-001/Feat/Sign-Up-from`
+5. After making changes, do `git add .`
+6. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
+7. To make sure there are no conflicts, run `git pull origin dev`.
+8. Push changes to your new branch, run `git push -u origin feat-csv-parser`.
+9. Create a pull request to the `dev` branch not `main`.
+10. Ensure to describe your pull request.
+11. > If you've added code that should be tested, add some test examples.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Merging
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Wait for review before merge a pull request on a specific branch to the `dev` or `main` branch
 
-## Learn More
+### _Commit CheatSheet_
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Type     |                          | Description                                                                                                 |
+| -------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| feat     | Features                 | A new feature                                                                                               |
+| fix      | Bug Fixes                | A bug fix                                                                                                   |
+| docs     | Documentation            | Documentation only changes                                                                                  |
+| style    | Styles                   | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)     |
+| refactor | Code Refactoring         | A code change that neither fixes a bug nor adds a feature                                                   |
+| perf     | Performance Improvements | A code change that improves performance                                                                     |
+| test     | Tests                    | Adding missing tests or correcting existing tests                                                           |
+| build    | Builds                   | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)         |
+| ci       | Continuous Integrations  | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| chore    | Chores                   | Other changes that don't modify, backend or test files                                                      |
+| revert   | Reverts                  | Reverts a previous commit                                                                                   |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> _Sample Commit Messages_
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `chore: Updated README file`:= `chore` is used because the commit didn't make any changes to the backend or test folders in any way.
+- `feat: Added plugin info endpoints`:= `feat` is used here because the feature was non-existent before the commit.
