@@ -69,7 +69,7 @@ const SignUpForm = ({ toggleForm }) => {
   );
 };
 
-
+// Inline styles for simplicity
 const styles = {
   container: {
     width: "300px",
