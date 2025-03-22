@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 
-const SignUpForm = ({ toggleForm }) => {
-  // State to manage form inputs
+const Login = ({ toggleForm }) => {
   const [formData, setFormData] = useState({
-    fullName: "",
     email: "",
     password: "",
   });
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,26 +13,16 @@ const SignUpForm = ({ toggleForm }) => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Signed Up:", formData);
-    alert("Sign Up Successful!");
+    console.log("User Logged In:", formData);
+    alert("Login Successful!");
   };
 
   return (
     <div style={styles.container}>
-      <h2>Sign Up</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
         <input
           type="email"
           name="email"
@@ -54,22 +41,21 @@ const SignUpForm = ({ toggleForm }) => {
           style={styles.input}
           required
         />
-        <button type="submit" style={styles.button}>Sign Up</button>
+        <button type="submit" style={styles.button}>Login</button>
       </form>
       <p>
-        Already have an account?{" "}
+        Don't have an account?{" "}
         <button 
-          onClick={toggleForm}  // switch to Login form when clicked
+          onClick={toggleForm}  
           style={styles.linkButton}
         >
-          Sign in
+          Sign up
         </button>
       </p>
     </div>
   );
 };
 
-// Inline styles for simplicity
 const styles = {
   container: {
     width: "300px",
@@ -110,6 +96,4 @@ const styles = {
   },
 };
 
-export default SignUpForm;
-
-
+export default Login;
