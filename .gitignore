@@ -3,7 +3,8 @@
 # dependencies
 /.pnp
 .pnp.js
-__pycache__
+__pycache__/
+*.pyc
 venv
 node_modules
 package-lock.json
@@ -20,6 +21,10 @@ package-lock.json
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+.vscode/
+alembic/
+!alembic/versions/
 
 npm-debug.log*
 yarn-debug.log*
