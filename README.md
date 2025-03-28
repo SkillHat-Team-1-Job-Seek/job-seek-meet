@@ -67,3 +67,89 @@ Wait for review before merge a pull request on the `main` branch
 
 - `chore: Updated README file`:= `chore` is used because the commit didn't make any changes to the backend or test folders in any way.
 - `feat: Added plugin info endpoints`:= `feat` is used here because the feature was non-existent before the commit.
+
+## Database Migrations
+When making changes to the database schema, we use Alembic for managing migrations. Follow the steps below to create and apply migrations.
+
+### Creating a New Migration
+If you modify the database models, you need to generate a migration file to track the changes.
+1. Activate the virtual environment (if not already activated):
+- macOS/Linux:
+
+    ```source .venv/bin/activate```
+
+- Windows:
+
+    ```.venv\Scripts\activate```
+
+2. Navigate to the project root folder (if not already there):
+
+    ```cd job-seek-meet```
+
+3. Generate a migration script:
+
+    ```alembic revision --autogenerate -m "Describe your migration change here"```
+
+    - This creates a migration script inside ```alembic/versions/```.
+
+4. Review the generated migration file in ```alembic/versions/```. Check for accuracy, especially for table alterations, column changes, and constraints.
+
+
+5. Apply the migration to the database:
+    
+    ```alembic upgrade head```
+
+### Applying Migrations from Another Teammate’s Branch
+
+If a teammate has already created a migration and merged it into the branch you're working on, follow these steps to apply the changes:
+
+1. Pull the latest changes from main (or the relevant branch):
+
+    ```git pull origin main```
+
+2. Apply the latest migrations:
+
+    ```alembic upgrade head```
+
+3. Verify that the database reflects the latest schema changes by inspecting tables or running queries.
+
+### Seeding the Database (Optional)
+- To populate the users table with test data locally, follow these steps:
+
+1. Connect to the PostgreSQL database:
+
+    ```psql -h dpg-cvdjk03qf0us73fb7350-a.oregon-postgres.render.com -U team1_job_seek_meet_user -d team1_job_seek_meet```
+
+    - Enter the password from Render under the project's Info section when prompted.
+
+2. Run the seeder script:
+
+    ```python app/backend/db/seed.py```
+    - Ensure your virtual environment is activated before running this command.
+
+3. Verify the seeded data:
+- Inside psql, run:
+
+    ```SELECT * FROM users;```
+
+- Expected output:
+```
+i id | first_name |          email          |     password      |         created_at         
+----+------------+-------------------------+-------------------+----------------------------
+  4 | John       | john.doe@example.com    | hashed_password_1 | 2025-03-26 02:02:13.938707
+  5 | Jane       | jane.doe@example.com    | hashed_password_2 | 2025-03-26 02:02:13.938707
+  6 | Alice      | alice.smith@example.com | hashed_password_3 | 2025-03-26 02:02:13.938707
+(3 rows)
+```
+
+4. Exit the database session: 
+    
+    ```\q```
+
+
+**Troubleshooting:**
+
+- If you encounter issues, check your database connection settings in ```alembic.ini``` or ```alembic/env.py```.
+
+- Run ```alembic current``` to check your current migration state.
+    - This will show the latest applied migration. Ensure the migration ID in the output matches the latest migration file in ```alembic/versions/```.
