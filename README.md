@@ -13,7 +13,7 @@ Our web app can help job seekers connect with other job seekers so they can co-w
 This can function similar to Meetup.com. The idea is to create community for job seekers.
 \*Note: I added this to Confluence here: https://tcaa11team1.atlassian.net/l/cp/j8QK2Co2
 
-Live link: is at http://
+Live link: is at https://job-seek-meet.onrender.com/
 
 Doc link: https://
 
@@ -153,3 +153,40 @@ i id | first_name |          email          |     password      |         create
 
 - Run ```alembic current``` to check your current migration state.
     - This will show the latest applied migration. Ensure the migration ID in the output matches the latest migration file in ```alembic/versions/```.
+
+## Deployment on Render
+
+This repo is deployed as a monolithic application in Render.
+The following is an outline of how deployment has been configured.
+
+✅ Render Deployment Fields Configuration
+1️⃣ Language
+➡️ Python (since the backend is FastAPI)
+
+2️⃣ Branch
+➡️ main
+
+3️⃣ Region
+➡️ Oregon (US West)
+
+4️⃣ Root Directory
+➡️ app/backend (since FastAPI is the main entry point)
+
+5️⃣ Build Command
+cd ../frontend && npm install && npm run build
+pip install -r requirements.txt
+(Reasoning: First, we navigate to frontend, install dependencies, and build the React app.
+Then, we install FastAPI dependencies from requirements.txt.)
+
+6️⃣ Start Command
+uvicorn main:app --host 0.0.0.0 --port 8000
+(This starts the FastAPI backend, which also serves the built React frontend.)
+
+
+✅  Environment Variables That Were Set in Render Dashboard → Environment → Add Env Var:
+
+DATABASE_URL → (PostgreSQL connection string)
+
+SECRET_KEY → (secure secret key generated in VS terminal)
+
+
