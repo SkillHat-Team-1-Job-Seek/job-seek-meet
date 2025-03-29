@@ -15,10 +15,22 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing_extensions import Self
 
 
+# This configuration file defines the Settings class for managing application settings.
+# It uses Pydantic's BaseSettings to load environment variables and validate them.
+# Key features include:
+# - Loading environment variables from a .env file using SettingsConfigDict.
+# - Securely generating a SECRET_KEY if not provided.
+# - Parsing and validating CORS origins using the parse_cors function.
+# - Constructing the SQLAlchemy database URI dynamically from individual database settings.
+# - Enforcing security best practices by checking that sensitive variables (e.g., SECRET_KEY, POSTGRES_PASSWORD)
+#   are not left as default values ("changethis") in production environments.
+# - Using Pydantic's model_validator to validate settings after initialization.
+# This ensures the application is secure and properly configured for different environments (local, staging, production).
+
 def parse_cors(v: Any) -> list[str] | str:
     if isinstance(v, str) and not v.startswith("["):
         return [i.strip() for i in v.split(",")]
-    elif isinstance(v, list | str):
+    elif isinstance(v, (list, str)):
         return v
     raise ValueError(v)
 
@@ -66,9 +78,12 @@ class Settings(BaseSettings):
             port=self.POSTGRES_PORT,
             path=self.POSTGRES_DB,
         )
+    
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
+        
         if value == "changethis":
+            
             message = (
                 f'The value of {var_name} is "changethis", '
                 "for security, please change it, at least for deployments."
