@@ -22,3 +22,5 @@ typing_extensions==4.12.2
 uvicorn==0.33.0
 zipp==3.20.2
 passlib[bcrypt]<2.0.0,>=1.7.4
+jwt==2.5.0
+pyjwt==2.6.0
