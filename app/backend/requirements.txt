@@ -21,3 +21,4 @@ starlette==0.44.0
 typing_extensions==4.12.2
 uvicorn==0.33.0
 zipp==3.20.2
+passlib[bcrypt]<2.0.0,>=1.7.4
