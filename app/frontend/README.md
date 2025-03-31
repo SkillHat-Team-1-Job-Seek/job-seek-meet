@@ -40,3 +40,19 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+
+### How to start the backend application?
+
+```shell
+$ cd app/backend
+$ source venv/bin/activate
+$ pipx install fastapi
+$ python3 -m uvicorn main:app --reload
+```
+* Open the application on http://127.0.0.1:8000 
+
+* If the port is already opened
+```
+$ lsof -i :8000
+$ kill -9 <PID>
+```
