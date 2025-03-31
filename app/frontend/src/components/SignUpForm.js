@@ -19,11 +19,9 @@ const SignUpForm = ({ toggleForm }) => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("User Signed Up:", formData);
-    // alert("Sign Up Successful!");
-
+    
     try {
-      const response = await fetch("/signup", {
+      const response = await fetch("http://localhost:8000/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
