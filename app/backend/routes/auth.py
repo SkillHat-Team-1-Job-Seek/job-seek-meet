@@ -9,8 +9,6 @@ class SignUpRequest(BaseModel):
     email: str
     password: str
 
-
-
 @router.post("/signup")
 def signup(user: SignUpRequest):
     # Simulate storing user data
@@ -18,6 +16,13 @@ def signup(user: SignUpRequest):
         raise HTTPException(status_code=400, detail="Email already registered")
     return {"message": "User signup successful with user: test_user@test.com"}
 
+# Define request model
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
 @router.post("/login")
-def login():
-   return {"message": "User login successful with user: test_user@test.com"}
+async def login(request: LoginRequest):
+    if request.email == "test_user@test.com" and request.password == "password123":
+        return {"message": f"User login successful with user: {request.email}"}
+    raise HTTPException(status_code=400, detail="Invalid credentials")
