@@ -2,15 +2,15 @@ from datetime import timedelta
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 from app.backend.core import security
 from ..deps import CurrentUser, SessionDep
 from app.backend.core.config import settings
 from app.backend.core.security import get_password_hash
 from app.backend.schema.auth import  NewPassword, Token
-from app.backend.schema.user import UserPublic
-from app.backend.crud import authenticate,get_user_by_email
+from app.backend.schema.user import UserPublic, UserCreate
+from app.backend.crud import authenticate,get_user_by_email, create_user
 router = APIRouter(tags=["login"])
 
 @router.post("/login/access-token")
@@ -35,10 +35,5 @@ def login_access_token(
     )
 
 
-@router.post("/signup")
-def signup():
-    return {"message": "User signup successful with user: test_user@test.com"}
-#
-# @router.post("/login")
-# def login():
-#    return {"message": "User login successful with user: test_user@test.com"}
+
+
