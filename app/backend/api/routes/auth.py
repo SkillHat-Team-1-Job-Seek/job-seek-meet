@@ -1,11 +1,44 @@
-from fastapi import APIRouter
+from datetime import timedelta
+from typing import Annotated, Any
 
-router = APIRouter()
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.security import OAuth2PasswordRequestForm
+from app.backend.core import security
+from ..deps import CurrentUser, SessionDep
+from app.backend.core.config import settings
+from app.backend.core.security import get_password_hash
+from app.backend.schema.auth import  NewPassword, Token
+from app.backend.schema.user import UserPublic
+from app.backend.crud import authenticate,get_user_by_email
+router = APIRouter(tags=["login"])
+
+@router.post("/login/access-token")
+def login_access_token(
+    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+) -> Token:
+    """
+    OAuth2 compatible token login, get an access token for future requests
+    """
+    user = authenticate(
+        session=session, email=form_data.username, password=form_data.password
+    )
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+    elif not user.is_active:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    return Token(
+        access_token=security.create_access_token(
+            user.id, expires_delta=access_token_expires
+        )
+    )
+
 
 @router.post("/signup")
 def signup():
     return {"message": "User signup successful with user: test_user@test.com"}
-
-@router.post("/login")
-def login():
-   return {"message": "User login successful with user: test_user@test.com"}
+#
+# @router.post("/login")
+# def login():
+#    return {"message": "User login successful with user: test_user@test.com"}
