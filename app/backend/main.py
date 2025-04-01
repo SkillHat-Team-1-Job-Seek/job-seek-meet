@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.backend.routes import auth
+from app.backend.api.routes import auth
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
