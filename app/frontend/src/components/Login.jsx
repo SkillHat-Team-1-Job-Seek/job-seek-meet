@@ -15,75 +15,32 @@ const Login = ({ toggleForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
     try {
-      const response = await fetch("/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-  
-      const data = await response.json(); // Convert response to JSON
-  
-      if (!response.ok) {
-        // If response is not okay, throw the actual error message
-        throw new Error(data?.detail || data?.message || "Login failed");
-      }
-  
-      console.log("User logged in successfully:", data);
-      alert(`Login Successful! ${data.message}`);
-    } catch (error) {
-      console.error("Error:", error);
-  
-      // Extract a readable error message
-      let errorMessage = "Login failed";
-  
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      } else if (typeof error === "object") {
-        errorMessage = JSON.stringify(error);
-      }
-  
-      alert(`Login failed: ${errorMessage}`);
-    }
-  };  
+        const response = await fetch("http://localhost:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                email: formData.email.trim(),  // Ensure no leading/trailing spaces
+                password: formData.password.trim()
+            }), 
+        });
 
-  return (
-    <div style={styles.container}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        <button type="submit" style={styles.button}>Login</button>
-      </form>
-      <p>
-        Don't have an account?{" "}
-        <button 
-          onClick={toggleForm}  
-          style={styles.linkButton}
-        >
-          Sign up
-        </button>
-      </p>
-    </div>
-  );
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Login failed");
+        }
+
+        const data = await response.json();
+        alert(data.message);  
+    } catch (error) {
+        alert("Login failed: " + error.message);
+    }
 };
+
 
 const styles = {
   container: {
@@ -124,5 +81,6 @@ const styles = {
     fontSize: "inherit",
   },
 };
+}
 
 export default Login;

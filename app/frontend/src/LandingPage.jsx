@@ -1,41 +1,4 @@
-import React, { useState } from "react";
-import SignUpForm from "./components/SignUpForm";  
-import Login from "./components/Login";    
-import "./index.css";
-
-
-// const App = () => {
-//   const [isSignUp, setIsSignUp] = useState(true);
-
-//   // Function to toggle between SignUp and Login
-//   const toggleForm = () => {
-//     setIsSignUp((prev) => !prev);
-//   };
-
-//   return (
-//     <div>
-//       {isSignUp ? <SignUpForm toggleForm={toggleForm} /> : <Login toggleForm={toggleForm} />}
-//     </div>
-//   );
-// };
-
-// const App = () => {
-//   const [currentPage, setCurrentPage] = useState("landing");  // Track the current page
-
-//   // Function to navigate between pages
-//   const navigateTo = (page) => {
-//     setCurrentPage(page);
-//   };
-
-//   return (
-//     <div>
-//       {currentPage === "landing" && <LandingPage navigateTo={navigateTo} />}
-//       {currentPage === "signup" && <SignUpForm toggleForm={() => navigateTo("login")} />}
-//       {currentPage === "login" && <Login toggleForm={() => navigateTo("signup")} />}
-//     </div>
-//   );
-// };
-
+import React from "react";
 
 const LandingPage = () => {
   return (
@@ -99,6 +62,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-
-// export default App;
