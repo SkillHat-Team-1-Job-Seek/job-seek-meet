@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-from app.backend.routes import auth
+from backend.routes import auth
+# from routes import auth
+
 
 app = FastAPI()
 

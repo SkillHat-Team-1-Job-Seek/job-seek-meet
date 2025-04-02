@@ -1,131 +1,60 @@
-import React, { useState } from "react";
-import SignUpForm from "./components/SignUpForm";  
-import Login from "./components/Login";  
-import LandingPage from "./components/LandingPage";  
-import "./index.css";
+import React from "react";
 
-const App = () => {
-  const [currentPage, setCurrentPage] = useState("landing");
-
-  const navigateTo = (page) => {
-    setCurrentPage(page);
-  };
-
+const LandingPage = ({ navigateTo }) => {
   return (
-    <div>
-      {currentPage === "landing" && <LandingPage navigateTo={navigateTo} />}
-      {currentPage === "signup" && <SignUpForm toggleForm={() => navigateTo("login")} />}
-      {currentPage === "login" && <Login toggleForm={() => navigateTo("signup")} />}
+    <div className="w-full min-h-screen bg-white flex flex-col items-center">
+      {/* Navigation */}
+      <div className="w-full flex justify-between items-center px-16 py-6 bg-gray-100">
+        <img className="w-20 h-20" src="/assets/image-103.png" alt="Logo" />
+        <div className="flex gap-8 text-teal-600 text-2xl font-bold">
+          <span>About Us</span>
+          <span>Features</span>
+          <span>How It Works</span>
+        </div>
+        <button
+          onClick={() => navigateTo("login")}
+          className="text-xl font-bold text-black"
+        >
+          Log in
+        </button>
+        <button
+          onClick={() => navigateTo("signup")}
+          className="px-6 py-3 bg-yellow-300 text-black rounded-md text-xl font-semibold"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      {/* Hero Section */}
+      <div className="flex flex-col items-center text-center mt-16">
+        <h1 className="text-4xl font-bold text-black">Welcome to Job Seekers Community</h1>
+        <p className="text-lg text-gray-600 mt-4">
+          Connecting job seekers with opportunities.
+        </p>
+        <img className="mt-6 w-[80%]" src="/assets/unsplash_g1Kr4Ozfoac.png" alt="Landing Page Banner" />
+
+        <div className="mt-8 flex gap-4">
+          <button
+            onClick={() => navigateTo("signup")}
+            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Sign Up
+          </button>
+          <button
+            onClick={() => navigateTo("login")}
+            className="px-6 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+          >
+            Login
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default App;
+export default LandingPage;
 
-
-
-// import React, { useState } from "react";
-// import SignUpForm from "./components/SignUpForm";  
-// import Login from "./components/Login";  
-// import LandingPage from "./components/LandingPage";  // Import Landing Page  
-// import "./index.css";
-
-
-// const App = () => {
-//   const [isSignUp, setIsSignUp] = useState(true);
-
-//   // Function to toggle between SignUp and Login
-//   const toggleForm = () => {
-//     setIsSignUp((prev) => !prev);
-//   };
-
-//   return (
-//     <div>
-//       {isSignUp ? <SignUpForm toggleForm={toggleForm} /> : <Login toggleForm={toggleForm} />}
-//     </div>
-//   );
-// };
-
-// const App = () => {
-//   const [currentPage, setCurrentPage] = useState("landing");  // Track the current page
-
-//   // Function to navigate between pages
-//   const navigateTo = (page) => {
-//     setCurrentPage(page);
-//   };
-
-//   return (
-//     <div>
-//       {currentPage === "landing" && <LandingPage navigateTo={navigateTo} />}
-//       {currentPage === "signup" && <SignUpForm toggleForm={() => navigateTo("login")} />}
-//       {currentPage === "login" && <Login toggleForm={() => navigateTo("signup")} />}
-//     </div>
-//   );
-// };
-
-
-// const LandingPage = () => {
-//   return (
-//     <div className="font-sans">
-//       {/* Navigation Bar */}
-//       <nav className="bg-white shadow-md p-4 flex justify-between items-center">
-//         <h1 className="text-xl font-bold">Job Seekers Community</h1>
-//         <div>
-//           <button className="px-4 py-2 mr-2 text-blue-500">Login</button>
-//           <button className="px-4 py-2 bg-blue-500 text-white rounded">Sign Up</button>
-//         </div>
-//       </nav>
-
-//       {/* Hero Section */}
-//       <section className="text-center py-20 bg-gray-100">
-//         <h2 className="text-4xl font-bold">Find Your Dream Job</h2>
-//         <p className="text-lg text-gray-600 mt-2">Join our community to access job listings and career resources.</p>
-//         <button className="mt-4 px-6 py-3 bg-blue-500 text-white rounded">Get Started</button>
-//       </section>
-
-//       {/* Features Section */}
-//       <section className="py-16">
-//         <h2 className="text-center text-3xl font-bold mb-8">Why Join Us?</h2>
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-10">
-//           <div className="p-6 bg-white shadow-lg rounded text-center">
-//             <h3 className="text-xl font-semibold">Exclusive Job Listings</h3>
-//             <p className="text-gray-600 mt-2">Access top job opportunities tailored to your skills.</p>
-//           </div>
-//           <div className="p-6 bg-white shadow-lg rounded text-center">
-//             <h3 className="text-xl font-semibold">Career Guidance</h3>
-//             <p className="text-gray-600 mt-2">Get expert advice and mentorship from industry leaders.</p>
-//           </div>
-//           <div className="p-6 bg-white shadow-lg rounded text-center">
-//             <h3 className="text-xl font-semibold">Networking Opportunities</h3>
-//             <p className="text-gray-600 mt-2">Connect with professionals and recruiters worldwide.</p>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Testimonials */}
-//       <section className="bg-blue-500 text-white py-16">
-//         <h2 className="text-center text-3xl font-bold mb-6">What Our Users Say</h2>
-//         <div className="text-center">
-//           <p className="text-lg">"This platform helped me land my dream job!"</p>
-//           <span className="block mt-2 font-semibold">- Jane Doe</span>
-//         </div>
-//       </section>
-
-//       {/* Call to Action */}
-//       <section className="text-center py-12">
-//         <h2 className="text-3xl font-bold">Ready to Find Your Job?</h2>
-//         <button className="mt-4 px-6 py-3 bg-blue-500 text-white rounded">Join Now</button>
-//       </section>
-
-//       {/* Footer */}
-//       <footer className="bg-gray-800 text-white text-center py-4">
-//         <p>&copy; 2025 Job Seekers Community. All Rights Reserved.</p>
-//       </footer>
-//     </div>
-//   );
-// };
-
-// const LandingPage = () => {
+// const LandingPage = ({ navigateTo }) => {
 //   return (
 //     <div className="w-[1440px] h-[8860px] relative bg-white overflow-hidden">
 //   <div className="left-[110px] top-[43px] absolute inline-flex justify-start items-center gap-12">
@@ -143,6 +72,20 @@ export default App;
 //         <div className="px-16 py-5 bg-yellow-300 rounded-[10px] inline-flex justify-center items-center gap-2.5">
 //           <div className="w-32 h-7 text-center justify-start text-stone-950 text-xl font-semibold font-['Poppins']">Sign up </div>
 //           <img className="w-full" alt="Landing Page Banner" src="/assets/unsplash_g1Kr4Ozfoac.png" />
+//           <div className="flex gap-4">
+//         <button
+//           onClick={() => navigateTo("signup")}
+//           className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+//         >
+//           Sign Up
+//         </button>
+//         <button
+//           onClick={() => navigateTo("login")}
+//           className="px-6 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+//         >
+//           Login
+//         </button>
+//       </div>
 //         </div>
 //       </div>
 //     </div>
@@ -345,6 +288,3 @@ export default App;
 
 
 // export default LandingPage;
-
-
-// export default App;
