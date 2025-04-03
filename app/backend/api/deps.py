@@ -1,4 +1,3 @@
-from collections.abc import Generator
 from typing import Annotated, Type
 
 import jwt
@@ -7,16 +6,14 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from pydantic import ValidationError
 from sqlmodel import Session
-from ..core import security
-from ..core.config import settings
-from ..schema.auth import TokenPayload
-from ..db.models import User
-
-from ..db.session import get_db  # Dependency to get the database session
-
+from app.backend.core import security
+from app.backend.core.config import settings
+from app.backend.db.models import TokenPayload, User
+from app.backend.db.models import User
+from app.backend.db.session import get_db
 
 reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1}/login/access-token"
+    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 )
 
 SessionDep = Annotated[Session, Depends(get_db)]

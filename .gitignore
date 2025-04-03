@@ -24,8 +24,6 @@ package-lock.json
 .env.production.local
 .env
 .vscode/
-alembic/
-!alembic/versions/
 
 npm-debug.log*
 yarn-debug.log*

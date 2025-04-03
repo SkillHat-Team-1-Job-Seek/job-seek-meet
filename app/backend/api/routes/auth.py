@@ -3,14 +3,11 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
 from app.backend.core import security
-from ..deps import CurrentUser, SessionDep
+from app.backend.api.deps import CurrentUser, SessionDep
 from app.backend.core.config import settings
-from app.backend.core.security import get_password_hash
-from app.backend.schema.auth import  NewPassword, Token
-from app.backend.schema.user import UserPublic, UserCreate
-from app.backend.crud import authenticate,get_user_by_email, create_user
+from app.backend.db.models import Message, NewPassword, Token, UserPublic
+from app.backend.crud import authenticate
 router = APIRouter(tags=["login"])
 
 @router.post("/login/access-token")
@@ -33,7 +30,6 @@ def login_access_token(
             user.id, expires_delta=access_token_expires
         )
     )
-
 
 
 

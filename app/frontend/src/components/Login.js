@@ -13,11 +13,40 @@ const Login = ({ toggleForm }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Logged In:", formData);
-    alert("Login Successful!");
-  };
+  
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json(); // Convert response to JSON
+  
+      if (!response.ok) {
+        // If response is not okay, throw the actual error message
+        throw new Error(data?.detail || data?.message || "Login failed");
+      }
+  
+      console.log("User logged in successfully:", data);
+      alert(`Login Successful! ${data.message}`);
+    } catch (error) {
+      console.error("Error:", error);
+  
+      // Extract a readable error message
+      let errorMessage = "Login failed";
+  
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (typeof error === "object") {
+        errorMessage = JSON.stringify(error);
+      }
+  
+      alert(`Login failed: ${errorMessage}`);
+    }
+  };  
 
   return (
     <div style={styles.container}>

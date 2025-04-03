@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const SignUpForm = ({ toggleForm }) => {
   // State to manage form inputs
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
     email: "",
     password: "",
   });
@@ -17,10 +17,30 @@ const SignUpForm = ({ toggleForm }) => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Signed Up:", formData);
-    alert("Sign Up Successful!");
+    // console.log("User Signed Up:", formData);
+    // alert("Sign Up Successful!");
+
+    try {
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.detail || "Sign-up failed");
+      }
+  
+      console.log("User registered successfully:", data);
+      alert(`Sign Up Successful! ${data.message}`);
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert(`Sign-up failed: ${error.message}`);
+    }
   };
 
   return (
@@ -29,9 +49,9 @@ const SignUpForm = ({ toggleForm }) => {
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
           type="text"
-          name="fullName"
-          placeholder="Full Name"
-          value={formData.fullName}
+          name="firstName"
+          placeholder="First Name"
+          value={formData.firstName}
           onChange={handleChange}
           style={styles.input}
           required
