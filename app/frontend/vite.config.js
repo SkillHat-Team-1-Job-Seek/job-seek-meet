@@ -28,6 +28,16 @@ export default defineConfig({
   css: {
     postcss: "./postcss.config.js",
   },
+  server: {
+    port: 3000,
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:8000',
+        changeOrigin: false,
+        secure: false,
+      },
+    },
+  },
 });
 
-  
+
