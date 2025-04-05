@@ -1,8 +1,13 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-
 from pathlib import Path
+from fastapi import FastAPI
+from app.backend.api.main import api_router
+from app.backend.core.config import settings
+
+from app.backend.routes import auth
+
 
 app = FastAPI()
 
@@ -23,21 +28,13 @@ async def serve_react_app(full_path: str):
         return FileResponse(index_file)
     return {"detail": "Frontend not found"}
 
-# Enable CORS (only needed if frontend is running separately)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow frontend dev server
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Register the auth router
-# app.include_router(auth.router)
-
 # @app.get("/")
 # def health_check():
 #     return {"status": "API is running"} 
 
 
-app.include_router(auth.router)
+@app.get("/")
+def health_check():
+    return {"status": "API is running"}
+
+app.include_router(api_router, prefix=settings.API_V1_STR)
