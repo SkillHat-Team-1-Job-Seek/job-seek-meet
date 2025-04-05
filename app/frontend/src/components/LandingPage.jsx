@@ -1,10 +1,12 @@
 import React from "react";
+import NavigationBar from "./NavigationBar";
 
 const LandingPage = ({ navigateTo }) => {
   return (
     <div className="w-full min-h-screen bg-white flex flex-col items-center">
       {/* Navigation */}
-      <div className="w-full flex justify-between items-center px-16 py-6 bg-gray-100">
+      <NavigationBar navigateTo={navigateTo} />
+      {/* <div className="w-full flex justify-between items-center px-16 py-6 bg-gray-100">
         <img className="w-20 h-20" src="/assets/image 103.png" alt="Logo" />
         <div className="flex gap-8 text-teal-600 text-2xl font-bold">
           <span>About Us</span>
@@ -13,7 +15,7 @@ const LandingPage = ({ navigateTo }) => {
         </div>
         <button
           onClick={() => navigateTo("login")}
-          className="text-xl font-bold text-black"
+          className="px-6 py-3 bg-white-300 text-xl font-bold text-black"
         >
           Log in
         </button>
@@ -23,7 +25,7 @@ const LandingPage = ({ navigateTo }) => {
         >
           Sign Up
         </button>
-      </div>
+      </div> */}
 
       {/* Hero Section */}
       <div className="flex flex-col items-center text-center mt-16">
