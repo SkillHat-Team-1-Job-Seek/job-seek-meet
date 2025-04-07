@@ -16,6 +16,7 @@ frontend_path = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 # Register the auth router.
 # Moved it above the app.mount() to ensure it is registered before the static files so signup & login function properly in the browser.
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
 # Serve React frontend if it exists
 if frontend_path.exists():
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="static")
