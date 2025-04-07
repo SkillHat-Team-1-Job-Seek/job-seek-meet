@@ -1,6 +1,5 @@
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi import FastAPI
 from app.backend.api.main import api_router

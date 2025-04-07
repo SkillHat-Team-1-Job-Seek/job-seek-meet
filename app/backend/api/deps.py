@@ -3,7 +3,7 @@ from typing import Annotated, Type
 import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jwt.exceptions import InvalidTokenError
+from jwt import InvalidTokenError
 from pydantic import ValidationError
 from sqlmodel import Session
 from app.backend.core import security
