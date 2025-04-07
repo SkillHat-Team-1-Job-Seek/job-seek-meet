@@ -1,40 +1,22 @@
 import React from "react";
 import NavigationBar from "./NavigationBar";
+import HeroSection from "./HeroSection";
 
 const LandingPage = ({ navigateTo }) => {
   return (
     <div className="w-full min-h-screen bg-white flex flex-col items-center">
       {/* Navigation */}
       <NavigationBar navigateTo={navigateTo} />
-      {/* <div className="w-full flex justify-between items-center px-16 py-6 bg-gray-100">
-        <img className="w-20 h-20" src="/assets/image 103.png" alt="Logo" />
-        <div className="flex gap-8 text-teal-600 text-2xl font-bold">
-          <span>About Us</span>
-          <span>Features</span>
-          <span>How It Works</span>
-        </div>
-        <button
-          onClick={() => navigateTo("login")}
-          className="px-6 py-3 bg-white-300 text-xl font-bold text-black"
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => navigateTo("signup")}
-          className="px-6 py-3 bg-yellow-300 text-black rounded-md text-xl font-semibold"
-        >
-          Sign Up
-        </button>
-      </div> */}
+      <HeroSection/>
 
       {/* Hero Section */}
-      <div className="flex flex-col items-center text-center mt-16">
+      {/* <div className="flex flex-col items-center text-center mt-16">
         <h1 className="text-4xl font-bold text-black">Welcome to Job Seekers Community</h1>
         <p className="text-lg text-gray-600 mt-4">
           Connecting job seekers with opportunities.
         </p>
         <img className="mt-6 w-[80%]" src="/assets/unsplash_g1Kr4Ozfoac.png" alt="Landing Page Banner" />
-      </div>
+      </div> */}
     <div className="w-[1440px] p-28 left-0 top-[5037px] absolute bg-slate-400 inline-flex justify-start items-center gap-12 overflow-hidden">
     <div className="flex-1 max-w-[816px] min-w-[762px] inline-flex flex-col justify-start items-start gap-6 overflow-hidden">
       <div className="self-stretch inline-flex justify-start items-start gap-2.5 overflow-hidden">
