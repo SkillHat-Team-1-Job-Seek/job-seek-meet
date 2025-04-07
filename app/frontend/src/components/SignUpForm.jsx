@@ -18,7 +18,7 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-    
+
 //     try {
 //       // const response = await fetch(`${API_URL}/api/signup`, { // Use deployed backend
 //       const response = await fetch(`/signup`, { // Use deployed backend
@@ -26,13 +26,13 @@
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify(formData),
 //       });
-  
+
 //       const data = await response.json();
-  
+
 //       if (!response.ok) {
 //         throw new Error(data.detail || "Sign-up failed");
 //       }
-  
+
 //       console.log("User registered successfully:", data);
 //       alert(`Sign Up Successful! ${data.message}`);
 //     } catch (error) {
@@ -150,20 +150,20 @@ const SignUpForm = ({ toggleForm }) => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await fetch("http://localhost:8000/api/signup", {
+      const response = await fetch("http://localhost:8000/api/v1/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.detail || "Sign-up failed");
       }
-  
+
       console.log("User registered successfully:", data);
       alert(`Sign Up Successful! ${data.message}`);
     } catch (error) {
@@ -207,7 +207,7 @@ const SignUpForm = ({ toggleForm }) => {
       </form>
       <p>
         Already have an account?{" "}
-        <button 
+        <button
           onClick={toggleForm}  // switch to Login form when clicked
           style={styles.linkButton}
         >

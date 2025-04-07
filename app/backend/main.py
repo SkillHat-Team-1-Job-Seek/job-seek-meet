@@ -1,4 +1,5 @@
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from fastapi.responses import FileResponse
 from fastapi import FastAPI
@@ -28,8 +29,15 @@ async def serve_react_app(full_path: str):
         return FileResponse(index_file)
     return {"detail": "Frontend not found"}
 
+# Enable CORS (only needed if frontend is running separately)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow frontend dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-app.mount("/static", StaticFiles(directory=frontend_path), name="static")
-@app.get("/")
+# @app.get("/")
 def health_check():
     return {"status": "API is running"}
