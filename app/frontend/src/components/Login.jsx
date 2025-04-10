@@ -106,18 +106,17 @@ const Login = ({ toggleForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await fetch("http://localhost:8000/api/v1/login", {
+      const response = await fetch("http://localhost:8000/api/v1/login/access-token", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded", // Change to x-www-form-urlencoded
         },
-        body: JSON.stringify({
-          email: formData.email.trim(),
-          password: formData.password.trim(),
-        }), 
+        body: new URLSearchParams({
+          username: formData.email, // Use 'username' to follow the backend
+          password: formData.password,
+        }),
       });
 
       if (!response.ok) {
@@ -126,7 +125,10 @@ const Login = ({ toggleForm }) => {
       }
 
       const data = await response.json();
-      alert(data.message);  
+      console.log(data);
+      localStorage.setItem("access_token", data.access_token); // Store the token
+      alert("Login Successful");
+      // You can redirect here(Navigate here)
     } catch (error) {
       alert("Login failed: " + error.message);
     }
@@ -174,8 +176,6 @@ const Login = ({ toggleForm }) => {
 };
 
 export default Login;
-
-
 
 
 // import React, { useState } from "react";
