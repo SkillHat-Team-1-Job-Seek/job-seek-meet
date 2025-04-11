@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-from app.backend.routes import auth
+from fastapi.responses import FileResponse
+from fastapi import FastAPI
+from app.backend.api.main import api_router
+from app.backend.core.config import settings
 
 
 app = FastAPI()
@@ -12,12 +13,9 @@ app = FastAPI()
 # updated to point to the correct Vite build output directory to properly display landing page in the browser
 frontend_path = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
-# Register the auth router. 
+# Register the auth router.
 # Moved it above the app.mount() to ensure it is registered before the static files so signup & login function properly in the browser.
-app.include_router(auth.router, prefix="/api/v1")
-
-app.mount("/static", StaticFiles(directory=frontend_path), name="static")
-
+app.include_router(api_router, prefix=settings.API_V1_STR)
 
 # Serve React frontend if it exists
 if frontend_path.exists():
@@ -39,3 +37,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# @app.get("/")
+def health_check():
+    return {"status": "API is running"}
