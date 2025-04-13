@@ -26,7 +26,7 @@ const Testimonials = () => {
               </div>
             </div>
             <div data-layer="card" className="Card w-[560px] max-w-[560px] min-w-[552px] p-4 left-[646px] top-[6px] absolute bg-gray-200 rounded-tr-[32px] rounded-bl-[32px] inline-flex justify-start items-start gap-4 overflow-hidden">
-              <img data-layer="photoWrapper" className="Photowrapper size-16 relative rounded-[60px]" src="/assets/171b3030fa7347bd085558a194f618e3.jpeg" />
+              <img data-layer="photoWrapper" className="Photowrapper size-16 relative rounded-[60px]" src="app/frontend/public/assets/171b3030fa7347bd085558a194f618e3.jpeg" />
               <div data-layer="info_wrapper" className="InfoWrapper flex-1 pt-1.5 inline-flex flex-col justify-center items-start gap-1 overflow-hidden">
                 <div data-layer="full_name" className="FullName self-stretch justify-start text-cyan-950 text-xl font-black font-['Poppins']">Michael Smith</div>
                 <div data-layer="feedback" className="Feedback self-stretch justify-start text-slate-900 text-xl font-normal font-['Poppins']">I was amazed by how user-friendly JobBuddies is. Creating my profile was a breeze, and I landed my dream job thanks to this platform.</div>
