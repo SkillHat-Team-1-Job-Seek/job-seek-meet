@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from app.backend.routes import auth
+import os
+from dotenv import load_dotenv
 
 
 app = FastAPI()
@@ -23,6 +25,14 @@ app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 if frontend_path.exists():
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="static")
 
+is_production = os.getenv("ENV") == "production"
+
+origins = (
+    ["https://job-seek-meet.onrender.com"]
+    if is_production
+    else ["http://localhost:3000"]
+)
+
 # Fallback route to serve index.html for React Router
 @app.get("/{full_path:path}")
 async def serve_react_app(full_path: str):
@@ -34,7 +44,7 @@ async def serve_react_app(full_path: str):
 # Enable CORS (only needed if frontend is running separately)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow frontend dev server
+    allow_origins=origins,  # Allow frontend dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
