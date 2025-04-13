@@ -26,3 +26,7 @@ async def login(request: LoginRequest):
     if request.email == "test_user@test.com" and request.password == "password123":
         return {"message": f"User login successful with user: {request.email}"}
     raise HTTPException(status_code=400, detail="Invalid credentials")
+
+@router.get("/test")
+def test_route():
+    return {"message": "Auth routes working"}
