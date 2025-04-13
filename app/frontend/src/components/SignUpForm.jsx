@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 
 // const API_URL = "https://job-seek-meet.onrender.com/";
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_BASE_URL = "https://job-seek-meet.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = "https://job-seek-meet.onrender.com";
 
 
 
