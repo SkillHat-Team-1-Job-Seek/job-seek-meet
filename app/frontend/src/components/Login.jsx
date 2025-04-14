@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -18,19 +17,21 @@ const Login = ({ toggleForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email.trim(),
-          password: formData.password.trim(),
-        }), 
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/login/access-token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded", // Change to x-www-form-urlencoded
+          },
+          body: new URLSearchParams({
+            username: formData.email, // Use 'username' to follow the backend
+            password: formData.password,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -38,7 +39,10 @@ const Login = ({ toggleForm }) => {
       }
 
       const data = await response.json();
-      alert(data.message);  
+      console.log(data);
+      localStorage.setItem("access_token", data.access_token); // Store the token
+      alert("Login Successful");
+      // You can redirect here(Navigate here)
     } catch (error) {
       alert("Login failed: " + error.message);
     }
@@ -87,9 +91,6 @@ const Login = ({ toggleForm }) => {
 
 export default Login;
 
-
-
-
 // import React, { useState } from "react";
 
 // const Login = ({ toggleForm }) => {
@@ -107,7 +108,7 @@ export default Login;
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-    
+
 //     try {
 //         const response = await fetch("http://localhost:8000/login", {
 //             method: "POST",
@@ -118,7 +119,7 @@ export default Login;
 //             body: JSON.stringify({
 //                 email: formData.email.trim(),  // Ensure no leading/trailing spaces
 //                 password: formData.password.trim()
-//             }), 
+//             }),
 //         });
 
 //         if (!response.ok) {
@@ -127,12 +128,11 @@ export default Login;
 //         }
 
 //         const data = await response.json();
-//         alert(data.message);  
+//         alert(data.message);
 //     } catch (error) {
 //         alert("Login failed: " + error.message);
 //     }
 // };
-
 
 // const styles = {
 //   container: {
