@@ -1,17 +1,12 @@
 {
   "compilerOptions": {
+    "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": false,
-    "target": "ES6",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "lib": ["esnext"],
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "declaration": true
   },
-  "include": ["src/**/*.ts", "src/types/**/*.d.ts"]
+  "include": ["src/**/*.ts"]
 }
