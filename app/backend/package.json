@@ -7,6 +7,8 @@
     "dev": "cross-env NODE_ENV=development TS_NODE_FILES=true nodemon --exec 'ts-node --transpile-only' src/server.ts",
     "build": "npm run clean && tsc -p . && tsc-alias && npm run copyfiles",
     "start": "cross-env NODE_ENV=production ts-node --transpile-only --files ./src/server.ts",
+    "copyfiles": "copyfiles -u 1 src/email/**/* dist",
+    "clean": "rimraf --glob dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

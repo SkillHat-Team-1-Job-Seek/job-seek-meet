@@ -15,5 +15,4 @@ dist/
 
 # Production build files
 build/
-
-/src/generated/prisma/
+src/generated/prisma/
