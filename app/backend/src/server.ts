@@ -3,12 +3,14 @@ import { PORT } from "./util/secrets";
 import authRoutes from "./user-management/auth.routes";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import cors from "cors";
 // import { errorHandler } from "./util/";
 const app: Express = express();
 
 const apiVersion = "/api/v1";
 
 app.use(express.json());
+app.use(cors());
 
 app.use(morgan("dev"));
 
