@@ -25,6 +25,7 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
@@ -36,9 +37,12 @@
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^22.14.1",
     "@types/nodemailer": "^6.4.17",
+    "morgan": "^1.10.0",
     "prisma": "^6.6.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.15",

@@ -15,7 +15,6 @@ let emailFirstName: string;
 export const signup = async (req: Request, res: Response) => {
   try {
     let validationResult = validateUserDetails(req.body);
-
     if (validationResult === "rejected") {
       fail(res, 400, "All fields are required");
       return;
@@ -29,7 +28,7 @@ export const signup = async (req: Request, res: Response) => {
       return;
     }
     const emailExist = await prisma.user.findUnique({
-      where: email,
+      where: { email },
     });
     if (emailExist) {
       fail(res, 400, "User already exists");
@@ -136,19 +135,26 @@ const handleEmailVerification = async (user: any, res: Response) => {
     data: { verificationToken: token, verificationTokenExpiresAt: time },
   });
 
-  await sendVerificationEmail(user.email!, user.name!, token).catch((err: any) => {
-    console.error("Error sending verification email:", err.message);
-  });
+  await sendVerificationEmail(user.email!, user.name!, token).catch(
+    (err: any) => {
+      console.error("Error sending verification email:", err.message);
+    }
+  );
 
   res.status(403).json({
     status: "error",
     code: "403",
-    message: "Your email is not verified. A new verification email has been sent to your inbox.",
+    message:
+      "Your email is not verified. A new verification email has been sent to your inbox.",
   });
   return false;
 };
 
-const validatePassword = async (password: string, hashedPassword: string, res: Response) => {
+const validatePassword = async (
+  password: string,
+  hashedPassword: string,
+  res: Response
+) => {
   const result = compareSync(password, hashedPassword);
   if (!result) {
     res.status(401).json({

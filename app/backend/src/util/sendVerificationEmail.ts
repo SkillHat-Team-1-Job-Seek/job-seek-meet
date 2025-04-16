@@ -4,9 +4,7 @@ import { EMAIL_PASSWORD } from "./secrets";
 // import { EMAIL_VERIFICATION_TEMPLATE } from "./email.templates";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // false for port 587 and other ports, true for port 465
+  service: "Gmail",
   auth: {
     user: EMAIL_ADDRESS,
     pass: EMAIL_PASSWORD,
@@ -20,7 +18,7 @@ async function sendVerificationEmail(
 ) {
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"JobBuddies" <tca11.team1@gmail.com>', // sender address
+    from: '"JobBuddies" <opeyemioyeyemi141@gmail.com>', // sender address
     to: `${email}`, // list of receivers
     subject: "JobBuddies Verification Token", // Subject line
     text: "", // plain text body
