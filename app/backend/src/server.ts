@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import { PORT } from "./util/secret";
+import { PORT } from "./util/secrets";
 
 const app: Express = express();
 
