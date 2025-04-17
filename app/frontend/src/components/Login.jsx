@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const Login = ({ toggleForm }) => {
+const Login = ({ toggleForm, goHome }) => {
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -42,137 +45,89 @@ const Login = ({ toggleForm }) => {
       console.log(data);
       localStorage.setItem("access_token", data.access_token); // Store the token
       alert("Login Successful");
-      // You can redirect here(Navigate here)
+      navigate("/"); // Redirect to home page
     } catch (error) {
       alert("Login failed: " + error.message);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="mb-4 p-3 border rounded-md"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="mb-4 p-3 border rounded-md"
-            required
-          />
+    <div className="SignIn w-full min-h-screen bg-slate-800 py-20">
+      <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl p-6 relative text-white">
+        <div className="flex items-center justify-between mb-8">
+          <img src="/assets/image 103.png" alt="Logo" className="size-28" />
+          <div className="px-6 py-4 bg-white/25 rounded-3xl outline outline-4 outline-teal-600 backdrop-blur-lg text-center">
+            <h2 className="text-teal-600 text-4xl font-black">
+              Stronger Together!
+            </h2>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="flex flex-col">
+            <label className="text-white text-base mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-white text-base mb-1">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
+            />
+          </div>
+
           <button
             type="submit"
-            className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700"
+            className="px-8 py-4 bg-yellow-300 rounded-xl text-cyan-950 font-semibold text-base hover:bg-yellow-400 transition-colors"
           >
-            Login
+            Log In
           </button>
         </form>
-        <p className="mt-4 text-center">
-          Don't have an account?{" "}
-          <button onClick={toggleForm} className="text-blue-600 underline">
-            Sign Up
+
+        <div className="flex justify-center items-center my-6">
+          <span className="text-white text-2xl font-bold">or</span>
+        </div>
+
+        <div className="flex justify-center gap-8 mb-6">
+          <button className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
+            Apple
           </button>
-        </p>
+          <button className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
+            Google
+          </button>
+        </div>
+
+        <div className="text-center text-white text-lg">
+          <p>
+            Don’t Have An Account?{" "}
+            <button
+              onClick={() => navigate("/signup")}
+              className="text-yellow-300 underline hover:text-yellow-400"
+            >
+              Sign Up
+            </button>
+          </p>
+        </div>
+        <div className="text-center mt-4">
+          <button onClick={() => navigate("/")}>Back to Previous Page</button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Login;
-
-// import React, { useState } from "react";
-
-// const Login = ({ toggleForm }) => {
-//   const [formData, setFormData] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const handleChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//         const response = await fetch("http://localhost:8000/login", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 email: formData.email.trim(),  // Ensure no leading/trailing spaces
-//                 password: formData.password.trim()
-//             }),
-//         });
-
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.detail || "Login failed");
-//         }
-
-//         const data = await response.json();
-//         alert(data.message);
-//     } catch (error) {
-//         alert("Login failed: " + error.message);
-//     }
-// };
-
-// const styles = {
-//   container: {
-//     width: "300px",
-//     margin: "50px auto",
-//     padding: "20px",
-//     textAlign: "center",
-//     border: "1px solid #ccc",
-//     borderRadius: "5px",
-//   },
-//   form: {
-//     display: "flex",
-//     flexDirection: "column",
-//   },
-//   input: {
-//     margin: "10px 0",
-//     padding: "10px",
-//     fontSize: "16px",
-//     border: "1px solid #ccc",
-//     borderRadius: "5px",
-//   },
-//   button: {
-//     padding: "10px",
-//     fontSize: "16px",
-//     backgroundColor: "#007bff",
-//     color: "#fff",
-//     border: "none",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//   },
-//   linkButton: {
-//     background: "none",
-//     border: "none",
-//     padding: 0,
-//     color: "#007bff",
-//     textDecoration: "underline",
-//     cursor: "pointer",
-//     fontSize: "inherit",
-//   },
-// };
-// }
-
-// export default Login;

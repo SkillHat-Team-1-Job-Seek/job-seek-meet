@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
 import HeroSection from "./HeroSection";
 import OurReachSection from "./OurReach";
@@ -9,29 +10,47 @@ import HowItWorkSection from "./HowItWorks";
 import FAQSection from "./FAQs";
 import FooterSection from "./Footer";
 
-const LandingPage = ({ navigateTo }) => {
+const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const featuresRef = useRef(null);
+  const aboutUsRef = useRef(null);
+  const howItWorksRef = useRef(null);
+  const faqRef = useRef(null);
+
+  const scrollToSection = (section) => {
+    const sectionMap = {
+      features: featuresRef,
+      about: aboutUsRef,
+      howItWorks: howItWorksRef,
+      faq: faqRef,
+    };
+
+    sectionMap[section]?.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
-      {/* Navigation */}
-      <NavigationBar navigateTo={navigateTo} />
-      {/* Hero Section */}
-      <HeroSection />
-      {/* Our Reach Section */}
+      <NavigationBar scrollTo={scrollToSection} />
+      <HeroSection onJoin={() => navigate("/signup")} />
       <OurReachSection />
-      {/* Features Section */}
-      <FeaturesSection />
-      {/* How It Works Section */}
-      <HowItWorkSection />
-      {/*Testimonial Section */}
+      <div ref={featuresRef}>
+        <FeaturesSection />
+      </div>
+      <div ref={howItWorksRef}>
+        <HowItWorkSection />
+      </div>
       <Testimonials />
-      {/* About Us Section */}
-      <AboutUsSection />
-      {/* FAQ Section */}
-      <FAQSection />
-      {/* Footer Section */}
+      <div ref={aboutUsRef}>
+        <AboutUsSection />
+      </div>
+      <div ref={faqRef}>
+        <FAQSection />
+      </div>
       <FooterSection />
     </div>
   );
 };
 
 export default LandingPage;
+
