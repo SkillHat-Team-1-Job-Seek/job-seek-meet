@@ -4,10 +4,10 @@
   "description": "Backend for JobBuddies project",
   "main": "dist/app.js",
   "scripts": {
-   "dev": "cross-env NODE_ENV=development TS_NODE_FILES=true nodemon --exec 'ts-node --transpile-only' src/app.ts",
+    "dev": "cross-env NODE_ENV=development TS_NODE_FILES=true nodemon --exec 'ts-node --transpile-only' src/app.ts",
     "build": "npm run clean && tsc -p . && tsc-alias && npm run copyfiles",
     "start": "cross-env NODE_ENV=production ts-node --transpile-only --files ./src/app.ts",
-     "copyfiles": "copyfiles -u 1 src/email/**/* dist",
+    "copyfiles": "copyfiles -u 1 src/email/**/* dist",
     "clean": "rimraf --glob dist/*"
   },
   "repository": {
@@ -35,6 +35,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.10.1",
+    "ts-node": "^10.9.2",
     "nodemon": "^3.1.9",
     "rimraf": "^6.0.1"
   },
