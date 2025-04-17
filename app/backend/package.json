@@ -2,12 +2,13 @@
   "name": "jobbuddies-backend",
   "version": "1.0.0",
   "description": "Backend for JobBuddies project",
-  "m,ain": "index.js",
+  "main": "dist/app.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "dev": "cross-env NODE_ENV=development TS_NODE_FILES=true nodemon --exec 'ts-node --transpile-only' src/app.ts",
+    "build": "npm run clean && tsc -p . && tsc-alias && npm run copyfiles",
+    "start": "cross-env NODE_ENV=production ts-node --transpile-only --files ./src/app.ts",
+     "copyfiles": "copyfiles -u 1 src/email/**/* dist",
+    "clean": "rimraf --glob dist/*"
   },
   "repository": {
     "type": "git",
