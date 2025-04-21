@@ -195,3 +195,54 @@ export const logout = (req: Request, res: Response) => {
     .status(200)
     .json({ status: "success", code: "200", message: "user logged out!" });
 };
+
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const { id, verifyToken } = req.body;
+
+    const verifyUser = await prisma.user.findUnique({
+      where: { id: id },
+      select: {
+        verificationToken: true,
+        verificationTokenExpiresAt: true,
+      },
+    });
+    const dateNow = new Date(Date.now());
+    const date = new Date(dateNow + " UTC");
+    let tokenExpiryDate = new Date(
+      verifyUser?.verificationTokenExpiresAt + " UTC"
+    );
+    if (tokenExpiryDate > date) {
+      if (verifyToken == verifyUser?.verificationToken) {
+        // update verify User(isVerified to "true")
+        console.log(verifyToken, verifyUser?.verificationToken);
+        await prisma.user.update({
+          where: {
+            id: id,
+          },
+          data: {
+            isVerified: "true",
+          },
+        });
+        success(res, 200, "Email verification successful");
+        return;
+      }
+      fail(res, 400, "Invalid input. Please check and try again");
+      return;
+    }
+    fail(
+      res,
+      400,
+      "The token has expired. Please press the 'Resend' button below the page to resend a new token to your email. Thank you."
+    );
+    return;
+  } catch (error: any) {
+    console.error("Verify email:", error.message);
+    res.status(500).json({
+      status: "error",
+      code: "500",
+      message: "Internal server error",
+    });
+    return;
+  }
+};
