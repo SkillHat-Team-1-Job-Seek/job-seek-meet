@@ -134,7 +134,12 @@ const handleEmailVerification = async (user: any, res: Response) => {
     where: { email: user.email },
     data: { verificationToken: token, verificationTokenExpiresAt: time },
   });
-
+  /**
+   * Error handler for sending verification emails.
+   * Logs the error message to the console.
+   *
+   * @param {any} err - The error object containing details about the failure.
+   */
   await sendVerificationEmail(user.email!, user.name!, token).catch(
     (err: any) => {
       console.error("Error sending verification email:", err.message);
