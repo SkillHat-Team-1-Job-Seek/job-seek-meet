@@ -5,6 +5,16 @@
 /* stylelint-disable-next-line */
 @tailwind utilities;
 
+body {
+  font-family: Poppins, sans-serif;
+
+  color: #333;
+}
+
+.Frame1686562482 {
+  background-image: url('components/testimonials-bg.png');
+}
+
 /* dummy */
 /* body {
   margin: 0;
