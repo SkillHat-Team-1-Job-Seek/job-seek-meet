@@ -3,8 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import SignUpForm from "./components/SignUpForm";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+// import createProfile from "./components/CreateProfile";
+// import Dashboard from "./components/Profile";
 import "./index.css";
+import CreateProfile from "./components/CreateProfile";
+import EditProfile from "./components/EditProfile";
+import ProfileDashboard from "./components/ProfileDashboard";
+import Connections from "./components/Connections";
+// import FindBuddies from "./components/FindBuddies";
 
 const App = () => {
   return (
@@ -12,7 +18,13 @@ const App = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/createProfile" element={<CreateProfile />} />
+      <Route path="/editProfile" element={<EditProfile />} />
+      <Route path="/profileDashboard" element={<ProfileDashboard />} />
+      <Route path="/connections" element={<Connections />} />
+      
+      
+      {/* <Route path="/findbuddies" element={<FindBuddies />} /> */}
     </Routes>
   );
 };

@@ -1,9 +1,4 @@
 {
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
@@ -18,4 +13,3 @@
     "react-router-dom": "^7.5.0"
   }
 }
-

@@ -96,7 +96,7 @@ const SignUpForm = ({ toggleForm }) => {
             />
           </div>
 
-          <button
+          <button onClick={() => navigate("/createProfile")}
             type="submit"
             className="px-8 py-4 bg-yellow-300 rounded-xl text-cyan-950 font-semibold text-base hover:bg-yellow-400 transition-colors"
           >
