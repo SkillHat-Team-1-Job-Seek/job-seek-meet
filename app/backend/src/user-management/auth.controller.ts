@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { createJWT } from "../util/createJWT";
 import { NODE_ENV, environment } from "../util/secrets";
-// import { generateAuthJWT } from "../util/generateAuth";
 import { generateToken } from "../util/generateToken";
 import { validateUserDetails } from "../util/validateUserDetails";
 import { compareSync, hashSync } from "bcryptjs";
