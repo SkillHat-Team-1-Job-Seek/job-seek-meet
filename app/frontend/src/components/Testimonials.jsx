@@ -79,7 +79,7 @@ const Testimonials = () => {
   return (
     <div
       data-layer="Frame 1686562482"
-      className="Frame1686562482 w-[1440px] px-28 py-10 relative bg-black/60 inline-flex flex-col justify-start items-start gap-2.5"
+      className="Frame1686562482 w-full px-28 py-10 relative bg-black/60 inline-flex flex-col justify-start items-start gap-2.5"
     >
       <div
         data-layer="Frame 1686562511"

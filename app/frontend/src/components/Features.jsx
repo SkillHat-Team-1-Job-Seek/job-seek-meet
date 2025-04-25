@@ -2,7 +2,7 @@ import React from 'react';
 
 const FeatureSection = () => {
   return (
-    <div className="Features w-[1440px] h-[1026px] px-32 py-20 bg-gray-200 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
+    <div className="Features w-full h-[1026px] px-32 py-20 bg-gray-200 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
       <div className="TextWrapper w-[649px] max-w-[816px] flex flex-col justify-center items-center gap-3">
         <div className="Heading w-[606px] text-center justify-start text-cyan-950 text-6xl font-bold  leading-[88px] tracking-wide">
           Our Features
