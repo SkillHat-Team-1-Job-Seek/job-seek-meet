@@ -9,7 +9,8 @@ import "./index.css";
 import CreateProfile from "./components/CreateProfile";
 import EditProfile from "./components/EditProfile";
 import ProfileDashboard from "./components/ProfileDashboard";
-import Connections from "./components/Connections";
+import MatchesDashboard from "./components/MatchesDashboard";
+// import Connections from "./components/Connections";
 // import FindBuddies from "./components/FindBuddies";
 
 const App = () => {
@@ -21,7 +22,8 @@ const App = () => {
       <Route path="/createProfile" element={<CreateProfile />} />
       <Route path="/editProfile" element={<EditProfile />} />
       <Route path="/profileDashboard" element={<ProfileDashboard />} />
-      <Route path="/connections" element={<Connections />} />
+      <Route path="/matchesDashboard" element={<MatchesDashboard />} />
+      {/* <Route path="/connections" element={<Connections />} /> */}
       
       
       {/* <Route path="/findbuddies" element={<FindBuddies />} /> */}

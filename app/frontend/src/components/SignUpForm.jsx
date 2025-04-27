@@ -1,67 +1,119 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+console.log(API_BASE_URL);
 
-const SignUpForm = ({ toggleForm }) => {
+const SignUpForm = () => {
+  const [showPassword, setPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const[data, setData] = useState({
+    email: "",
+    password:"",
+    confirmPassword: "",
+  })
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    fullName: "", // Changed from firstName to fullName
-    email: "",
-    password: "",
-    confirmPassword: "", // Added confirmPassword field
-    agreeToTerms: false, // Added for terms checkbox
-  });
+  const handleChange =(e) =>{
+    const {fullName, value} = e.target;
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      }
+    })
+  }
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    // Basic validation for password match
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+    if(data.password === data.confirmPassword){
+      const responseData = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+        method: "post",
+        headers: {
+          "content-type": "application.json",
+        },
+        body : JSON.stringify(data),
+      });
+
+      const dataApi = await responseData.json();
+
+      if(dataApi.success){
+        toast.success(dataApi.message);
+        navigate("/");
+      }
+      if(dataApi.error){
+        toast.error(dataApi.message);
+      }
     }
-
-    if (!formData.agreeToTerms) {
-      alert("You must agree to the Terms and Conditions!");
-      return;
+    else{
+      toast.error("Please check your password ");
     }
+    
+  }
 
-    // try {
-    //   const response = await fetch(`${API_BASE_URL}/api/v1/users/signup`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       fullName: formData.fullName,
-    //       email: formData.email,
-    //       password: formData.password,
-    //     }),
-    //   });
+  // const navigate = useNavigate();
 
-    //   const data = await response.json();
+  // const [formData, setFormData] = useState({
+  //   fullName: "", // Changed from firstName to fullName
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "", // Added confirmPassword field
+  //   agreeToTerms: false, // Added for terms checkbox
+  // });
 
-    //   if (!response.ok) {
-    //     throw new Error(data.detail || "Sign-up failed");
-    //   }
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   });
+  // };
 
-    //   console.log("User registered successfully:", data);
-    //   alert(`Sign Up Successful! ${data.message}`);
-    //   navigate("/"); // Redirect to homepage
-    // } catch (error) {
-    //   console.error("Error:", error.message);
-    //   alert(`Sign-up failed: ${error.message}`);
-    // }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
+  //   // Basic validation for password match
+  //   if (formData.password !== formData.confirmPassword) {
+  //     alert("Passwords do not match!");
+  //     return;
+  //   }
+
+  //   if (!formData.agreeToTerms) {
+  //     alert("You must agree to the Terms and Conditions!");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         fullName: formData.fullName,
+  //         email: formData.email,
+  //         password: formData.password,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log("Response data:", data);
+
+  //     if (!response.ok) {
+  //       throw new Error(data.detail || "Sign-up failed");
+  //     }
+
+  //     // console.log("User registered successfully:", data);
+  //     // alert(`Sign Up Successful! ${data.message}`);
+  //     // // navigate("/"); // Redirect to homepage
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //     alert(`Sign-up failed: ${error.message}`);
+  //   }
+}
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
       <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl flex flex-col md:flex-row">
@@ -76,7 +128,7 @@ const SignUpForm = ({ toggleForm }) => {
               <input
                 type="text"
                 name="fullName"
-                value={formData.fullName}
+                value={data.fullName}
                 onChange={handleChange}
                 placeholder="Full Name"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -89,7 +141,7 @@ const SignUpForm = ({ toggleForm }) => {
               <input
                 type="email"
                 name="email"
-                value={formData.email}
+                value={data.email}
                 onChange={handleChange}
                 placeholder="Enter your Email"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -100,14 +152,17 @@ const SignUpForm = ({ toggleForm }) => {
             {/* Password */}
             <div className="flex flex-col">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
-                value={formData.password}
+                value={data.value}
                 onChange={handleChange}
                 placeholder="Enter your Password"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 required
               />
+              <div className="cursor-pointer text-xl" onClick={()=> setShowPassword((prev) => !prev)}>
+              <span>{showPassword ? <FaEyeSlash/> : <FaEye/>}</span>
+              </div>
               <p className="text-sm text-gray-300 mt-1">
                 At least 8 characters (1 capital, 1 number, 1 special).
               </p>
@@ -202,9 +257,7 @@ const SignUpForm = ({ toggleForm }) => {
     </div>
   );
 };
-
 export default SignUpForm;
-
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";

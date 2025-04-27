@@ -15,7 +15,12 @@
 module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-teal': '#83C4CC',
+        'light-teal': '#138797'
+      },
+    },
   },
   plugins: [],
 };

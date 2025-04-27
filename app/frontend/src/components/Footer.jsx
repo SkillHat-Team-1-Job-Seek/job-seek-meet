@@ -2,7 +2,7 @@ import React from 'react';
 
 const FooterSection = () => {
   return (
-<div data-layer="Footer" className="w-full bg-slate-400 outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
+<div data-layer="Footer" className="w-full bg-custom-teal outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
   <div data-layer="Frame 1866" className="size- flex flex-col justify-start items-center gap-4">
     <div data-layer="Join our Community" className="text-center justify-start text-slate-900 text-4xl font-bold font-['Poppins'] leading-[48px] tracking-wide">Join our Community</div>
     <div data-layer="We’re Stronger Together!" className="w-[572px] text-center justify-start text-slate-900 text-xl font-normal font-['Poppins'] leading-loose tracking-wide">We’re Stronger Together!</div>
