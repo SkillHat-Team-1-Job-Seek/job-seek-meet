@@ -18,9 +18,65 @@ model User {
   name         String                              
   email        String   @unique                    
   password     String
+  profession   String?
+  location     String?
+  age          Int?
+  bio          String?
+  profileImageUrl String
+  tags           Tag[]     
   isVerified                 String            @default("false")
   verificationToken          String?
   verificationTokenExpiresAt DateTime?                              
-  createdAt    DateTime @default(now())            
-  updatedAt    DateTime @updatedAt                 
+  registrationDate    DateTime @default(now())
+   sentConnections     Connection[] @relation("User1Connections")
+
+  // Received connection requests
+  receivedConnections Connection[] @relation("User2Connections")                          
+}
+
+model Connection{
+  userId1 :     String
+  userId2 :     String
+  status      ConnectionStatus @default(PENDING)
+  connectedAt DateTime?
+
+  user1 User @relation("User1Connections", fields: [userId1], references: [id])
+  user2 User @relation("User2Connections", fields: [userId2], references: [id])
+
+  @@id([userId1, userId2])
+}
+
+model Group {
+  id              String            @id @default(uuid())
+  name            String
+  description     String?           @db.Text
+  groupImageUrl   String?          
+  members         GroupMembership[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model GroupMembership {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   String
+  isAdmin   Boolean  @default(false)
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, groupId])
+}
+
+model Tag{
+  id       String
+  name     String @unique
+  users    User[]
+  createdAt DateTime @default(now())  
+}
+
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
