@@ -1,0 +1,37 @@
+import Joi from "joi";
+
+// User creation validation schema
+export const createUserDTO = Joi.object({
+  name: Joi.string().required().min(2).max(50),
+  email: Joi.string().email().required(),
+  password: Joi.string()
+    .required()
+    .min(8)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
+    .message(
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    ),
+});
+
+// User profile update validation schema
+export const updateUserProfileDTO = Joi.object({
+  profession: Joi.string().trim().max(100).allow(null, ""),
+  location: Joi.string().trim().max(100).allow(null, ""),
+  age: Joi.number().integer().min(18).max(120).allow(null),
+  bio: Joi.string().trim().max(500).allow(null, ""),
+  tags: Joi.array().items(Joi.string()).max(10),
+});
+
+// Usage in controller or service
+
+export const validateUserInput = (data: any, schema: Joi.ObjectSchema) => {
+  const { error, value } = schema.validate(data, { abortEarly: false });
+  if (error) {
+    const errors = error.details.map((detail) => ({
+      field: detail.path[0],
+      message: detail.message,
+    }));
+    return { isValid: false, errors, value: null };
+  }
+  return { isValid: true, errors: null, value };
+};
