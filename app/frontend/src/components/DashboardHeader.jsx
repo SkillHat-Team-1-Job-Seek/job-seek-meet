@@ -68,8 +68,8 @@ const DashboardHeader = () => {
         <div className="flex items-center space-x-2">
           <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
           <div>
-            <p className="font-semibold text-gray-700">John Smith</p>
-            <p className="text-sm text-gray-500">Business Analyst</p>
+            <p className="font-semibold text-gray-700">Malik Mustapha</p>
+            <p className="text-sm text-gray-500">Marketing</p>
           </div>
         </div>
       </div>

@@ -15,6 +15,33 @@ body {
   background-image: url('components/testimonials-bg.png');
 }
 
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark .bg-gray-100 {
+  background-color: #1f2937; /* Tailwind's gray-800 */
+}
+
+.dark .bg-white {
+  background-color: #374151; /* Tailwind's gray-700 */
+}
+
+.dark .text-gray-800 {
+  color: #e5e7eb; /* Tailwind's gray-200 */
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db; /* Tailwind's gray-300 */
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af; /* Tailwind's gray-400 */
+}
+
+
+
 /* dummy */
 /* body {
   margin: 0;

@@ -10,7 +10,7 @@ import CreateProfile from "./components/CreateProfile";
 import EditProfile from "./components/EditProfile";
 import ProfileDashboard from "./components/ProfileDashboard";
 import MatchesDashboard from "./components/MatchesDashboard";
-// import Connections from "./components/Connections";
+import Connections from "./components/Connections";
 // import FindBuddies from "./components/FindBuddies";
 
 const App = () => {
@@ -21,9 +21,9 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/createProfile" element={<CreateProfile />} />
       <Route path="/editProfile" element={<EditProfile />} />
-      <Route path="/profileDashboard" element={<ProfileDashboard />} />
+      <Route path="/dashboard" element={<ProfileDashboard />} />
       <Route path="/matchesDashboard" element={<MatchesDashboard />} />
-      {/* <Route path="/connections" element={<Connections />} /> */}
+      <Route path="/connections" element={<Connections />} />
       
       
       {/* <Route path="/findbuddies" element={<FindBuddies />} /> */}

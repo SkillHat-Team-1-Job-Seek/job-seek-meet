@@ -3,6 +3,8 @@ import DashboardHeader from './DashboardHeader';
 import StatsCards from './StatsCards';
 import Matches from './Matches';
 import PeerConnections from './PeerConnections';
+import Sidebar from './SideBar';
+import ProfileCard from './BuddyProfileCard';
 
 const MatchesDashboard = () => {
   const navigate = useNavigate();
@@ -12,12 +14,27 @@ const MatchesDashboard = () => {
     navigate('/login');
   };
 
+
+  const profiles = [
+    { name: 'James King', role: 'Product Designer', experience: 'Has had 4 years experience' },
+    { name: 'Femi Zacc', role: 'Frontend Dev', experience: 'Has had 3 years experience' },
+    { name: 'Mary John', role: 'Business Analyst', experience: 'Has had 5+ years experience' },
+    { name: 'Sarah Lee', role: 'Software Engineer', experience: 'Has had 6 years experience' },
+    { name: 'Peter Smith', role: 'Data Scientist', experience: 'Has had 2 years experience' },
+    { name: 'Anna Brown', role: 'UX Designer', experience: 'Has had 4 years experience' },
+    { name: 'Mike Davis', role: 'Backend Dev', experience: 'Has had 5 years experience' },
+    { name: 'Emily White', role: 'Marketing Specialist', experience: 'Has had 3 years experience' },
+    { name: 'Tom Clark', role: 'Project Manager', experience: 'Has had 7 years experience' },
+  ];
+
   return (
     <div>
     <DashboardHeader />
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-light-teal text-white p-6">
+           {/* Sidebar */}
+           <Sidebar onLogout={handleLogout} />
+
+      {/* <div className="w-64 bg-light-teal text-white p-6">
         <nav className="space-y-4">
           <Link to="/dashboard" className="block text-lg hover:bg-teal-700 p-2 rounded">Dashboard</Link>
           <Link to="/matches" className="block text-lg hover:bg-teal-700 p-2 rounded">Matches</Link>
@@ -27,7 +44,7 @@ const MatchesDashboard = () => {
           <Link to="/settings" className="block text-lg hover:bg-teal-700 p-2 rounded">Settings</Link>
           <button onClick={handleLogout} className="block text-lg hover:bg-teal-700 p-2 rounded w-full text-left">Log out</button>
         </nav>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       {/* Main Content */}
@@ -35,10 +52,10 @@ const MatchesDashboard = () => {
   {/* Header */}
   <div className="bg-white p-6 rounded-lg shadow mb-6 flex flex-col items-center">
     <h1 className="text-5xl font-bold text-black">
-      Welcome back Malik!
+      My Matches
     </h1>
     <p className="text-2xl font-semibold text-black mb-8">
-      Here’s what’s new for you today
+    Curated Matches to Elevate Your Job Search Journey
     </p>
     {/* Slider */}
     <div className="mb-10"></div>
@@ -78,14 +95,36 @@ const MatchesDashboard = () => {
         </div>
       </div>
     </div>
+    <p className="text-sm text-gray-600 mb-24"></p>
+
+    {/* Profile Matches Section */}
+    <div className="flex justify-between items-center mb-24 space-x-96">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-800">Profile Matches</h2>
+          <p className="text-sm text-gray-600">You’ve been matched with {profiles.length} new professionals</p>
+        </div>
+        <button className="bg-yellow-400 text-black px-4 py-2 rounded-lg text-sm mr-8">
+          Meet Your Buddy
+        </button>
+      </div>
+
+      {/* 3x3 Grid of Profile Cards */}
+      <div className="grid grid-cols-3 gap-32">
+        {profiles.map((profile, index) => (
+          <ProfileCard
+            key={index}
+            name={profile.name}
+            role={profile.role}
+            experience={profile.experience}
+          />
+        ))}
+      </div>
+    {/* <Matches />
+
+    <Matches />
+
+    <Matches /> */}
     </div>
-
-    {/* Stats Section */}
-    <Matches />
-
-    <Matches />
-
-    <Matches />
     </div>
     </div>
     </div>
