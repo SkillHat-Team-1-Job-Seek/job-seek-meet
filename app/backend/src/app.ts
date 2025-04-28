@@ -17,12 +17,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
-/**
- * Handles the incoming request and sends a "Hello World!" response.
- *
- * @param {Request} req - The request object representing the HTTP request.
- * @param {Response} res - The response object used to send a response to the client.
- */
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });

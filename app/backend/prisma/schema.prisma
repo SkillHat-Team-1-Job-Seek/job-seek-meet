@@ -25,6 +25,8 @@ model User {
   profileImageUrl            String?
   tags                       Tag[]
   isVerified                 String       @default("false")
+  showAge                  Boolean @default(true)
+  showProfile              Boolean @default(true)
   verificationToken          String?
   verificationTokenExpiresAt DateTime?
   registrationDate           DateTime     @default(now())

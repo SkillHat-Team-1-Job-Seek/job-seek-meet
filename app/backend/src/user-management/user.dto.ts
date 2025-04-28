@@ -1,5 +1,27 @@
 import Joi from "joi";
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  profession?: string;
+  location?: string;
+  age?: number;
+  bio?: string;
+  profileImageUrl?: string;
+  tags?: Tag[];
+  isVerified: string;
+  verificationToken?: string;
+  verificationTokenExpiresAt?: Date;
+  registrationDate: Date;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+}
+
 // User creation validation schema
 export const createUserDTO = Joi.object({
   name: Joi.string().required().min(2).max(50),
