@@ -167,12 +167,16 @@ export const getUserById = async (
 /**
  * Get current user's profile
  */
-export const getCurrentUserProfile = async (req: Request, res: Response) => {
+export const getCurrentUserProfile = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.user?.userID;
 
     if (!userId) {
-      return fail(res, 401, "Authentication required");
+      fail(res, 401, "Authentication required");
+      return;
     }
 
     const user = await prisma.user.findUnique({
@@ -181,7 +185,8 @@ export const getCurrentUserProfile = async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return fail(res, 404, "User not found");
+      fail(res, 404, "User not found");
+      return;
     }
 
     // Remove sensitive data
@@ -192,10 +197,12 @@ export const getCurrentUserProfile = async (req: Request, res: Response) => {
       ...safeUser
     } = user;
 
-    return success(res, 200, safeUser, "Profile retrieved successfully");
+    success(res, 200, safeUser, "Profile retrieved successfully");
+    return; 
   } catch (error) {
     console.error("Get current user profile error:", error);
-    return fail(res, 500, "Failed to retrieve profile");
+    fail(res, 500, "Failed to retrieve profile");
+    return; 
   }
 };
 
