@@ -58,11 +58,12 @@ export const createGroup = async (
   }
 
   try {
+    const imageURL = (req.file as any).path;
     const newGroup = await prisma.group.create({
       data: {
         name,
         description,
-        groupImageUrl,
+        groupImageUrl: imageURL,
         members: {
           create: {
             userId,

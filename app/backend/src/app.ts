@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import { PORT } from "./util/secrets";
 import authRoutes from "./user-management/auth.routes";
 import userRoutes from "./user-management/user.routes";
+import groupRoutes from "./group-management/gruop.routes";
 import connectionRoutes from "./connection-management/connection.routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./util/error.handler";
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/connections", connectionRoutes);
+app.use("/api/v1/groups", groupRoutes);
 
 app.use(errorHandler);
 app.get("/", (req: Request, res: Response) => {
