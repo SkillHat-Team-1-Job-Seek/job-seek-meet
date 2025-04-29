@@ -2,6 +2,68 @@ import { NextFunction, Request, Response } from "express";
 import prisma from "../util/db";
 import { success, fail } from "../util/response";
 
+// GET /api/groups
+export const getAllGroups = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const groups = await prisma.group.findMany({
+      include: {
+        _count: {
+          select: { members: true },
+        },
+      },
+    });
+    success(res, 200, groups, "Groups Retrieved sucessfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getGroupsForUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = req.user?.userId;
+
+  if (!userId) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+
+  try {
+    const groups = await prisma.group.findMany({
+      where: {
+        members: {
+          some: { userId }, // userId from req.user?.userID
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        groupImageUrl: true,
+        createdAt: true,
+        members: {
+          select: {
+            userId: true,
+          },
+        },
+        _count: {
+          select: {
+            members: true,
+          },
+        },
+      },
+    });
+    success(res, 200, groups, "Group retrived Sucessfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
 // POST /api/groups/:groupId/join
 export const joinGroup = async (
   req: Request,
