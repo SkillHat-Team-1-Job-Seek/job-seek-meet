@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 
-const Sidebar = ({ onLogout }) => {
+const SideBar = ({ onLogout }) => {
   const location = useLocation();
 
   // Define the navigation links with their corresponding routes
@@ -60,4 +60,4 @@ const Sidebar = ({ onLogout }) => {
   );
 };
 
-export default Sidebar;
+export default SideBar;
