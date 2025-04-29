@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import { errorHandler } from "./util/error.handler";
 import morgan from "morgan";
 import cors from "cors";
-// import { errorHandler } from "./util/";
 const app: Express = express();
 
 const apiVersion = "/api/v1";

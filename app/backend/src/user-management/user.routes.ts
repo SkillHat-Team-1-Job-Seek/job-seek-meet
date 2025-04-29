@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { verifyUserToken } from "../util/authenticateUser";
 import {
   getAllUsers,
   updateUser,
@@ -12,9 +13,9 @@ const router = Router();
 
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
-router.get("/me", getCurrentUserProfile)
+router.get("/me", getCurrentUserProfile);
 
-router.patch("/", upload.single("profileImage"), updateUser);
-router.delete("/:id", deleteAccount);
+router.patch("/", upload.single("profileImage"), verifyUserToken, updateUser);
+router.delete("/", verifyUserToken, deleteAccount);
 
 export default router;
