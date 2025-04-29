@@ -38,6 +38,7 @@ export const createUserDTO = Joi.object({
 // User profile update validation schema
 export const updateUserProfileDTO = Joi.object({
   profession: Joi.string().trim().max(100).allow(null, ""),
+  industry: Joi.string().trim().max(100).allow(null, ""),
   location: Joi.string().trim().max(100).allow(null, ""),
   age: Joi.number().integer().min(18).max(120).allow(null),
   bio: Joi.string().trim().max(500).allow(null, ""),

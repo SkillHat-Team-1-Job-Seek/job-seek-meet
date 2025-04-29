@@ -124,7 +124,7 @@ export const getUserById = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    // const currentUserId = req.user?.userID;
+    const currentUserId = req.user?.userID;
 
     const user = await prisma.user.findUnique({
       where: { id },
@@ -198,11 +198,11 @@ export const getCurrentUserProfile = async (
     } = user;
 
     success(res, 200, safeUser, "Profile retrieved successfully");
-    return; 
+    return;
   } catch (error) {
     console.error("Get current user profile error:", error);
     fail(res, 500, "Failed to retrieve profile");
-    return; 
+    return;
   }
 };
 
@@ -261,10 +261,8 @@ export const updateUser = async (
       updateData.profileImageUrl = req.file.path;
     }
 
-    // Handle tags using a simplified approach
     if (tags && Array.isArray(tags) && tags.length > 0) {
       updateData.tags = {
-        // First disconnect all existing tags
         set: [],
         // Then connect or create the new tags
         connectOrCreate: tags.map((tagName) => ({

@@ -8,7 +8,8 @@
     "build": "npm run clean && tsc -p . && tsc-alias && npm run copyfiles",
     "start": "cross-env NODE_ENV=production ts-node --transpile-only --files ./src/app.ts",
     "copyfiles": "copyfiles -u 1 src/email/**/* dist",
-    "clean": "rimraf --glob dist/*"
+    "clean": "rimraf --glob dist/*",
+    "seed": "ts-node src/seed/index.ts"
   },
   "repository": {
     "type": "git",

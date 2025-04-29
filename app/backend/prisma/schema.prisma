@@ -14,37 +14,38 @@ datasource db {
 }
 
 model User {
-  id                         String       @id @default(uuid())
+  id                         String            @id @default(uuid())
   name                       String
-  email                      String       @unique
+  email                      String            @unique
   password                   String
   profession                 String?
   location                   String?
   age                        Int?
   bio                        String?
   profileImageUrl            String?
+  industry                   String?
   tags                       Tag[]
-  isVerified                 String       @default("false")
-  showAge                  Boolean @default(true)
-  showProfile              Boolean @default(true)
+  isVerified                 String            @default("false")
+  showAge                    Boolean           @default(true)
+  showProfile                Boolean           @default(true)
   verificationToken          String?
   verificationTokenExpiresAt DateTime?
-  registrationDate           DateTime     @default(now())
-  sentConnections            Connection[] @relation("User1Connections")
-
-  // Received connection requests
-  receivedConnections Connection[]      @relation("User2Connections")
-  GroupMembership     GroupMembership[]
+  registrationDate           DateTime          @default(now())
+  sentConnections            Connection[]      @relation("SentConnections")
+  receivedConnections        Connection[]      @relation("ReceivedConnections")
+  GroupMembership            GroupMembership[]
+  Notification               Notification[]
 }
 
 model Connection {
   userId1     String
   userId2     String
   status      ConnectionStatus @default(PENDING)
-  connectedAt DateTime?
+  connectedAt DateTime?        @default(now())
+  updatedAt   DateTime         @updatedAt
 
-  user1 User @relation("User1Connections", fields: [userId1], references: [id])
-  user2 User @relation("User2Connections", fields: [userId2], references: [id])
+  user1 User @relation("SentConnections", fields: [userId1], references: [id])
+  user2 User @relation("ReceivedConnections", fields: [userId2], references: [id])
 
   @@id([userId1, userId2])
 }
@@ -71,6 +72,25 @@ model GroupMembership {
   @@unique([userId, groupId])
 }
 
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  type      NotificationType
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum NotificationType {
+  CONNECTION_REQUEST
+  CONNECTION_ACCEPTED
+  MESSAGE
+  OTHER
+}
+
 model Tag {
   id        String   @id @default(uuid())
   name      String   @unique
@@ -81,5 +101,4 @@ model Tag {
 enum ConnectionStatus {
   PENDING
   ACCEPTED
-  REJECTED
 }

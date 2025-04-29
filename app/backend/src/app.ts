@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import { PORT } from "./util/secrets";
 import authRoutes from "./user-management/auth.routes";
 import userRoutes from "./user-management/user.routes";
+import connectionRoutes from "./connection-management/connection.routes";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import cors from "cors";
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/connections", connectionRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
