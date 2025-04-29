@@ -1,12 +1,12 @@
 import { Router } from "express";
+import { verifyUserToken } from "../util/authenticateUser";
 import {
-  getUserConnections,
   sendConnectionRequest,
-  acceptConnectionRequest,
+  getUserConnections,
   getNearbyUsers,
+  acceptConnectionRequest,
   getRecommendedUsers,
 } from "./connection.controller";
-import { verifyUserToken } from "../util/authenticateUser";
 const router = Router();
 
 router.get("/", verifyUserToken, getUserConnections);
