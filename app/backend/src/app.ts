@@ -12,6 +12,7 @@ import { ACCESS_ORIGIN } from "./util/secrets";
 const app: Express = express();
 
 const apiVersion = "/api/v1";
+console.log(ACCESS_ORIGIN);
 
 app.use(express.json());
 app.use(cors());
