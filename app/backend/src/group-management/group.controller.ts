@@ -113,7 +113,7 @@ export const createGroup = async (
   res: Response
 ): Promise<void> => {
   const userId = req.user?.userID;
-  const { name, description, groupImageUrl } = req.body;
+  const { name, description } = req.body;
 
   if (!name || !userId) {
     fail(res, 400, "Name and userId are required");

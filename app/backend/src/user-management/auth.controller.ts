@@ -216,8 +216,10 @@ export const verifyEmail = async (req: Request, res: Response) => {
     let tokenExpiryDate = new Date(
       verifyUser?.verificationTokenExpiresAt + " UTC"
     );
+    console.log(tokenExpiryDate > date);
     if (tokenExpiryDate > date) {
       if (verifyToken == verifyUser?.verificationToken) {
+        console.log(verifyToken == verifyUser?.verificationToken);
         // update verify User(isVerified to "true")
         console.log(verifyToken, verifyUser?.verificationToken);
         await prisma.user.update({
