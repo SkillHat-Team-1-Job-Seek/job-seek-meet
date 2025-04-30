@@ -16,7 +16,8 @@ const SideBar = ({ onLogout }) => {
   ];
 
   return (
-    <div className="w-64 bg-light-teal text-white p-4 flex flex-col h-screen">
+    // <div className="w-64 bg-light-teal text-white p-4 flex flex-col h-screen">
+    <div className="w-64 bg-light-teal text-white p-4 flex flex-col rounded-lg">
       {/* Navigation Links */}
       <nav className="space-y-4 flex-1">
         {navLinks.map((link) => (

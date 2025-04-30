@@ -28,7 +28,7 @@ const MatchesDashboard = () => {
   ];
 
   return (
-    <div>
+    <div className="flex-1 p-8 overflow-y-auto">
     <DashboardHeader />
     <div className="flex h-screen bg-gray-100">
            {/* Sidebar */}

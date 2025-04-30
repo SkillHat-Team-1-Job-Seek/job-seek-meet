@@ -138,13 +138,13 @@ const CreateProfile = () => {
             {/* Buttons */}
             <div className="flex justify-between mt-8">
               <button
-                onClick={() => navigate("/profileDashboard")}
+                onClick={() => navigate("/dashboard")}
                 className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-xl hover:bg-teal-100 transition-colors"
               >
                 Preview
               </button>
               <button
-                onClick={() => navigate("/profileDashboard")}
+                onClick={() => navigate("/dashboard")}
                 type="submit"
                 className="px-14 py-3 bg-yellow-300 text-teal-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
               >

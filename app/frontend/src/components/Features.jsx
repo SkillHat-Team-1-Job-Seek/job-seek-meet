@@ -2,7 +2,8 @@ import React from 'react';
 
 const FeatureSection = () => {
   return (
-    <div className="Features w-full h-[1026px] px-32 py-20 bg-gray-200 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
+    // <div className="Features w-full h-[1026px] px-32 py-20 bg-gray-200 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
+    <section className="relative  w-full px-96 py-20 bg-gray-200 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
       <div className="TextWrapper w-[649px] max-w-[816px] flex flex-col justify-center items-center gap-3">
         <div className="Heading w-[606px] text-center justify-start text-cyan-950 text-6xl font-bold  leading-[88px] tracking-wide">
           Our Features
@@ -12,7 +13,7 @@ const FeatureSection = () => {
           in one job-seekers’ Community.
         </div>
       </div>
-      <div className="self-stretch inline-flex justify-start items-center gap-9">
+      <div className="self-stretch inline-flex justify-start items-center gap-32">
         <div className=" w-[574.91px]  h-[414px] rounded-tr-[34.66px] rounded-bl-[34.66px] outline outline-4 outline-offset-[-4.33px] outline-teal-600 flex flex-col justify-start items-start gap-9">
           <figure className="Feature2 w-[574.91px] h-96 flex-col justify-center gap-y-5  flex flex-1 py-8 items-center min-h-fit min-w-fit">
             <div className=" contents text-center max-w-[297px] max-h-[299px]">
@@ -53,7 +54,8 @@ const FeatureSection = () => {
           Get Matched Now
         </div>
       </div>
-    </div>
+    {/* </div> */}
+    </section>
   );
 };
 
