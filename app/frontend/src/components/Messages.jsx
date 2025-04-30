@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './SideBar';
+import Sidebar from './Sidebar';
 import Header from './Header';
 import StatsCards from './StatsCards';
 import Matches from './Matches';

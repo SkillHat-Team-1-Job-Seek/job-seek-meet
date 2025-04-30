@@ -3,7 +3,7 @@ import DashboardHeader from './DashboardHeader';
 import StatsCards from './StatsCards';
 import Matches from './Matches';
 import PeerConnections from './PeerConnections';
-import Sidebar from './SideBar';
+import Sidebar from './Sidebar';
 import ProfileCard from './BuddyProfileCard';
 
 const MatchesDashboard = () => {
