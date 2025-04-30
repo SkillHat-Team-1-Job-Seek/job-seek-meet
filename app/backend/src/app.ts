@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { errorHandler } from "./util/error.handler";
 import morgan from "morgan";
 import cors from "cors";
+import { ACCESS_ORIGIN } from "./util/secrets";
 const app: Express = express();
 
 const apiVersion = "/api/v1";
@@ -16,6 +17,17 @@ app.use(express.json());
 app.use(cors());
 
 app.use(morgan("dev"));
+app.use(function (_, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
+
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  next();
+});
 
 app.use(cookieParser());
 
