@@ -1,55 +1,58 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import Context from "../context";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const Login = ({ toggleForm, goHome }) => {
-
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    email: " ",
     password: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  const navigate = useNavigate();
+  // const { fetchUserDetails } = useContext(Context);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/login/access-token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded", // Change to x-www-form-urlencoded
-          },
-          body: new URLSearchParams({
-            username: formData.email, // Use 'username' to follow the backend
-            password: formData.password,
-          }),
-        }
-      );
+    const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
+      method: "post",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Login failed");
-      }
+    const dataApi = await dataResponse.json();
+    console.log(dataApi);
 
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("access_token", data.access_token); // Store the token
-      alert("Login Successful");
-      navigate("/"); // Redirect to home page
-    } catch (error) {
-      alert("Login failed: " + error.message);
+    if (dataApi.success) {
+      toast.success(dataApi.message);
+      navigate("/");
+      fetchUserDetails();
+    }
+    if (dataApi.error) {
+      toast.error(dataApi.message);
     }
   };
+  console.log("data login", data);
 
   return (
     <div className="SignIn w-full min-h-screen bg-slate-800 py-20">
@@ -70,24 +73,30 @@ const Login = ({ toggleForm, goHome }) => {
               type="email"
               name="email"
               placeholder="Enter your Email"
-              value={formData.email}
-              onChange={handleChange}
+              value={data.email}
+              onChange={handleOnChange}
               required
               className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
             />
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col relative">
             <label className="text-white text-base mb-1">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your Password"
-              value={formData.password}
-              onChange={handleChange}
+              value={data.value}
+              onChange={handleOnChange}
               required
-              className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
+              className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black w-full pr-12"
             />
+            <div
+              className="absolute right-4 top-1/2 transform translate-y-1/3 cursor-pointer text-xl text-gray-600"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <span>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+            </div>
           </div>
 
           <button
