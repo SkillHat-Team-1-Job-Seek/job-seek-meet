@@ -37,12 +37,14 @@ export const createUserDTO = Joi.object({
 
 // User profile update validation schema
 export const updateUserProfileDTO = Joi.object({
-  profession: Joi.string().trim().max(100).allow(null, ""),
-  industry: Joi.string().trim().max(100).allow(null, ""),
-  location: Joi.string().trim().max(100).allow(null, ""),
-  age: Joi.number().integer().min(18).max(120).allow(null),
-  bio: Joi.string().trim().max(500).allow(null, ""),
-  tags: Joi.array().items(Joi.string()).max(10),
+  profession: Joi.string().trim().max(100).optional(),
+  industry: Joi.string().trim().max(100).optional(),
+  location: Joi.string().trim().max(100).optional(),
+  age: Joi.number().integer().min(18).max(120).optional(),
+  bio: Joi.string().trim().max(500).optional(),
+  tags: Joi.array().items(Joi.string()).max(10).optional(),
+  showAge: Joi.boolean().optional(), // Allow showAge as a boolean
+  showProfile: Joi.boolean().optional(), // Allow showProfile as a boolean
 });
 
 // Usage in controller or service
@@ -50,6 +52,7 @@ export const updateUserProfileDTO = Joi.object({
 export const validateUserInput = (data: any, schema: Joi.ObjectSchema) => {
   const { error, value } = schema.validate(data, { abortEarly: false });
   if (error) {
+    console.error("Validation Errors:", error.details); // Log validation errors
     const errors = error.details.map((detail) => ({
       field: detail.path[0],
       message: detail.message,

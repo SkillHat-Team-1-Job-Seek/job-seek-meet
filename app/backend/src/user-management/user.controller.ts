@@ -223,6 +223,8 @@ export const updateUser = async (
 
     // Validate input data using the DTO
     const validation = validateUserInput(req.body, updateUserProfileDTO);
+    console.error("Validation Errors:", validation.errors); // Log validation errors
+    console.log("Request Body:", req.body);
 
     if (!validation.isValid) {
       fail(res, 400, "Validation failed");
@@ -230,7 +232,6 @@ export const updateUser = async (
 
     // Get validated data
     const {
-      name,
       profession,
       location,
       age,
@@ -245,7 +246,7 @@ export const updateUser = async (
     const updateData: any = {};
 
     // Only add fields that were actually provided
-    if (name !== undefined) updateData.name = name;
+
     if (profession !== undefined) updateData.profession = profession;
     if (location !== undefined) updateData.location = location;
     if (age !== undefined) updateData.age = Number(age);
