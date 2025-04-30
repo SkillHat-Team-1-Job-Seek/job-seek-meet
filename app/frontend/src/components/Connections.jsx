@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import DashboardHeader from "./DashboardHeader";
-import Sidebar from "./SideBar";
+import Sidebar from "./Sidebar";
 
 const Connections = () => {
   const navigate = useNavigate();
