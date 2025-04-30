@@ -9,6 +9,7 @@ export const verifyUserToken = async (
   next: NextFunction
 ): Promise<void> => {
   const token = req.cookies.accessToken;
+  console.log(token);
   if (!token) {
     res.status(401).json({
       sucess: false,
@@ -22,7 +23,11 @@ export const verifyUserToken = async (
   try {
     const verifiedToken = jwt.verify(token, JWT_SECRET);
 
-    req.user = verifiedToken;
+    if (typeof verifiedToken === "object" && "userID" in verifiedToken) {
+      req.user = verifiedToken as { userID: string };
+    } else {
+      throw new CustomHttpError(401, "Invalid token structure");
+    }
 
     next();
   } catch (err) {

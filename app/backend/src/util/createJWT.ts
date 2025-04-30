@@ -7,3 +7,5 @@ export const createJWT = (payload: { userID: string }) => {
   });
   return accessToken;
 };
+
+console.log(createJWT({ userID: "ba1677a4-1d9f-45c6-80b4-c3effa0ee233" }));

@@ -26,11 +26,12 @@ export const getGroupsForUser = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const userId = req.user?.userId;
+): Promise<void> => {
+  const userId = req.user?.userID;
 
   if (!userId) {
-    return res.status(401).json({ error: "Authentication required" });
+    res.status(401).json({ error: "Authentication required" });
+    return;
   }
 
   try {
@@ -70,7 +71,7 @@ export const joinGroup = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const userId = req.user?.userId; // from middleware
+  const userId = req.user?.userID; // from middleware
   const groupId = req.params.groupId;
 
   if (!userId || !groupId) {
