@@ -71,7 +71,7 @@ export const joinGroup = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const userId = req.user?.userID; // from middleware
+  const userId = req.user?.userID; // authentication
   const groupId = req.params.groupId;
 
   if (!userId || !groupId) {
