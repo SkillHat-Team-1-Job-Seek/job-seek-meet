@@ -35,6 +35,8 @@ model User {
   receivedConnections        Connection[]      @relation("ReceivedConnections")
   GroupMembership            GroupMembership[]
   Notification               Notification[]
+  Message                    Message[]
+  UserChat                   UserChat[]
 }
 
 model Connection {
@@ -84,11 +86,42 @@ model Notification {
   user User @relation(fields: [userId], references: [id])
 }
 
-enum NotificationType {
-  CONNECTION_REQUEST
-  CONNECTION_ACCEPTED
-  MESSAGE
-  OTHER
+model Chat {
+  id        String     @id @default(uuid())
+  messages  Message[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  users     UserChat[]
+  isGroup   Boolean    @default(false)
+}
+
+model Message {
+  id              String    @id @default(uuid())
+  message         String
+  isEdited        Boolean   @default(false)
+  containsBadword Boolean   @default(false)
+  oldMessages     Json?
+  senderId        String
+  sender          User      @relation(fields: [senderId], references: [id])
+  type            String    @default("message")
+  isRead          Boolean   @default(false)
+  replyToId       String?
+  replyTo         Message?  @relation("ReplyRelation", fields: [replyToId], references: [id])
+  replies         Message[] @relation("ReplyRelation")
+  chat            Chat      @relation(fields: [chatId], references: [id])
+  chatId          String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model UserChat {
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  chat     Chat     @relation(fields: [chatId], references: [id])
+  chatId   String
+  joinedAt DateTime @default(now())
+
+  @@id([userId, chatId])
 }
 
 model Tag {
@@ -101,4 +134,11 @@ model Tag {
 enum ConnectionStatus {
   PENDING
   ACCEPTED
+}
+
+enum NotificationType {
+  CONNECTION_REQUEST
+  CONNECTION_ACCEPTED
+  MESSAGE
+  OTHER
 }
