@@ -3,7 +3,7 @@ import React from 'react';
 const FAQSection = () => {
   return (
 
-<div data-layer="[screen] Faq" className="w-[1440px] p-28 bg-gray-200 inline-flex flex-col justify-start items-start gap-12 overflow-hidden">
+<div data-layer="[screen] Faq" className="w-full p-28 bg-gray-200 inline-flex flex-col justify-start items-start gap-12 overflow-hidden">
   <div data-layer="text_wrapper" className="self-stretch min-w-[762px] flex flex-col justify-start items-start gap-3 overflow-hidden">
     <div data-layer="heading" className="self-stretch justify-start text-cyan-950 text-7xl font-black font-['Poppins']">FAQ</div>
   </div>

@@ -1,9 +1,4 @@
 {
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
@@ -15,7 +10,8 @@
     "@types/express": "^5.0.1",
     "framer-motion": "^12.6.3",
     "lucide-react": "^0.487.0",
-    "react-router-dom": "^7.5.0"
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.5.0",
+    "react-toastify": "^11.0.5"
   }
 }
-

@@ -2,7 +2,7 @@ import React from 'react';
 
 const HowItWorkSection = () => {
   return (
-<div data-layer="[screen] Step By Step Guideline" className="ScreenStepByStepGuideline w-[1440px] px-28 py-20 bg-yellow-400/30 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
+<div data-layer="[screen] Step By Step Guideline" className="ScreenStepByStepGuideline w-full px-28 py-20 bg-yellow-400/30 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
   <div data-layer="text_wrapper" className="TextWrapper w-[816px] max-w-[816px] flex flex-col justify-start items-start gap-3 overflow-hidden">
     <div data-layer="heading" className="Heading self-stretch text-center justify-start text-cyan-950 text-6xl font-bold font-['Poppins'] leading-[88px] tracking-wide">How It Works</div>
     <div data-layer="paragraph" className="Paragraph self-stretch opacity-50 text-center justify-start text-cyan-950 text-2xl font-normal font-['Poppins']">Discover how JobBuddies works to help job seekers connect and support each other.</div>
