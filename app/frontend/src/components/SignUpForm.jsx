@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const SignUpForm = ({ toggleForm }) => {
+const SignUpForm = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassowrd, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "", // Changed from firstName to fullName
@@ -18,50 +23,78 @@ const SignUpForm = ({ toggleForm }) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
+      [name]: value,
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation for password match
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    if (!formData.agreeToTerms) {
-      alert("You must agree to the Terms and Conditions!");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          email: formData.email,
-          password: formData.password,
-        }),
+    if (formData.password === formData.confirmPassword) {
+      console.log("apiSummary.signUp.url", apiSummary.signUp.url);
+      const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-      console.log("Response data:", data);
+      const dataApi = await dataResponse.json();
 
-      if (!response.ok) {
-        throw new Error(data.detail || "Sign-up failed");
+      if (dataApi.success) {
+        toast.success(dataApi.message);
+        navigate("/verify");
       }
 
-      console.log("User registered successfully:", data);
-      alert(`Sign Up Successful! ${data.message}`);
-      navigate("/"); // Redirect to homepage
-    } catch (error) {
-      console.error("Error:", error.message);
-      alert(`Sign-up failed: ${error.message}`);
+      if (dataApi.error) {
+        toast.error(dataApi.message);
+      }
+    } else {
+      toast.error("Please check your password ");
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Basic validation for password match
+  //   if (formData.password !== formData.confirmPassword) {
+  //     alert("Passwords do not match!");
+  //     return;
+  //   }
+
+  //   if (!formData.agreeToTerms) {
+  //     alert("You must agree to the Terms and Conditions!");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         fullName: formData.fullName,
+  //         email: formData.email,
+  //         password: formData.password,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log("Response data:", data);
+
+  //     if (!response.ok) {
+  //       throw new Error(data.detail || "Sign-up failed");
+  //     }
+
+  //     console.log("User registered successfully:", data);
+  //     alert(`Sign Up Successful! ${data.message}`);
+  //     navigate("/"); // Redirect to homepage
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //     alert(`Sign-up failed: ${error.message}`);
+  //   }
+  // };
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
@@ -69,7 +102,9 @@ const SignUpForm = ({ toggleForm }) => {
         {/* Left Section: Form */}
         <div className="w-full md:w-1/2 p-8 text-white">
           <h2 className="text-3xl font-bold mb-2">Create an Account</h2>
-          <p className="text-lg mb-6">Join the community that grows with you.</p>
+          <p className="text-lg mb-6">
+            Join the community that grows with you.
+          </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Full Name */}
@@ -99,25 +134,31 @@ const SignUpForm = ({ toggleForm }) => {
             </div>
 
             {/* Password */}
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
-                value={formData.password}
+                value={data.value}
                 onChange={handleChange}
                 placeholder="Enter your Password"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 required
               />
+              <div
+                className="absolute right-4 top-1/3 transform -translate-y-1/3 cursor-pointer text-l text-gray-400"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <span>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+              </div>
               <p className="text-sm text-gray-300 mt-1">
                 At least 8 characters (1 capital, 1 number, 1 special).
               </p>
             </div>
 
             {/* Confirm Password */}
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
               <input
-                type="password"
+                type={showConfirmPassowrd ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
@@ -125,6 +166,12 @@ const SignUpForm = ({ toggleForm }) => {
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 required
               />
+              <div
+                className="absolute right-4 top-1/4 transform translate-y-1/4 cursor-pointer text-l text-gray-400"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+              >
+                <span>{showConfirmPassowrd ? <FaEyeSlash /> : <FaEye />}</span>
+              </div>
             </div>
 
             {/* Terms Checkbox */}
@@ -144,7 +191,8 @@ const SignUpForm = ({ toggleForm }) => {
 
             {/* Sign Up Button */}
             {/* <button */}
-            <button onClick={() => navigate("/createProfile")}
+            <button
+              onClick={() => navigate("/createProfile")}
               type="submit"
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
             >
@@ -205,7 +253,6 @@ const SignUpForm = ({ toggleForm }) => {
 };
 
 export default SignUpForm;
-
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";

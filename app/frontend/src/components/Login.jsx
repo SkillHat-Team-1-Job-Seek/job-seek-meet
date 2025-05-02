@@ -1,56 +1,54 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const Login = ({ toggleForm, goHome }) => {
+const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    email: " ",
     password: "",
     keepLoggedIn: false, // Added for the "Keep me logged in" toggle
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/login/access-token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            username: formData.email,
-            password: formData.password,
-          }),
-        }
-      );
+    const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
+      method: "post",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Login failed");
-      }
+    const dataApi = await dataResponse.json();
+    console.log(dataApi);
 
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("access_token", data.access_token);
-      alert("Login Successful");
+    if (dataApi.success) {
+      toast.success(dataApi.message);
       navigate("/");
-    } catch (error) {
-      alert("Login failed: " + error.message);
+    }
+    if (dataApi.error) {
+      toast.error(dataApi.message);
     }
   };
+  console.log("data login", data);
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
@@ -66,24 +64,30 @@ const Login = ({ toggleForm, goHome }) => {
                 type="email"
                 name="email"
                 placeholder="Enter your Email"
-                value={formData.email}
-                onChange={handleChange}
+                value={data.email}
+                onChange={handleOnChange}
                 required
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
             </div>
 
             {/* Password */}
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
-                value={formData.password}
-                onChange={handleChange}
+                value={data.value}
+                onChange={handleOnChange}
                 required
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
+              <div
+                className="absolute right-4 top-1/4 transform translate-y-1/4 cursor-pointer text-xl text-gray-600"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <span>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+              </div>
             </div>
 
             {/* Keep me logged in Toggle */}
@@ -91,8 +95,8 @@ const Login = ({ toggleForm, goHome }) => {
               <input
                 type="checkbox"
                 name="keepLoggedIn"
-                checked={formData.keepLoggedIn}
-                onChange={handleChange}
+                checked={data.keepLoggedIn}
+                onChange={handleOnChange}
                 className="w-5 h-5 text-yellow-400 focus:ring-yellow-400"
               />
               <label className="text-sm">Keep me logged in</label>
@@ -135,7 +139,7 @@ const Login = ({ toggleForm, goHome }) => {
         <div className="w-full md:w-1/2 p-8">
           <div className="relative h-full flex items-center justify-center">
             <img
-              src="/assets/Sign Up Image.png" 
+              src="/assets/Sign Up Image.png"
               alt="Stronger Together"
               className="w-full h-full object-cover rounded-2xl"
             />
