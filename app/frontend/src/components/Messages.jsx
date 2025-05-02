@@ -2,9 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
-import StatsCards from './StatsCards';
+import StatsCards from './maindashboard/StatsCards';
 import Matches from './Matches';
 import PeerConnections from './PeerConnections';
+import DashboardHeader from './DashboardHeader';
 
 const Messages = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Messages = () => {
   return (
     <div className="flex-1 p-8 overflow-y-auto">
                   {/* Header */}
-                  <Header />
+                  <DashboardHeader />
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar onLogout={handleLogout} />

@@ -1,5 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from '../ui/PrimaryButton';
+import SecondaryButton from '../ui/SecondaryButton';
+
 
 const NavigationBar = ({ scrollTo }) => {
   const navigate = useNavigate();
@@ -44,18 +47,15 @@ const NavigationBar = ({ scrollTo }) => {
 
         {/* Buttons */}
         <div className="hidden md:flex items-center gap-x-5">
-          <button
+
+          <SecondaryButton
+            label="Log in"
             onClick={() => navigate("/login")}
-            className="w-44 px-8 py-4 text-base font-semibold text-cyan-950 font-['Poppins'] border-2 border-cyan-950 rounded-xl flex items-center justify-center hover:bg-cyan-50 transition"
-          >
-            Log in
-          </button>
-          <button
+          />
+          <PrimaryButton
+            text="Sign up"
             onClick={() => navigate("/signup")}
-            className="w-44 px-8 py-4 bg-yellow-300 text-base font-semibold text-cyan-950 font-['Poppins'] rounded-xl flex items-center justify-center hover:bg-yellow-400 transition"
-          >
-            Sign up
-          </button>
+          />
         </div>
       </div>
     </nav>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "./ui/PrimaryButton";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -54,10 +55,27 @@ const Login = ({ toggleForm, goHome }) => {
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
+      {/* <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl flex flex-col md:flex-row">
+        {/* Left Section: Form */}
+      {/*<div className="w-full md:w-1/2 p-8 text-white">
+          <h2 className="text-3xl font-bold mb-2">Welcome Back!</h2> */}
       <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl flex flex-col md:flex-row">
         {/* Left Section: Form */}
         <div className="w-full md:w-1/2 p-8 text-white">
-          <h2 className="text-3xl font-bold mb-2">Welcome Back!</h2>
+          {/* JB Logo */}
+          <div className="mb-6">
+            <img
+              src="/assets/image 104.png"
+              alt="JB Logo"
+              className="w-16 h-16"
+            />
+          </div>
+
+          {/* Centered Text */}
+          <h2 className="text-3xl font-bold mb-2 text-center">Welcome back</h2>
+          <p className="text-lg mb-6 text-center">
+            Enter your email to receive a one-time passcode
+          </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Email */}
@@ -73,19 +91,6 @@ const Login = ({ toggleForm, goHome }) => {
               />
             </div>
 
-            {/* Password */}
-            <div className="flex flex-col">
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter your Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              />
-            </div>
-
             {/* Keep me logged in Toggle */}
             <div className="flex items-center gap-2">
               <input
@@ -93,30 +98,54 @@ const Login = ({ toggleForm, goHome }) => {
                 name="keepLoggedIn"
                 checked={formData.keepLoggedIn}
                 onChange={handleChange}
-                className="w-5 h-5 text-yellow-400 focus:ring-yellow-400"
+                className="w-5 h-5 text-yellow-400 focus:ring-yellow-400 rounded"
               />
-              <label className="text-sm">Keep me logged in</label>
+              <label className="text-sm">Remember me for 30 days</label>
             </div>
 
-            {/* Log In Button */}
-            <button
-              type="submit"
+            {/* Send 4-digit code Button */}
+            <PrimaryButton
+              text="Send 4-digit code"
+              onClick={handleSubmit}
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
+            />
+
+            {/* Or Separator */}
+            <div className="text-center font-extrabold text-white my-4">Or</div>
+
+            {/* Apple and Google Buttons */}
+
+            <button
+              className="
+    w-full py-3 rounded-lg border-2 border-cyan-950 
+    bg-white text-cyan-950 text-base font-semibold font-['Poppins'] leading-7 tracking-wide 
+    flex items-center justify-center gap-2 
+    hover:bg-gray-100 transition-colors
+  "
             >
-              Log In
+              <img
+                src="/assets/Vector2.png"
+                alt="Apple Logo"
+                className="w-5 h-5"
+              />
+              Sign in with Apple ID
+            </button>
+            <button
+              className="
+    w-full py-3 rounded-lg border-2 border-cyan-950 
+    bg-white text-cyan-950 text-base font-semibold font-['Poppins'] leading-7 tracking-wide 
+    flex items-center justify-center gap-2 
+    hover:bg-gray-100 transition-colors
+  "
+            >
+              <img
+                src="/assets/Group 1000003419.png"
+                alt="Google Logo"
+                className="w-5 h-5"
+              />
+              Sign in with Google
             </button>
           </form>
-
-          {/* Apple and Google Buttons */}
-          <div className="flex justify-between gap-4 mt-6">
-            <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🍎</span> Apple
-            </button>
-            <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🌐</span> Google
-            </button>
-          </div>
-
           {/* Sign Up Link */}
           <div className="text-center mt-6">
             <p className="text-sm">
@@ -132,10 +161,11 @@ const Login = ({ toggleForm, goHome }) => {
         </div>
 
         {/* Right Section: Image */}
+        {/* Right Section: Image */}
         <div className="w-full md:w-1/2 p-8">
           <div className="relative h-full flex items-center justify-center">
             <img
-              src="/assets/Sign Up Image.png" 
+              src="/assets/Sign Up Image.png"
               alt="Stronger Together"
               className="w-full h-full object-cover rounded-2xl"
             />

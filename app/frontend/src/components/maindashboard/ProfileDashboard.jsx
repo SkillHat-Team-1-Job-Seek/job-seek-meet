@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from "./Sidebar";
-import Header from './Header';
+import Sidebar from "../Sidebar";
+import DashboardHeader from '../DashboardHeader';
 import StatsCards from './StatsCards';
-import Matches from './Matches';
-import PeerConnections from './PeerConnections';
+import Matches from '../Matches';
+import PeerConnections from '../PeerConnections';
 
 const ProfileDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const ProfileDashboard = () => {
   return (
     <div className="flex-1 p-8 overflow-y-auto">
                   {/* Header */}
-                  <Header />
+                  <DashboardHeader />
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar onLogout={handleLogout} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import CtaButton from '../ui/CtaButton.jsx';
 
 const HowItWorkSection = () => {
   return (
@@ -51,9 +52,9 @@ const HowItWorkSection = () => {
       </div>
     </div>
   </div>
-  <div data-layer="cta_button" className="CtaButton w-96 max-w-96 p-6 bg-gradient-to-br from-teal-600 to-yellow-300 rounded-[10px] outline outline-2 outline-offset-[-2px] outline-teal-600 inline-flex justify-center items-center gap-2.5 overflow-hidden">
-    <div data-layer="cta_text" className="CtaText text-center justify-start text-cyan-950 text-xl font-semibold font-['Poppins']">Find Your Buddy</div>
-  </div>
+  <CtaButton label="Find Your Buddy" onClick={() => {
+            window.location.href = '/createProfile';
+          }} />
 </div>
 );
 };

@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import DashboardHeader from './DashboardHeader';
-import StatsCards from './StatsCards';
-import Matches from './Matches';
-import PeerConnections from './PeerConnections';
-import Sidebar from './Sidebar';
+import DashboardHeader from '../DashboardHeader';
+import StatsCards from '../maindashboard/StatsCards';
+import Matches from '../Matches';
+import PeerConnections from '../PeerConnections';
+import Sidebar from '../Sidebar';
 import ProfileCard from './BuddyProfileCard';
 
 const MatchesDashboard = () => {

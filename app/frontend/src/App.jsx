@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./components/landingpage/LandingPage";
 import SignUpForm from "./components/SignUpForm";
 import Login from "./components/Login";
 // import createProfile from "./components/CreateProfile";
@@ -8,8 +8,8 @@ import Login from "./components/Login";
 import "./index.css";
 import CreateProfile from "./components/CreateProfile";
 import EditProfile from "./components/EditProfile";
-import ProfileDashboard from "./components/ProfileDashboard";
-import MatchesDashboard from "./components/MatchesDashboard";
+import ProfileDashboard from "./components/maindashboard/ProfileDashboard";
+import MatchesDashboard from "./components/matchesdashboard/MatchesDashboard";
 import Connections from "./components/Connections";
 import Messages from "./components/Messages";
 
