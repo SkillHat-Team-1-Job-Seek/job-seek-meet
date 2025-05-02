@@ -4,8 +4,6 @@
   "NEW_EVENT_INACTIVE": "inactive",
   "NEW_EVENT_DELETE_MESSAGE": "delete_message",
   "NEW_EVENT_EDIT_MESSAGE": "edit_message",
-  // "NEW_EVENT_CHAT_RESTORE": "chat_restore",
-  // "NEW_EVENT_LOGOUT": "logout",
   "NEW_EVENT_SEND_MESSAGE": "send_message",
   "NEW_EVENT_SEND_FAILED": "send_failed",
   "NEW_EVENT_RECEIVE_MESSAGE": "receive_message",
@@ -14,7 +12,6 @@
   "NEW_EVENT_TYPING": "typing",
   "NEW_EVENT_DISPLAY": "display",
   "NEW_EVENT_ADDING": "adding",
-  "NEW_EVENT_START_CHAT" "sta",
   "NEW_EVENT_READ_MESSAGE": "read_message",
 
   "FIFTEEN_MINUTES": 900000
