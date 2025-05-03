@@ -66,10 +66,14 @@ const DashboardHeader = () => {
 
         {/* User Profile */}
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+          <img
+            src={"/assets/Malik Mustapha.png"}
+            alt="Esther Howard"
+            className={`w-16 h-16 rounded-full border-4 border-white`}
+          />
           <div>
             <p className="font-semibold text-gray-700">Malik Mustapha</p>
-            <p className="text-sm text-gray-500">Marketing</p>
+            <p className="text-sm text-gray-500">Business Analyst</p>
           </div>
         </div>
       </div>

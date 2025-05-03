@@ -16,16 +16,15 @@ const MatchesDashboard = () => {
 
 
   const profiles = [
-    { name: 'James King', role: 'Product Designer', experience: 'Has had 4 years experience' },
-    { name: 'Femi Zacc', role: 'Frontend Dev', experience: 'Has had 3 years experience' },
-    { name: 'Mary John', role: 'Business Analyst', experience: 'Has had 5+ years experience' },
-    { name: 'Sarah Lee', role: 'Software Engineer', experience: 'Has had 6 years experience' },
-    { name: 'Peter Smith', role: 'Data Scientist', experience: 'Has had 2 years experience' },
-    { name: 'Anna Brown', role: 'UX Designer', experience: 'Has had 4 years experience' },
-    { name: 'Mike Davis', role: 'Backend Dev', experience: 'Has had 5 years experience' },
-    { name: 'Emily White', role: 'Marketing Specialist', experience: 'Has had 3 years experience' },
-    { name: 'Tom Clark', role: 'Project Manager', experience: 'Has had 7 years experience' },
+    { name: 'Flora Zoe', title: ' Business Analyst', skills: 'SQL, Tableau, User Research', location:'Remote (Based in London, ON)', matchScore:'97% Match', sharedInterests:'Product Thinking, Remote Roles', image:'/assets/Flora Zoe.png' },
+    { name: 'Samir Patel', title: ' Business Analyst', skills: 'React, Tailwind, Accessibility', location:'Remote (Toronto, Canada)', matchScore:'92% Match', sharedInterests:'Remote Work, Open Source', image:'/assets/Samir Patel.png' },
+    { name: 'Linda Okafor', title: ' Product Manager in HealthTech', skills: 'Agile, Roadmapping, Jira', location:'Remote (Based in London, ON)', matchScore:'90% Match', sharedInterests:'Tech for Impact, Women in Tech', image:'/assets/Linda Okafor.png' },
+    { name: 'James King', title: ' Frontend Developer', skills: 'SQL, Tableau, User Research', location:' Toronto, Canada', matchScore:'88% Match', sharedInterests:'Remote Work, Open Source', image:'/assets/James King.png' },
+    { name: 'Rita Daniels', title: ' Product Designer', skills: 'Figma, Wireframing, User Interviews', location:'Remote (Based in London, ON)', matchScore:'86% Match', sharedInterests:'Design Mentorship, Tech for Good', image:'/assets/Rita Daniels.png' },
+    { name: 'Jayden Brooks', title: ' Analyst | Pivoting into Product', skills: 'SQL, Tableau, User Research', location:'London, UK (Remote-Preferred)', matchScore:'81% Match', sharedInterests:'Product Thinking, Remote Roles', image:'/assets/Jayden Brooks.png' },
   ];
+
+
 
   return (
     <div className="flex-1 p-8 overflow-y-auto">
@@ -34,19 +33,6 @@ const MatchesDashboard = () => {
            {/* Sidebar */}
            <Sidebar onLogout={handleLogout} />
 
-      {/* <div className="w-64 bg-light-teal text-white p-6">
-        <nav className="space-y-4">
-          <Link to="/dashboard" className="block text-lg hover:bg-teal-700 p-2 rounded">Dashboard</Link>
-          <Link to="/matches" className="block text-lg hover:bg-teal-700 p-2 rounded">Matches</Link>
-          <Link to="/connections" className="block text-lg hover:bg-teal-700 p-2 rounded">Connections</Link>
-          <Link to="/messages" className="block text-lg hover:bg-teal-700 p-2 rounded">Messages</Link>
-          <Link to="/reources" className="block text-lg hover:bg-teal-700 p-2 rounded">Resources</Link>
-          <Link to="/settings" className="block text-lg hover:bg-teal-700 p-2 rounded">Settings</Link>
-          <button onClick={handleLogout} className="block text-lg hover:bg-teal-700 p-2 rounded w-full text-left">Log out</button>
-        </nav>
-      </div> */}
-
-      {/* Main Content */}
       {/* Main Content */}
 <div className="flex-1 p-8 overflow-y-auto">
   {/* Header */}
@@ -114,8 +100,12 @@ const MatchesDashboard = () => {
           <ProfileCard
             key={index}
             name={profile.name}
-            role={profile.role}
-            experience={profile.experience}
+            title={profile.title}
+            skills={profile.skills}
+            location={profile.location}
+            matchScore={profile.matchScore}
+            sharedInterests={profile.sharedInterests}
+            image={profile.image}
           />
         ))}
       </div>

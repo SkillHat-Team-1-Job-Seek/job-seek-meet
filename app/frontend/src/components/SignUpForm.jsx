@@ -3,7 +3,6 @@ import { data, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import PrimaryButton from "./ui/PrimaryButton";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -56,9 +55,6 @@ const SignUpForm = () => {
       toast.error("Please check your password ");
     }
   };
-
-
-
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
       <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl flex flex-col md:flex-row">

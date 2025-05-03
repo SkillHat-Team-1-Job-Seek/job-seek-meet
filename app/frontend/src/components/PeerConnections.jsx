@@ -29,7 +29,11 @@ const PeerConnections = () => {
             {/* Match 1: John Smith */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gray-200 rounded-full mr-4"></div>
+              <img
+                  src={"/assets/John Smith.png"}
+                  alt="John Smith"
+                  className="w-12 h-12 bg-gray-200 rounded-full mr-4"
+                />
                 <div>
                   <p className="text-sm font-semibold text-gray-800">
                     John Smith
@@ -43,18 +47,17 @@ const PeerConnections = () => {
                 Chat
               </button>
             </div>
-
             {/* Match 2: Esther Howard */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <img
-                  src={"/assets/Mary John.png"}
-                  alt="Jane Queen"
+                  src={"/assets/Esther Howard.png"}
+                  alt="Esther Howard"
                   className="w-12 h-12 bg-gray-200 rounded-full mr-4"
                 />
                 <div>
                   <p className="text-sm font-semibold text-gray-800">
-                    Esther Howard
+                    Jacob Jones
                   </p>
                   <p className="text-sm text-gray-600">
                     Market specialist, Maryland
@@ -69,7 +72,11 @@ const PeerConnections = () => {
             {/* Match 3: Jacob Jones */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gray-200 rounded-full mr-4"></div>
+              <img
+                  src={"/assets/Jacob Jones.png"}
+                  alt="Esther Howard"
+                  className="w-12 h-12 bg-gray-200 rounded-full mr-4"
+                />
                 <div>
                   <p className="text-sm font-semibold text-gray-800">
                     Jacob Jones
