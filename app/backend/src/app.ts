@@ -9,7 +9,7 @@ import { errorHandler } from "./util/error.handler";
 import morgan from "morgan";
 import { Server } from "socket.io";
 import cors from "cors";
-import { ACCESS_ORIGIN } from "./util/secrets";
+// import { ACCESS_ORIGIN } from "./util/secrets";
 import { createServer } from "http";
 import socketAuth from "./chat-management/socketAuth";
 import handleDeleteMessage from "./chat-management/socket/deleteMessage";
@@ -31,7 +31,7 @@ app.use(cors());
 
 app.use(morgan("dev"));
 app.use(function (_, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 
@@ -50,6 +50,18 @@ app.use("/api/v1/connections", connectionRoutes);
 app.use("/api/v1/groups", groupRoutes);
 
 app.use(errorHandler);
+
+io.use((socket, next) => {
+  console.log(
+    "Socket connection attempt with auth:",
+    JSON.stringify(socket.handshake.auth)
+  );
+  console.log(
+    "Headers received:",
+    JSON.stringify(socket.handshake.headers, null, 2)
+  );
+  next();
+});
 io.use(socketAuth);
 io.on("connection", (socket) => {
   console.log(`New socket connection: ${socket.id}`);
@@ -69,6 +81,6 @@ io.on("connection", (socket) => {
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server listening at port ${PORT}`);
 });

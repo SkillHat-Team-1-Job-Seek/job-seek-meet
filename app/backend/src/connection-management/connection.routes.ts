@@ -10,8 +10,8 @@ import {
 const router = Router();
 
 router.get("/", verifyUserToken, getUserConnections);
-router.post("/request", sendConnectionRequest);
-router.post("/accept/:connectionId", verifyUserToken, acceptConnectionRequest);
+router.post("/request", verifyUserToken, sendConnectionRequest);
+router.post("/accept/:senderId", verifyUserToken, acceptConnectionRequest);
 // User discovery
 router.get("/nearby", verifyUserToken, getNearbyUsers);
 router.get("/recommended", verifyUserToken, getRecommendedUsers);

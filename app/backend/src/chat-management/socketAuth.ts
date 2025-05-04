@@ -9,32 +9,31 @@ import prisma from "../util/db";
 
 export default function socketAuth(socket: Socket, next: Function) {
   try {
-    // Get token from auth object or from authorization header
-    const token =
-      socket.handshake.auth.token ||
-      socket.handshake.headers.authorization?.split(" ")[1];
+    const token = socket.handshake.auth.token;
 
     if (!token) {
       return next(new Error("Authentication error: No token provided"));
     }
 
-    // Verify JWT token
-    const decoded: any = jwt.verify(token, JWT_SECRET);
+    try {
+      const decoded: any = jwt.verify(token, JWT_SECRET);
+      socket.data.userId = decoded.userID || decoded.id;
 
-    if (!decoded.id) {
-      return next(new Error("Authentication error: Invalid token"));
+      if (!socket.data.userId) {
+        return next(new Error("Authentication error: Invalid token"));
+      }
+
+      // Join user to their chat rooms
+      joinUserChats(socket, socket.data.userId);
+
+      next();
+    } catch (error) {
+      console.error("Token verification error:", error);
+      return next(new Error(`Token verification failed: ${error}`));
     }
-
-    // Store user ID in socket for use in handlers
-    socket.data.userId = decoded.id;
-
-    // Join user to their chat rooms
-    joinUserChats(socket, decoded.id);
-
-    next();
   } catch (error) {
     console.error("Socket authentication error:", error);
-    next(new Error("Authentication error"));
+    return next(new Error("Authentication error"));
   }
 }
 

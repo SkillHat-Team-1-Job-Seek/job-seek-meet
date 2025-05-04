@@ -38,7 +38,6 @@ model User {
   Message                    Message[]
   UserChat                   UserChat[]
 }
-
 model Connection {
   userId1     String
   userId2     String
