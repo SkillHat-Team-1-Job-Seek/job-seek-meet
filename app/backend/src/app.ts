@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import { PORT } from "./util/secrets";
+import { ACCESS_ORIGIN, PORT } from "./util/secrets";
 import authRoutes from "./user-management/auth.routes";
 import userRoutes from "./user-management/user.routes";
 import groupRoutes from "./group-management/gruop.routes";
@@ -22,16 +22,21 @@ const app: Express = express();
 
 const apiVersion = "/api/v1";
 const httpServer = createServer(app);
+const allowedOrigins = [
+  "http://localhost:3001",
+  "http://localhost:5173",
+  "https://job-seek-meet-3.onrender.com",
+];
 const io = new Server(httpServer, {
   cors: { origin: "*" },
 });
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 app.use(morgan("dev"));
 app.use(function (_, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 
