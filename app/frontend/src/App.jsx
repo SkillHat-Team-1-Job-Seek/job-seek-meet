@@ -5,7 +5,9 @@ import SignUpForm from "./components/SignUpForm";
 import Login from "./components/Login";
 // import createProfile from "./components/CreateProfile";
 // import Dashboard from "./components/Profile";
+import PeerConnections from "./components/PeerConnections";
 import "./index.css";
+import { ToastContextProvider } from "./hook/useToast";
 import CreateProfile from "./components/CreateProfile";
 import EditProfile from "./components/EditProfile";
 import ProfileDashboard from "./components/maindashboard/ProfileDashboard";
@@ -13,13 +15,16 @@ import MatchesDashboard from "./components/matchesdashboard/MatchesDashboard";
 import Connections from "./components/Connections";
 import Messages from "./components/Messages";
 import Profile from './components/Profile'; 
+import VerifyEmail from "./components/verifyEmail";
 
 const App = () => {
   return (
+    <ToastContextProvider>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/verify" element={<VerifyEmail />} />
       <Route path="/createProfile" element={<CreateProfile />} />
       <Route path="/editProfile" element={<EditProfile />} />
       <Route path="/dashboard" element={<ProfileDashboard />} />
@@ -31,6 +36,8 @@ const App = () => {
       
       {/* <Route path="/findbuddies" element={<FindBuddies />} /> */}
     </Routes>
+    </ToastContextProvider>
+
   );
 };
 

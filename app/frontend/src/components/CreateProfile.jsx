@@ -1,207 +1,206 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FooterSection from "./Footer";
-import Header from "./Header";
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import FooterSection from "./Footer";
+// import Header from "./Header";
 
-const CreateProfile = () => {
-  const navigate = useNavigate();
+// const CreateProfile = () => {
+//   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    age: "",
-    profession: "",
-    location: "",
-    bio: "",
-    tags: "",
-    openToOneOnOne: false,
-    openToGroup: false,
-    profilePicture: null,
-  });
+//   const [formData, setFormData] = useState({
+//     fullName: "",
+//     age: "",
+//     profession: "",
+//     location: "",
+//     bio: "",
+//     tags: "",
+//     openToOneOnOne: false,
+//     openToGroup: false,
+//     profilePicture: null,
+//   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
-    });
-  };
+//   const handleChange = (e) => {
+//     const { name, value, type, checked, files } = e.target;
+//     setFormData({
+//       ...formData,
+//       [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
+//     });
+//   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Profile Data:", formData);
-    alert("Profile Created Successfully! (Simulated)");
-    navigate("/dashboard");
-  };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     console.log("Profile Data:", formData);
+//     alert("Profile Created Successfully! (Simulated)");
+//     navigate("/dashboard");
+//   };
 
-  return (
-    <div className="w-half min-h-screen bg-white">
-      {/* Header Section */}
-      <Header />
+//   return (
+//     <div className="w-half min-h-screen bg-white">
+//       {/* Header Section */}
+//       <Header />
 
-      {/* Main Content */}
-      <div className="w-full py-20 px-4 sm:px-6 lg:px-8">
-        {/* Centered Title and Description */}
-        <div className="text-center mb-20">
-          <h2 className="text-3xl font-bold text-black mb-2">Profile Setup</h2>
-          <p className="text-gray-500">
-            Let others know who you are. This helps with better matches and connections
-          </p>
-        </div>
+//       {/* Main Content */}
+//       <div className="w-full py-20 px-4 sm:px-6 lg:px-8">
+//         {/* Centered Title and Description */}
+//         <div className="text-center mb-20">
+//           <h2 className="text-3xl font-bold text-black mb-2">Profile Setup</h2>
+//           <p className="text-gray-500">
+//             Let others know who you are. This helps with better matches and connections
+//           </p>
+//         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-8 w-full">
-          {/* Left Section: Form Fields */}
-          <div className="w-full md:w-3/4 flex flex-col gap-4">
-            {/* Full Name */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Full Name</label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required
-              />
-            </div>
+//         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-8 w-full">
+//           {/* Left Section: Form Fields */}
+//           <div className="w-full md:w-3/4 flex flex-col gap-4">
+//             {/* Full Name */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Full Name</label>
+//               <input
+//                 type="text"
+//                 name="fullName"
+//                 value={formData.fullName}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+//                 required
+//               />
+//             </div>
 
-            {/* Age */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Age</label>
-              <input
-                type="number"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required
-              />
-            </div>
+//             {/* Age */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Age</label>
+//               <input
+//                 type="number"
+//                 name="age"
+//                 value={formData.age}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+//                 required
+//               />
+//             </div>
 
-            {/* Profession */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Profession</label>
-              <input
-                type="text"
-                name="profession"
-                value={formData.profession}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required
-              />
-            </div>
+//             {/* Profession */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Profession</label>
+//               <input
+//                 type="text"
+//                 name="profession"
+//                 value={formData.profession}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+//                 required
+//               />
+//             </div>
 
-            {/* Location */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Location</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required
-              />
-            </div>
+//             {/* Location */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Location</label>
+//               <input
+//                 type="text"
+//                 name="location"
+//                 value={formData.location}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+//                 required
+//               />
+//             </div>
 
-            {/* Bio */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Bio</label>
-              <textarea
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 h-32 resize-none"
-                required
-              />
-            </div>
+//             {/* Bio */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Bio</label>
+//               <textarea
+//                 name="bio"
+//                 value={formData.bio}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 h-32 resize-none"
+//                 required
+//               />
+//             </div>
 
-            {/* Tags */}
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-sm mb-1">Tags</label>
-              <input
-                type="text"
-                name="tags"
-                value={formData.tags}
-                onChange={handleChange}
-                placeholder=" "
-                className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required
-              />
-            </div>
+//             {/* Tags */}
+//             <div className="flex flex-col">
+//               <label className="text-gray-500 text-sm mb-1">Tags</label>
+//               <input
+//                 type="text"
+//                 name="tags"
+//                 value={formData.tags}
+//                 onChange={handleChange}
+//                 placeholder=" "
+//                 className="px-5 py-3 bg-gray-100 rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+//                 required
+//               />
+//             </div>
 
+//             {/* Buttons */}
+//             <div className="flex justify-between mt-8">
+//               <button
+//                 onClick={() => navigate("/dashboard")}
+//                 className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-xl hover:bg-teal-100 transition-colors"
+//               >
+//                 Preview
+//               </button>
+//               <button
+//                 onClick={() => navigate("/dashboard")}
+//                 type="submit"
+//                 className="px-14 py-3 bg-yellow-300 text-teal-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
+//               >
+//                 Save
+//               </button>
+//               <button
+//                 onClick={() => navigate("/")}
+//                 className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-lg hover:bg-teal-100 transition-colors"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           </div>
 
-            {/* Buttons */}
-            <div className="flex justify-between mt-8">
-              <button
-                onClick={() => navigate("/dashboard")}
-                className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-xl hover:bg-teal-100 transition-colors"
-              >
-                Preview
-              </button>
-              <button
-                onClick={() => navigate("/dashboard")}
-                type="submit"
-                className="px-14 py-3 bg-yellow-300 text-teal-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => navigate("/")}
-                className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-lg hover:bg-teal-100 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+//           {/* Right Section: Profile Picture Upload */}
+//           <div className="w-full md:w-1/4 flex flex-col items-center justify-center min-h-full">
+//             <label className="text-gray-700 text-sm mb-2">Upload your picture</label>
+//             <div className="w-60 h-60 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
+//               {formData.profilePicture ? (
+//                 <img
+//                   src={URL.createObjectURL(formData.profilePicture)}
+//                   alt="Profile Preview"
+//                   className="w-full h-full object-cover rounded-lg"
+//                 />
+//               ) : (
+//                 <div className="flex flex-col items-center">
+//                   <span className="text-black">Upload your picture</span>
+//                   <span className="text-black text-xs mt-2">JPG, PNG format only</span>
+//                 </div>
+//               )}
+//             </div>
+//             <div className="flex items-center gap-2">
+//               <label className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm text-gray-700 cursor-pointer hover:bg-gray-200">
+//                 Choose File
+//                 <input
+//                   type="file"
+//                   name="profilePicture"
+//                   onChange={handleChange}
+//                   accept="image/jpeg,image/png"
+//                   className="hidden"
+//                 />
+//               </label>
+//               <span className="text-sm text-gray-500">
+//                 {formData.profilePicture ? formData.profilePicture.name : "No file chosen"}
+//               </span>
+//             </div>
+//           </div>
+//         </form>
+//       </div>
 
-          {/* Right Section: Profile Picture Upload */}
-          <div className="w-full md:w-1/4 flex flex-col items-center justify-center min-h-full">
-            <label className="text-gray-700 text-sm mb-2">Upload your picture</label>
-            <div className="w-60 h-60 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
-              {formData.profilePicture ? (
-                <img
-                  src={URL.createObjectURL(formData.profilePicture)}
-                  alt="Profile Preview"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              ) : (
-                <div className="flex flex-col items-center">
-                  <span className="text-black">Upload your picture</span>
-                  <span className="text-black text-xs mt-2">JPG, PNG format only</span>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm text-gray-700 cursor-pointer hover:bg-gray-200">
-                Choose File
-                <input
-                  type="file"
-                  name="profilePicture"
-                  onChange={handleChange}
-                  accept="image/jpeg,image/png"
-                  className="hidden"
-                />
-              </label>
-              <span className="text-sm text-gray-500">
-                {formData.profilePicture ? formData.profilePicture.name : "No file chosen"}
-              </span>
-            </div>
-          </div>
-        </form>
-      </div>
+//       {/* Footer Section */}
+//       <FooterSection />
+//     </div>
+//   );
+// };
 
-      {/* Footer Section */}
-      <FooterSection />
-    </div>
-  );
-};
-
-export default CreateProfile;
+// export default CreateProfile;
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -505,51 +504,51 @@ export default CreateProfile;
 //   const navigate = useNavigate();
 //     return (
 //       <div data-layer="Profile Screen" className="ProfileScreen w-[1440px] h-[2777px] relative bg-white overflow-hidden">
-        // <div data-layer="Frame 1686562487" className="Frame1686562487 w-[1240px] h-28 left-[100px] top-[13px] absolute inline-flex justify-start items-center gap-80">
-        //   <img data-layer="image 108" className="Image108 size-20" src="/assets/image 103.png" />
-        //   <div data-layer="Slider" data-state="Pressed" className="Slider w-72 bg-zinc-200 rounded-2xl flex justify-start items-center">
-        //     <div data-layer="👀 Change my Space-Between!" className="ChangeMySpaceBetween size- bg-yellow-400 rounded-tl-[40px] rounded-bl-[40px] flex justify-start items-start gap-24 overflow-hidden">
-        //       <div data-layer="Ellipse 91" className="Ellipse91 size-3 rounded-full" />
-        //       <div data-layer="Ellipse 92" className="Ellipse92 size-3 rounded-full" />
-        //     </div>
-        //     <div data-layer="🚧 Builder - Slider Indicator" data-label="True" data-state="Pressed" className="BuilderSliderIndicator w-7 h-3 relative rounded-2xl">
-        //       <div data-svg-wrapper data-layer="Rectangle 6" className="Rectangle6 left-[-2px] top-[-10px] absolute">
-        //         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //         <rect x="0.990234" y="1" width="30" height="30" rx="15" fill="#FCFCFC" stroke="#32A1B0" stroke-width="2"/>
-        //         </svg>
-        //       </div>
-        //       <div data-svg-wrapper data-layer="Indicator Divet" className="IndicatorDivet left-[14px] top-[2px] absolute">
-        //         <svg width="2" height="10" viewBox="0 0 2 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //         <path d="M0.990234 1V9" stroke="#03363D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        //         </svg>
-        //       </div>
-        //       <div data-layer="Popover Label" className="PopoverLabel h-9 left-[-77px] top-[-52px] absolute inline-flex flex-col justify-start items-center overflow-hidden">
-        //         <div data-layer="Amount" className="Amount size- px-2 py-1 bg-gradient-to-br from-teal-600 to-yellow-300 rounded-lg flex flex-col justify-start items-start gap-2.5">
-        //           <div data-layer="H1 Large Title - 48p" className="H1LargeTitle48p text-center justify-center text-neutral-50 text-sm font-semibold font-['Poppins'] leading-tight tracking-tight">56% Profile Completed</div>
-        //         </div>
-        //         <div data-svg-wrapper data-layer="Carat" className="Carat">
-        //           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //           <path d="M4.99023 6L0.660107 0L9.32036 0L4.99023 6Z" fill="url(#paint0_linear_3002_67)"/>
-        //           <defs>
-        //           <linearGradient id="paint0_linear_3002_67" x1="8.05205" y1="5.12132" x2="4.0799" y2="-0.611979" gradientUnits="userSpaceOnUse">
-        //           <stop stop-color="#138797"/>
-        //           <stop offset="1" stop-color="#FCDB32"/>
-        //           </linearGradient>
-        //           </defs>
-        //           </svg>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </div>
-        //   <button onClick={() => navigate("/editProfile")} className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
-        //     Edit Profile
-        //   </button>
-        //   {/* <div data-layer="Button - Secondary" className="ButtonSecondary size- flex justify-start items-start">
-        //     <div data-layer="Button - Secondary" data-icon-placement="No Icon" data-size="Large" data-state="Default" className="ButtonSecondary w-44 px-8 py-4 rounded-xl outline outline-2 outline-offset-[-2px] outline-cyan-950 flex justify-center items-center gap-4">
-        //       <div data-layer="Button" className="Button text-center justify-center text-cyan-950 text-base font-semibold font-['Poppins'] leading-7 tracking-wide">Edit Profile</div>
-        //     </div> */}
-        //   {/* </div> */}
-        // </div>
+// <div data-layer="Frame 1686562487" className="Frame1686562487 w-[1240px] h-28 left-[100px] top-[13px] absolute inline-flex justify-start items-center gap-80">
+//   <img data-layer="image 108" className="Image108 size-20" src="/assets/image 103.png" />
+//   <div data-layer="Slider" data-state="Pressed" className="Slider w-72 bg-zinc-200 rounded-2xl flex justify-start items-center">
+//     <div data-layer="👀 Change my Space-Between!" className="ChangeMySpaceBetween size- bg-yellow-400 rounded-tl-[40px] rounded-bl-[40px] flex justify-start items-start gap-24 overflow-hidden">
+//       <div data-layer="Ellipse 91" className="Ellipse91 size-3 rounded-full" />
+//       <div data-layer="Ellipse 92" className="Ellipse92 size-3 rounded-full" />
+//     </div>
+//     <div data-layer="🚧 Builder - Slider Indicator" data-label="True" data-state="Pressed" className="BuilderSliderIndicator w-7 h-3 relative rounded-2xl">
+//       <div data-svg-wrapper data-layer="Rectangle 6" className="Rectangle6 left-[-2px] top-[-10px] absolute">
+//         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+//         <rect x="0.990234" y="1" width="30" height="30" rx="15" fill="#FCFCFC" stroke="#32A1B0" stroke-width="2"/>
+//         </svg>
+//       </div>
+//       <div data-svg-wrapper data-layer="Indicator Divet" className="IndicatorDivet left-[14px] top-[2px] absolute">
+//         <svg width="2" height="10" viewBox="0 0 2 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+//         <path d="M0.990234 1V9" stroke="#03363D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+//         </svg>
+//       </div>
+//       <div data-layer="Popover Label" className="PopoverLabel h-9 left-[-77px] top-[-52px] absolute inline-flex flex-col justify-start items-center overflow-hidden">
+//         <div data-layer="Amount" className="Amount size- px-2 py-1 bg-gradient-to-br from-teal-600 to-yellow-300 rounded-lg flex flex-col justify-start items-start gap-2.5">
+//           <div data-layer="H1 Large Title - 48p" className="H1LargeTitle48p text-center justify-center text-neutral-50 text-sm font-semibold font-['Poppins'] leading-tight tracking-tight">56% Profile Completed</div>
+//         </div>
+//         <div data-svg-wrapper data-layer="Carat" className="Carat">
+//           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+//           <path d="M4.99023 6L0.660107 0L9.32036 0L4.99023 6Z" fill="url(#paint0_linear_3002_67)"/>
+//           <defs>
+//           <linearGradient id="paint0_linear_3002_67" x1="8.05205" y1="5.12132" x2="4.0799" y2="-0.611979" gradientUnits="userSpaceOnUse">
+//           <stop stop-color="#138797"/>
+//           <stop offset="1" stop-color="#FCDB32"/>
+//           </linearGradient>
+//           </defs>
+//           </svg>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+//   <button onClick={() => navigate("/editProfile")} className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
+//     Edit Profile
+//   </button>
+//   {/* <div data-layer="Button - Secondary" className="ButtonSecondary size- flex justify-start items-start">
+//     <div data-layer="Button - Secondary" data-icon-placement="No Icon" data-size="Large" data-state="Default" className="ButtonSecondary w-44 px-8 py-4 rounded-xl outline outline-2 outline-offset-[-2px] outline-cyan-950 flex justify-center items-center gap-4">
+//       <div data-layer="Button" className="Button text-center justify-center text-cyan-950 text-base font-semibold font-['Poppins'] leading-7 tracking-wide">Edit Profile</div>
+//     </div> */}
+//   {/* </div> */}
+// </div>
 //         <div data-layer="Footer" className="Footer w-[1440px] h-[563.50px] left-0 top-[2191px] absolute bg-slate-400 outline outline-1 outline-offset-[-1px] outline-black overflow-hidden">
 //           <div data-layer="Frame 1866" className="Frame1866 size- left-[421px] top-[23px] absolute inline-flex flex-col justify-start items-center gap-0.5">
 //             <div data-layer="Join our Community" className="JoinOurCommunity text-center justify-start text-slate-800 text-4xl font-bold font-['Poppins'] leading-[48px] tracking-wide">Join our Community</div>
@@ -877,3 +876,440 @@ export default CreateProfile;
 // // };
 
 //   // Removed duplicate export default statement
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FooterSection from "./Footer";
+import Header from "./Header";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { Switch } from "../components/ui/switch";
+import { Upload } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+
+const CreateProfile = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    age: "",
+    profession: "",
+    location: "",
+    bio: "",
+    tags: "",
+  });
+
+  const [privacy, setPrivacy] = useState({
+    showAge: true,
+    showGender: true,
+    showProfile: true,
+  });
+
+  const [profileImage, setProfileImage] = useState(null);
+  const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+
+  // Industry options
+  const industries = [
+    { id: 1, name: "Technology", description: "Software, IT, Data Science" },
+    { id: 2, name: "Healthcare", description: "Medical, Nursing, Pharmacy" },
+    { id: 3, name: "Finance", description: "Banking, Investment, Insurance" },
+    {
+      id: 4,
+      name: "Education",
+      description: "Teaching, Administration, Research",
+    },
+    {
+      id: 5,
+      name: "Marketing",
+      description: "Advertising, PR, Digital Marketing",
+    },
+    { id: 6, name: "Creative", description: "Design, Arts, Media" },
+  ];
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+
+    if (type === "file") {
+      return; // Handle file uploads separately
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handlePrivacyChange = (setting) => {
+    setPrivacy((prev) => ({ ...prev, [setting]: !prev[setting] }));
+  };
+
+  const handleImageUpload = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      // Check if file is JPG or PNG
+      if (!["image/jpeg", "image/png"].includes(file.type)) {
+        alert("Please upload JPG or PNG format only");
+        return;
+      }
+
+      setProfileImage(file);
+      setProfileImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleIndustrySelect = (value) => {
+    setSelectedIndustry(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Simple validation
+    if (!formData.fullName || !formData.profession || !formData.location) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    if (!selectedIndustry) {
+      alert("Please select an industry");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      console.log("Form submitted:", {
+        ...formData,
+        industry: selectedIndustry,
+        privacy,
+      });
+      navigate("/dashboard");
+    }, 1500);
+  };
+
+  return (
+    <div className="w-half min-h-screen bg-white">
+      {/* Header Section */}
+      <Header />
+
+      {/* Main Content */}
+      <div className="w-full py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        {/* Header with Progress */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <img src="/assets/image 103.png" alt="Logo" className="h-14 w-14" />
+          </div>
+          <div className="flex items-center space-x-4 w-72">
+            <div className="flex-1">
+              <div className="flex items-center mb-1">
+                <div className="bg-[#03363D] text-white text-xs rounded-full px-3 py-1 absolute left-[56%] transform -translate-x-1/2 -translate-y-10">
+                  56% Profile Completed
+                </div>
+              </div>
+              <div className="relative w-72 h-3 bg-zinc-200 rounded-2xl">
+                <div
+                  className="h-full bg-gradient-to-r from-teal-600 to-yellow-300 rounded-2xl"
+                  style={{ width: "56%" }}
+                ></div>
+                <div className="absolute left-[56%] top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div className="w-8 h-8 bg-white border-2 border-teal-600 rounded-full flex items-center justify-center">
+                    <div className="w-0.5 h-4 bg-teal-900"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              className="border-teal-600 text-teal-900 hover:bg-teal-50"
+              onClick={() => navigate("/editProfile")}
+            >
+              Edit Profile
+            </Button>
+          </div>
+        </div>
+
+        {/* Centered Title and Description */}
+        <div className="text-center mb-20">
+          <h2 className="text-3xl font-bold text-black mb-2">Profile Setup</h2>
+          <p className="text-gray-500">
+            Let others know who you are. This helps with better matches and
+            connections
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+          {/* Left Section: Form Fields */}
+          <div className="md:col-span-2 space-y-6">
+            {/* Full Name */}
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Full Name <span className="text-red-500">*</span>
+              </label>
+              <Input
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Your full name"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg"
+                required
+              />
+            </div>
+
+            {/* Profession */}
+            <div>
+              <label
+                htmlFor="profession"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Profession <span className="text-red-500">*</span>
+              </label>
+              <Input
+                id="profession"
+                name="profession"
+                value={formData.profession}
+                onChange={handleChange}
+                placeholder="Your profession or occupation"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg"
+                required
+              />
+            </div>
+
+            {/* Age Field */}
+            <div>
+              <label
+                htmlFor="age"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Age
+              </label>
+              <Input
+                id="age"
+                name="age"
+                type="number"
+                min="18"
+                max="120"
+                value={formData.age}
+                onChange={handleChange}
+                placeholder="Your age"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg"
+              />
+            </div>
+
+            {/* Location Field */}
+            <div>
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Location <span className="text-red-500">*</span>
+              </label>
+              <Input
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="City, Country"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg"
+                required
+              />
+            </div>
+
+            {/* Industry Selection Dropdown */}
+            <div>
+              <label
+                htmlFor="industry"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Select Your Industry <span className="text-red-500">*</span>
+              </label>
+              <Select
+                onValueChange={handleIndustrySelect}
+                value={selectedIndustry}
+              >
+                <SelectTrigger className="w-full px-4 py-3 bg-gray-100 rounded-lg">
+                  <SelectValue placeholder="Select an industry" />
+                </SelectTrigger>
+                <SelectContent>
+                  {industries.map((industry) => (
+                    <SelectItem
+                      key={industry.id}
+                      value={industry.name}
+                      className="py-3"
+                    >
+                      <div>
+                        <div className="font-medium">{industry.name}</div>
+                        <div className="text-xs text-gray-500">
+                          {industry.description}
+                        </div>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Bio Field */}
+            <div>
+              <label
+                htmlFor="bio"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Bio
+              </label>
+              <Textarea
+                id="bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Tell us a bit about yourself..."
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg min-h-28 resize-none"
+              />
+            </div>
+
+            {/* Tags Field */}
+            <div>
+              <label
+                htmlFor="tags"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Tags
+              </label>
+              <Textarea
+                id="tags"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+                placeholder="e.g. JavaScript, Node.js, React (comma separated)"
+                className="w-full px-4 py-3 bg-gray-100 rounded-lg resize-none"
+              />
+            </div>
+          </div>
+
+          {/* Right Section: Profile Picture Upload */}
+          <div className="space-y-6">
+            {/* Photo Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Upload Your Picture
+              </label>
+              <div className="flex flex-col items-center justify-center relative">
+                <div
+                  className="w-60 h-60 bg-gray-200 rounded-lg flex flex-col items-center justify-center cursor-pointer overflow-hidden"
+                  onClick={() =>
+                    document.getElementById("profilePicture").click()
+                  }
+                >
+                  {profileImagePreview ? (
+                    <img
+                      src={profileImagePreview}
+                      alt="Profile preview"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center">
+                      <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                      <span className="text-black">Upload your picture</span>
+                      <span className="text-black text-xs mt-2">
+                        JPG, PNG format only
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  id="profilePicture"
+                  name="profilePicture"
+                  accept="image/jpeg,image/png"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+            </div>
+
+            {/* Privacy Settings */}
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-700">Show / Hide Age</div>
+                <Switch
+                  checked={privacy.showAge}
+                  onCheckedChange={() => handlePrivacyChange("showAge")}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-700">Show / Hide Gender</div>
+                <Switch
+                  checked={privacy.showGender}
+                  onCheckedChange={() => handlePrivacyChange("showGender")}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-700">Show / Hide Profile</div>
+                <Switch
+                  checked={privacy.showProfile}
+                  onCheckedChange={() => handlePrivacyChange("showProfile")}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="md:col-span-3 flex justify-between mt-8">
+            <Button
+              type="button"
+              onClick={() => navigate("/dashboard")}
+              variant="outline"
+              className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-xl hover:bg-teal-100 transition-colors"
+            >
+              Preview
+            </Button>
+
+            <Button
+              type="submit"
+              className="px-14 py-3 bg-yellow-300 text-teal-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <div className="animate-spin h-5 w-5 border-2 border-teal-900 border-t-transparent rounded-full"></div>
+              ) : (
+                "Save"
+              )}
+            </Button>
+
+            <Button
+              type="button"
+              onClick={() => navigate("/")}
+              variant="outline"
+              className="px-10 py-3 border-2 border-teal-600 text-teal-900 font-semibold rounded-lg hover:bg-teal-100 transition-colors"
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </div>
+
+      {/* Footer Section */}
+      <FooterSection />
+    </div>
+  );
+};
+
+export default CreateProfile;
