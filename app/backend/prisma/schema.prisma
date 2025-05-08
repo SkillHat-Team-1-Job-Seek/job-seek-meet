@@ -23,6 +23,7 @@ model User {
   registrationDate                         DateTime          @default(now())
   showAge                                  Boolean           @default(true)
   showProfile                              Boolean           @default(true)
+  isProfileComplete                        String            @default("false")
   industry                                 String?
   sentConnections                          Connection[]      @relation("SentConnections")
   receivedConnections                      Connection[]      @relation("ReceivedConnections")
