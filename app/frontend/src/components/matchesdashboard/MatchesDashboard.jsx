@@ -186,12 +186,12 @@ const MatchesDashboard = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data?.data.map((profile) => (
-              <ProfileCard
+          <ProfileCard
                 key={profile.id}
-                name={profile.name}
+            name={profile.name}
                 role={profile.profession}
                 imageUrl={profile.profileImageUrl}
-                matchScore={profile.matchScore}
+            matchScore={profile.matchScore}
                 location={profile.location}
                 tag={profile.tag}
                 profileId={profile.id}
@@ -201,9 +201,9 @@ const MatchesDashboard = () => {
                   connectionMutation.variables === profile.id
                 }
                 connectionSent={pendingConnections.has(profile.id)}
-              />
-            ))}
-          </div>
+          />
+        ))}
+      </div>
 
           {data?.totalPages > 1 && (
             <Pagination className="mt-8">

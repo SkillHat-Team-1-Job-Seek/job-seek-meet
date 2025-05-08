@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { useQuery } from "@tanstack/react-query";
-import Header from "../Header";
+import Header from "../DashboardHeader";
 import { BookOpen, Bookmark, ChevronDown, Loader2 } from "lucide-react";
 import { useToast } from "../../hook/useToast";
 import { useAuth } from "../../hook/useAuth";
