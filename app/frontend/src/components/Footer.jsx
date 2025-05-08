@@ -2,7 +2,7 @@ import React from 'react';
 
 const FooterSection = () => {
   return (
-<div data-layer="Footer" className="w-[1440px] bg-slate-400 outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
+<div data-layer="Footer" className="w-full bg-custom-teal outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-center gap-12 overflow-hidden">
   <div data-layer="Frame 1866" className="size- flex flex-col justify-start items-center gap-4">
     <div data-layer="Join our Community" className="text-center justify-start text-slate-900 text-4xl font-bold font-['Poppins'] leading-[48px] tracking-wide">Join our Community</div>
     <div data-layer="We’re Stronger Together!" className="w-[572px] text-center justify-start text-slate-900 text-xl font-normal font-['Poppins'] leading-loose tracking-wide">We’re Stronger Together!</div>
@@ -31,7 +31,98 @@ const FooterSection = () => {
       </div>
     </div>
   </div>
-  <div data-layer="Footer Black" className="self-stretch h-80 relative bg-slate-900 outline outline-1 outline-offset-[-1px] outline-black overflow-hidden">
+  <div data-layer="Footer Black" className="self-stretch min-h-96 bg-slate-900 outline outline-1 outline-offset-[-1px] outline-black overflow-hidden flex flex-col justify-center items-center gap-6">
+      {/* Logo Section */}
+      <div data-layer="Frame 427319213" className="w-32 h-5 inline-flex justify-center items-center gap-7">
+        <div data-svg-wrapper data-layer="Frame 427319214" className="relative">
+          <svg width="111" height="21" viewBox="0 0 111 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.97891 1.08398H15.4921L20.3983 8.10099L26.2874 1.08398H28.0487L21.0691 9.06196L28.5807 19.8043H23.0707L17.946 12.4769L11.6201 19.8043H9.86035L17.2752 11.5174L9.97891 1.08398Z" fill="#83C4CC"/>
+            <path d="M58.7822 4.16401C59.9309 4.16401 60.8622 3.23274 60.8622 2.08396C60.8622 0.935176 59.9309 0.00390625 58.7822 0.00390625C57.6334 0.00390625 56.7021 0.935176 56.7021 2.08396C56.7021 3.23274 57.6334 4.16401 58.7822 4.16401Z" fill="#83C4CC"/>
+            <path d="M58.7822 8.32422V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M65.0225 8.32422V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M65.0225 13.5243C65.0225 10.6539 67.3521 8.32422 70.2225 8.32422C73.0929 8.32422 75.4225 10.6539 75.4225 13.5243V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M105.011 3.62904V6.2065H103.543V9.35797H105.011V18.7242H108.024V9.35891H110.047C110.047 9.35891 110.236 7.84789 110.328 6.19524H108.037V4.03986C108.037 3.71815 108.365 3.28482 108.69 3.28482H110.333V0.00390625H108.099C104.936 0.00390625 105.011 3.1582 105.011 3.62904Z" fill="#83C4CC"/>
+          </svg>
+        </div>
+      </div>
+
+      {/* Navigation Links Section */}
+      <div className="w-full flex flex-col justify-start items-center gap-5">
+        <div data-layer="Frame 427319215" className="w-full h-12 flex justify-center items-center gap-14">
+          <div data-layer="Blogs" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+            Blogs
+          </div>
+          <div data-svg-wrapper data-layer="Vector">
+            <svg width="5" height="40" viewBox="0 0 5 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 0C3.16304 0 3.79892 0.225765 4.26777 0.627628C4.73661 1.02949 5 1.57454 5 2.14286V37.8571C5 38.4255 4.73661 38.9705 4.26777 39.3724C3.79892 39.7742 3.16304 40 2.5 40C1.83696 40 1.20107 39.7742 0.732233 39.3724C0.263392 38.9705 0 38.4255 0 37.8571V2.14286C0 1.57454 0.263392 1.02949 0.732233 0.627628C1.20107 0.225765 1.83696 0 2.5 0Z" fill="white"/>
+            </svg>
+          </div>
+          <div data-layer="Privacy Policy" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+            Privacy Policy
+          </div>
+          <div data-svg-wrapper data-layer="Vector">
+            <svg width="5" height="40" viewBox="0 0 5 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 0C3.16304 0 3.79892 0.225765 4.26777 0.627628C4.73661 1.02949 5 1.57454 5 2.14286V37.8571C5 38.4255 4.73661 38.9705 4.26777 39.3724C3.79892 39.7742 3.16304 40 2.5 40C1.83696 40 1.20107 39.7742 0.732233 39.3724C0.263392 38.9705 0 38.4255 0 37.8571V2.14286C0 1.57454 0.263392 1.02949 0.732233 0.627628C1.20107 0.225765 1.83696 0 2.5 0Z" fill="white"/>
+            </svg>
+          </div>
+          <div data-layer="Contact Us" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+            Contact Us
+          </div>
+        </div>
+        <div data-layer="full_name" className="w-full text-center text-slate-400 text-sm font-medium font-['Poppins'] leading-tight tracking-tight">
+          2025 JobBuddies All Rights Reserved
+        </div>
+      </div>
+
+      {/* Image Section */}
+      <div className="flex justify-center items-center">
+        <img data-layer="image 104" className="w-40 h-40" src="/assets/image 103.png" />
+      </div>
+    </div>
+  {/* <div data-layer="Footer Black" className="self-stretch h-80 relative bg-slate-900 outline outline-1 outline-offset-[-1px] outline-black overflow-hidden">
+  <div data-layer="Frame 427319217" className="w-40 left-[677px] top-[29px] absolute inline-flex flex-col justify-start items-center gap-24">
+      <div data-layer="Frame 427319213" className="w-32 h-5 inline-flex justify-start items-center gap-7">
+        <div data-svg-wrapper data-layer="Frame 427319214" className="relative">
+        <svg width="111" height="21" viewBox="0 0 111 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.97891 1.08398H15.4921L20.3983 8.10099L26.2874 1.08398H28.0487L21.0691 9.06196L28.5807 19.8043H23.0707L17.946 12.4769L11.6201 19.8043H9.86035L17.2752 11.5174L9.97891 1.08398Z" fill="#83C4CC"/>
+        <path d="M58.7822 4.16401C59.9309 4.16401 60.8622 3.23274 60.8622 2.08396C60.8622 0.935176 59.9309 0.00390625 58.7822 0.00390625C57.6334 0.00390625 56.7021 0.935176 56.7021 2.08396C56.7021 3.23274 57.6334 4.16401 58.7822 4.16401Z" fill="#83C4CC"/>
+        <path d="M58.7822 8.32422V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M65.0225 8.32422V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M65.0225 13.5243C65.0225 10.6539 67.3521 8.32422 70.2225 8.32422C73.0929 8.32422 75.4225 10.6539 75.4225 13.5243V18.7245" stroke="#83C4CC" stroke-width="4.20007" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M105.011 3.62904V6.2065H103.543V9.35797H105.011V18.7242H108.024V9.35891H110.047C110.047 9.35891 110.236 7.84789 110.328 6.19524H108.037V4.03986C108.037 3.71815 108.365 3.28482 108.69 3.28482H110.333V0.00390625H108.099C104.936 0.00390625 105.011 3.1582 105.011 3.62904Z" fill="#83C4CC"/>
+        </svg>
+        </div>
+      </div>
+      <img data-layer="image 104" className="self-stretch h-40" src="/assets/image 103.png" />
+    </div>
+  <div className="w-full flex flex-col justify-start items-center gap-5">
+      <div data-layer="Frame 427319215" className="w-full h-12 flex justify-center items-center gap-14">
+        <div data-layer="Blogs" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+        Blogs 
+        </div>
+        <div data-svg-wrapper data-layer="Vector">
+          <svg width="5" height="40" viewBox="0 0 5 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 0C3.16304 0 3.79892 0.225765 4.26777 0.627628C4.73661 1.02949 5 1.57454 5 2.14286V37.8571C5 38.4255 4.73661 38.9705 4.26777 39.3724C3.79892 39.7742 3.16304 40 2.5 40C1.83696 40 1.20107 39.7742 0.732233 39.3724C0.263392 38.9705 0 38.4255 0 37.8571V2.14286C0 1.57454 0.263392 1.02949 0.732233 0.627628C1.20107 0.225765 1.83696 0 2.5 0Z" fill="white"/>
+          </svg>
+        </div>
+        <div data-layer="Privacy Policy" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+        Privacy Policy
+        </div>
+        <div data-svg-wrapper data-layer="Vector">
+          <svg width="5" height="40" viewBox="0 0 5 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 0C3.16304 0 3.79892 0.225765 4.26777 0.627628C4.73661 1.02949 5 1.57454 5 2.14286V37.8571C5 38.4255 4.73661 38.9705 4.26777 39.3724C3.79892 39.7742 3.16304 40 2.5 40C1.83696 40 1.20107 39.7742 0.732233 39.3724C0.263392 38.9705 0 38.4255 0 37.8571V2.14286C0 1.57454 0.263392 1.02949 0.732233 0.627628C1.20107 0.225765 1.83696 0 2.5 0Z" fill="white"/>
+          </svg>
+        </div>
+        <div data-layer="Contact Us" className="text-white text-2xl font-semibold font-['Poppins'] leading-loose tracking-wide">
+          Contact Us
+        </div>
+      </div>
+      <div data-layer="full_name" className="w-full text-center text-slate-400 text-sm font-medium font-['Poppins'] leading-tight tracking-tight">
+        2025 JobBuddies All Rights Reserved
+      </div>
+    </div>
+    </div> */}
+  {/* <div data-layer="Footer Black" className="self-stretch h-80 relative bg-slate-900 outline outline-1 outline-offset-[-1px] outline-black overflow-hidden">
     <div data-layer="Frame 427319217" className="w-40 left-[677px] top-[29px] absolute inline-flex flex-col justify-start items-center gap-24">
       <div data-layer="Frame 427319213" className="w-32 h-5 inline-flex justify-start items-center gap-7">
         <div data-svg-wrapper data-layer="Frame 427319214" className="relative">
@@ -82,7 +173,7 @@ const FooterSection = () => {
       </div>
       <div data-layer="full_name" className="w-72 justify-start text-slate-400 text-sm font-medium font-['Poppins'] leading-tight tracking-tight">2025 JobBuddies All Rights Reserved</div>
     </div>
-  </div>
+  </div> */}
 </div>
 );
 };

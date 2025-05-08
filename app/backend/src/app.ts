@@ -22,6 +22,11 @@ const app: Express = express();
 
 const apiVersion = "/api/v1";
 const httpServer = createServer(app);
+const allowedOrigins = [
+  "http://localhost:3001",
+  "http://localhost:5173",
+  "https://job-seek-meet-3.onrender.com",
+];
 const io = new Server(httpServer, {
   cors: { origin: "*" },
 });

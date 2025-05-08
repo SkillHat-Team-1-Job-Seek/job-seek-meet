@@ -1,8 +1,9 @@
 import React from 'react';
+import CtaButton from '../ui/CtaButton.jsx';
 
 const HowItWorkSection = () => {
   return (
-<div data-layer="[screen] Step By Step Guideline" className="ScreenStepByStepGuideline w-[1440px] px-28 py-20 bg-yellow-400/30 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
+<div data-layer="[screen] Step By Step Guideline" className="ScreenStepByStepGuideline w-full px-28 py-20 bg-yellow-400/30 inline-flex flex-col justify-start items-center gap-14 overflow-hidden">
   <div data-layer="text_wrapper" className="TextWrapper w-[816px] max-w-[816px] flex flex-col justify-start items-start gap-3 overflow-hidden">
     <div data-layer="heading" className="Heading self-stretch text-center justify-start text-cyan-950 text-6xl font-bold font-['Poppins'] leading-[88px] tracking-wide">How It Works</div>
     <div data-layer="paragraph" className="Paragraph self-stretch opacity-50 text-center justify-start text-cyan-950 text-2xl font-normal font-['Poppins']">Discover how JobBuddies works to help job seekers connect and support each other.</div>
@@ -51,9 +52,9 @@ const HowItWorkSection = () => {
       </div>
     </div>
   </div>
-  <div data-layer="cta_button" className="CtaButton w-96 max-w-96 p-6 bg-gradient-to-br from-teal-600 to-yellow-300 rounded-[10px] outline outline-2 outline-offset-[-2px] outline-teal-600 inline-flex justify-center items-center gap-2.5 overflow-hidden">
-    <div data-layer="cta_text" className="CtaText text-center justify-start text-cyan-950 text-xl font-semibold font-['Poppins']">Find Your Buddy</div>
-  </div>
+  <CtaButton label="Find Your Buddy" onClick={() => {
+            window.location.href = '/createProfile';
+          }} />
 </div>
 );
 };

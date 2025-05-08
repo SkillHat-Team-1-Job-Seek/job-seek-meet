@@ -1,17 +1,30 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "../hook/useAuth";
+import { useToast } from "../hook/useToast";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-const Login = ({ toggleForm }) => {
-  const [formData, setFormData] = useState({
+const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({
     email: "",
     password: "",
+    keepLoggedIn: false,
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
   };
 
@@ -19,71 +32,140 @@ const Login = ({ toggleForm }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/login/access-token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded", // Change to x-www-form-urlencoded
-          },
-          body: new URLSearchParams({
-            username: formData.email, // Use 'username' to follow the backend
-            password: formData.password,
-          }),
-        }
-      );
+      const result = await login(data.email, data.password);
+      console.log(result);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Login failed");
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Login successful!",
+          variant: "success",
+        });
+        navigate("/dashboard");
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Login failed",
+          variant: "destructive",
+        });
       }
-
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("access_token", data.access_token); // Store the token
-      alert("Login Successful");
-      // You can redirect here(Navigate here)
     } catch (error) {
-      alert("Login failed: " + error.message);
+      toast.error("An error occurred during login");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="mb-4 p-3 border rounded-md"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="mb-4 p-3 border rounded-md"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700"
-          >
-            Login
-          </button>
-        </form>
-        <p className="mt-4 text-center">
-          Don't have an account?{" "}
-          <button onClick={toggleForm} className="text-blue-600 underline">
-            Sign Up
-          </button>
-        </p>
+    <div className="w-full min-h-screen bg-teal-900 py-20">
+      <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl flex flex-col md:flex-row">
+        {/* Left Section: Form */}
+        <div className="w-full md:w-1/2 p-8 text-white">
+          <h2 className="text-3xl font-bold mb-2">Welcome Back!</h2>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Email */}
+            <div className="flex flex-col">
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your Email"
+                value={data.email}
+                onChange={handleOnChange}
+                required
+                className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your Password"
+                value={data.password}
+                onChange={handleOnChange}
+                required
+                className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              />
+              <div
+                className="absolute right-4 top-1/4 transform translate-y-1/4 cursor-pointer text-xl text-gray-600"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <span>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+              </div>
+            </div>
+
+            {/* Keep me logged in Toggle */}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="keepLoggedIn"
+                checked={data.keepLoggedIn}
+                onChange={handleOnChange}
+                className="w-5 h-5 text-yellow-400 focus:ring-yellow-400"
+              />
+              <label className="text-sm">Keep me logged in</label>
+            </div>
+
+            {/* Log In Button */}
+            <button
+              type="submit"
+              className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging in..." : "Log In"}
+            </button>
+          </form>
+
+          {/* Apple and Google Buttons */}
+          <div className="flex justify-between gap-4 mt-6">
+            <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
+              <span className="text-xl">🍎</span> Apple
+            </button>
+            <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
+              <span className="text-xl">🌐</span> Google
+            </button>
+          </div>
+
+          {/* Sign Up Link */}
+          <div className="text-center mt-6">
+            <p className="text-sm">
+              Don’t Have An Account?{" "}
+              <button
+                onClick={() => navigate("/signup")}
+                className="text-yellow-400 underline hover:text-yellow-500"
+              >
+                Sign Up
+              </button>
+            </p>
+          </div>
+        </div>
+
+        {/* Right Section: Image */}
+        <div className="w-full md:w-1/2 p-8">
+          <div className="relative h-full flex items-center justify-center">
+            <img
+              src="/assets/Sign Up Image.png"
+              alt="Stronger Together"
+              className="w-full h-full object-cover rounded-2xl"
+            />
+            <div className="absolute bg-yellow-400 text-teal-900 font-bold text-xl px-4 py-2 rounded-lg">
+              Stronger Together!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Back to Previous Page */}
+      <div className="text-center mt-6">
+        <button
+          onClick={() => navigate("/")}
+          className="text-yellow-400 underline hover:text-yellow-500"
+        >
+          Back to Previous Page
+        </button>
       </div>
     </div>
   );
@@ -92,8 +174,13 @@ const Login = ({ toggleForm }) => {
 export default Login;
 
 // import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-// const Login = ({ toggleForm }) => {
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// const Login = ({ toggleForm, goHome }) => {
+
+//   const navigate = useNavigate();
 //   const [formData, setFormData] = useState({
 //     email: "",
 //     password: "",
@@ -110,69 +197,112 @@ export default Login;
 //     e.preventDefault();
 
 //     try {
-//         const response = await fetch("http://localhost:8000/login", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 email: formData.email.trim(),  // Ensure no leading/trailing spaces
-//                 password: formData.password.trim()
-//             }),
-//         });
-
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.detail || "Login failed");
+//       const response = await fetch(
+//         `${API_BASE_URL}/api/v1/login/access-token`,
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/x-www-form-urlencoded", // Change to x-www-form-urlencoded
+//           },
+//           body: new URLSearchParams({
+//             username: formData.email, // Use 'username' to follow the backend
+//             password: formData.password,
+//           }),
 //         }
+//       );
 
-//         const data = await response.json();
-//         alert(data.message);
+//       if (!response.ok) {
+//         const errorData = await response.json();
+//         throw new Error(errorData.detail || "Login failed");
+//       }
+
+//       const data = await response.json();
+//       console.log(data);
+//       localStorage.setItem("access_token", data.access_token); // Store the token
+//       alert("Login Successful");
+//       navigate("/"); // Redirect to home page
 //     } catch (error) {
-//         alert("Login failed: " + error.message);
+//       alert("Login failed: " + error.message);
 //     }
-// };
+//   };
 
-// const styles = {
-//   container: {
-//     width: "300px",
-//     margin: "50px auto",
-//     padding: "20px",
-//     textAlign: "center",
-//     border: "1px solid #ccc",
-//     borderRadius: "5px",
-//   },
-//   form: {
-//     display: "flex",
-//     flexDirection: "column",
-//   },
-//   input: {
-//     margin: "10px 0",
-//     padding: "10px",
-//     fontSize: "16px",
-//     border: "1px solid #ccc",
-//     borderRadius: "5px",
-//   },
-//   button: {
-//     padding: "10px",
-//     fontSize: "16px",
-//     backgroundColor: "#007bff",
-//     color: "#fff",
-//     border: "none",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//   },
-//   linkButton: {
-//     background: "none",
-//     border: "none",
-//     padding: 0,
-//     color: "#007bff",
-//     textDecoration: "underline",
-//     cursor: "pointer",
-//     fontSize: "inherit",
-//   },
+//   return (
+//     <div className="SignIn w-full min-h-screen bg-slate-800 py-20">
+//       <div className="max-w-5xl mx-auto bg-teal-900 rounded-2xl p-6 relative text-white">
+//         <div className="flex items-center justify-between mb-8">
+//           <img src="/assets/image 103.png" alt="Logo" className="size-28" />
+//           <div className="px-6 py-4 bg-white/25 rounded-3xl outline outline-4 outline-teal-600 backdrop-blur-lg text-center">
+//             <h2 className="text-teal-600 text-4xl font-black">
+//               Stronger Together!
+//             </h2>
+//           </div>
+//         </div>
+
+//         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+//           <div className="flex flex-col">
+//             <label className="text-white text-base mb-1">Email</label>
+//             <input
+//               type="email"
+//               name="email"
+//               placeholder="Enter your Email"
+//               value={formData.email}
+//               onChange={handleChange}
+//               required
+//               className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
+//             />
+//           </div>
+
+//           <div className="flex flex-col">
+//             <label className="text-white text-base mb-1">Password</label>
+//             <input
+//               type="password"
+//               name="password"
+//               placeholder="Enter your Password"
+//               value={formData.password}
+//               onChange={handleChange}
+//               required
+//               className="px-5 py-3 bg-gray-100 rounded-2xl text-base text-black"
+//             />
+//           </div>
+
+//           <button
+//             type="submit"
+//             className="px-8 py-4 bg-yellow-300 rounded-xl text-cyan-950 font-semibold text-base hover:bg-yellow-400 transition-colors"
+//           >
+//             Log In
+//           </button>
+//         </form>
+
+//         <div className="flex justify-center items-center my-6">
+//           <span className="text-white text-2xl font-bold">or</span>
+//         </div>
+
+//         <div className="flex justify-center gap-8 mb-6">
+//           <button className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
+//             Apple
+//           </button>
+//           <button className="w-44 px-8 py-4 rounded-xl outline outline-2 outline-teal-600 text-cyan-950 font-semibold bg-white hover:bg-gray-100 transition-colors">
+//             Google
+//           </button>
+//         </div>
+
+//         <div className="text-center text-white text-lg">
+//           <p>
+//             Don’t Have An Account?{" "}
+//             <button
+//               onClick={() => navigate("/signup")}
+//               className="text-yellow-300 underline hover:text-yellow-400"
+//             >
+//               Sign Up
+//             </button>
+//           </p>
+//         </div>
+//         <div className="text-center mt-4">
+//           <button onClick={() => navigate("/")}>Back to Previous Page</button>
+//         </div>
+//       </div>
+//     </div>
+//   );
 // };
-// }
 
 // export default Login;

@@ -268,7 +268,7 @@ export const isUserInChat = async (userId: string, chatId: string) => {
     return true;
   }
 
-  // Regular check
+  // Regular check for real users
   const userChat = await prisma.userChat.findFirst({
     where: {
       userId,
