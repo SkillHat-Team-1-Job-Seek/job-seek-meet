@@ -4,12 +4,15 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+import { useAuth } from "../hook/useAuth";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassowrd, setShowConfirmPassword] = useState(false);
+  const { signup } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "", // Changed from firstName to fullName
@@ -30,29 +33,62 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password === formData.confirmPassword) {
-      console.log("apiSummary.signUp.url", apiSummary.signUp.url);
-      const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
       });
-
-      const dataApi = await dataResponse.json();
-
-      if (dataApi.success) {
-        toast.success(dataApi.message);
-        navigate("/verify");
-      }
-
-      if (dataApi.error) {
-        toast.error(dataApi.message);
-      }
-    } else {
-      toast.error("Please check your password ");
+      return;
     }
+
+    if (!formData.agreeToTerms) {
+      toast({
+        title: "Error",
+        description: "You must agree to the Terms and Conditions",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const result = await signup({
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: "Account created successfully",
+        variant: "success",
+      });
+      navigate("/verify", { state: { email: formData.email } });
+    }
+
+    // if (formData.password === formData.confirmPassword) {
+    //   console.log("apiSummary.signUp.url", apiSummary.signUp.url);
+    //   const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+    //     method: "post",
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //     body: JSON.stringify(formData),
+    //   });
+
+    //   const dataApi = await dataResponse.json();
+
+    //   if (dataApi.success) {
+    //     toast.success(dataApi.message);
+    //     navigate("/verify");
+    //   }
+
+    //   if (dataApi.error) {
+    //     toast.error(dataApi.message);
+    //   }
+    // } else {
+    //   toast.error("Please check your password ");
+    // }
   };
 
   // const handleSubmit = async (e) => {
@@ -138,7 +174,7 @@ const SignUpForm = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                value={data.value}
+                value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your Password"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -192,7 +228,6 @@ const SignUpForm = () => {
             {/* Sign Up Button */}
             {/* <button */}
             <button
-              onClick={() => navigate("/createProfile")}
               type="submit"
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
             >

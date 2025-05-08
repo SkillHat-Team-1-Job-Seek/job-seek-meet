@@ -348,3 +348,112 @@ export const deleteAccount = async (
     fail(res, 500, "Failed to delete account");
   }
 };
+/**
+ * Get recommended profiles based on matching criteria
+ */
+export const getRecommendedUsers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userID;
+    console.log(userId);
+
+    if (!userId) {
+      fail(res, 401, "Authentication required");
+      return;
+    }
+
+    // Get current user profile details
+    const currentUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { tags: true },
+    });
+    console.log("Current user found:", !!currentUser);
+
+    if (!currentUser) {
+      fail(res, 404, "User not found");
+      return;
+    }
+
+    // Get user's tags
+    const userTagIds = currentUser.tags.map((tag) => tag.id);
+
+    // Find users who share tags, profession or industry
+    const recommendedUsers = await prisma.user.findMany({
+      where: {
+        id: { not: userId },
+        showProfile: true,
+        isVerified: "true",
+        OR: [
+          // Match by profession
+          currentUser.profession ? { profession: currentUser.profession } : {},
+          // Match by industry
+          currentUser.industry ? { industry: currentUser.industry } : {},
+          // Match by tags
+          userTagIds.length > 0
+            ? {
+                tags: {
+                  some: {
+                    id: { in: userTagIds },
+                  },
+                },
+              }
+            : {},
+        ],
+      },
+      include: {
+        tags: true,
+      },
+      take: 10,
+    });
+
+    // Calculate match scores
+    const usersWithScores = recommendedUsers.map((user) => {
+      // Calculate tag overlap
+      const userTags = user.tags.map((tag) => tag.id);
+      const sharedTags = userTags.filter((tagId) => userTagIds.includes(tagId));
+      const tagScore =
+        userTagIds.length > 0 ? sharedTags.length / userTagIds.length : 0;
+
+      // Calculate profession match
+      const professionScore =
+        user.profession === currentUser.profession ? 0.4 : 0;
+
+      // Calculate industry match
+      const industryScore = user.industry === currentUser.industry ? 0.3 : 0;
+
+      // Calculate total score (max 100%)
+      const totalScore = Math.round(
+        (tagScore * 0.3 + professionScore + industryScore) * 100
+      );
+
+      // Remove sensitive data and add match score
+      const {
+        password,
+        verificationToken,
+        verificationTokenExpiresAt,
+        ...safeUser
+      } = user;
+
+      return {
+        ...safeUser,
+        matchScore: Math.min(totalScore, 100), // Cap at 100%
+      };
+    });
+
+    // Sort users by match score (highest first)
+    usersWithScores.sort((a, b) => b.matchScore - a.matchScore);
+
+    // Send the response
+    success(
+      res,
+      200,
+      usersWithScores,
+      "Recommended profiles retrieved successfully"
+    );
+  } catch (error) {
+    console.error("Get recommended users error:", error);
+    fail(res, 500, "Failed to retrieve recommended users");
+  }
+};

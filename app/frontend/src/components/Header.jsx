@@ -1,6 +1,14 @@
 import React from "react";
+import { useAuth } from "../hook/useAuth";
 
 const DashboardHeader = () => {
+  const { user } = useAuth();
+
+  // Use default values if user data is not available
+  const userName = user?.name || "Guest User";
+  const userProfession = user?.profession || "No profession set";
+  const profileImageUrl = user?.profileImageUrl;
+
   return (
     <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow mb-6">
       {/* Logo */}
@@ -66,10 +74,20 @@ const DashboardHeader = () => {
 
         {/* User Profile */}
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+          {profileImageUrl ? (
+            <img
+              src={profileImageUrl}
+              alt={userName}
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+          )}
           <div>
-            <p className="font-semibold text-gray-700">Malik Mustapha</p>
-            <p className="text-sm text-gray-500">Marketing</p>
+            <p className="font-semibold text-gray-700">{userName}</p>
+            <p className="text-sm text-gray-500">{userProfession}</p>
           </div>
         </div>
       </div>
@@ -78,29 +96,3 @@ const DashboardHeader = () => {
 };
 
 export default DashboardHeader;
-
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const Header = () => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div>
-// <div className="w-full h-40 flex justify-around items-center px-4 sm:px-6 lg:px-8">
-//       {/* Logo */}
-//       <img src="/assets/image 103.png" alt="Logo" className="w-20 h-20" />
-
-//       {/* Edit Profile Button */}
-//       <button
-//         onClick={() => navigate("/editProfile")}
-//         className="w-44 px-8 py-4 rounded-xl border-2 border-teal-600 text-teal-900 font-semibold bg-white hover:bg-gray-100 transition-colors"
-//       >
-//         Edit Profile
-//       </button>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default Header;

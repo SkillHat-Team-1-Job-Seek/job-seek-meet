@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { useAuth } from "../hook/useAuth";
+import { useToast } from "../hook/useToast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
-    email: " ",
+    email: "",
     password: "",
-    keepLoggedIn: false, // Added for the "Keep me logged in" toggle
+    keepLoggedIn: false,
   });
 
   const handleOnChange = (e) => {
@@ -28,27 +31,31 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
-      method: "post",
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const result = await login(data.email, data.password);
+      console.log(result);
 
-    const dataApi = await dataResponse.json();
-    console.log(dataApi);
-
-    if (dataApi.success) {
-      toast.success(dataApi.message);
-      navigate("/");
-    }
-    if (dataApi.error) {
-      toast.error(dataApi.message);
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Login successful!",
+          variant: "success",
+        });
+        navigate("/dashboard");
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Login failed",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast.error("An error occurred during login");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
-  console.log("data login", data);
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
@@ -77,7 +84,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
-                value={data.value}
+                value={data.password}
                 onChange={handleOnChange}
                 required
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -106,8 +113,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
+              disabled={isLoading}
             >
-              Log In
+              {isLoading ? "Logging in..." : "Log In"}
             </button>
           </form>
 
