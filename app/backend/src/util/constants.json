@@ -13,7 +13,6 @@
   "NEW_EVENT_DISPLAY": "display",
   "NEW_EVENT_ADDING": "adding",
   "NEW_EVENT_READ_MESSAGE": "read_message",
-
   "DELETE_TIMEOUT": 86400000,
   "FIFTEEN_MINUTES": 900000
 }

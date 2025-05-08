@@ -67,8 +67,6 @@ export const sendConnectionRequest = async (
         fail(res, 400, "These users are already connected");
         return;
       }
-
-      // We've removed REJECTED status per LinkedIn approach
     }
 
     // Create new connection with PENDING status
@@ -80,19 +78,24 @@ export const sendConnectionRequest = async (
       },
     });
 
-    // Create notification for recipient
     try {
+      const senderName = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true },
+      });
+
       await prisma.notification.create({
         data: {
           userId: recipientId,
           type: "CONNECTION_REQUEST",
-          message: "You have received a new connection request",
+          message: `[{"senderId":"${userId}"}] ${
+            senderName?.name || "Someone"
+          } has sent you a connection request`,
           isRead: false,
         },
       });
     } catch (notifError) {
       console.error("Failed to create notification:", notifError);
-      // Continue even if notification fails
     }
 
     success(res, 201, null, "Connection request sent successfully");
@@ -242,7 +245,7 @@ export const acceptConnectionRequest = async (
     try {
       await prisma.notification.create({
         data: {
-          userId: senderId,
+          userId: recipientId,
           type: "CONNECTION_ACCEPTED",
           message: `${
             req.user?.name || "Someone"

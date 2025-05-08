@@ -457,3 +457,28 @@ export const getRecommendedUsers = async (
     fail(res, 500, "Failed to retrieve recommended users");
   }
 };
+
+export const markProfileComplete = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userID;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { isProfileComplete: "true" },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile marked as complete",
+    });
+  } catch (error) {
+    console.error("Error marking profile complete:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred",
+    });
+  }
+};

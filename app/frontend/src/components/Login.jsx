@@ -30,11 +30,24 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const result = await login(data.email, data.password);
-      console.log(result);
 
+      // If login was successful but user is not verified
+      if (result.success && result.user && result.user.isVerified === "false") {
+        toast({
+          title: "Verification Required",
+          description: "Please verify your email to continue",
+          variant: "warning",
+        });
+
+        navigate("/verify", { state: { email: data.email } });
+        return;
+      }
+
+      // Normal login success flow
       if (result.success) {
         toast({
           title: "Success",
@@ -42,7 +55,17 @@ const Login = () => {
           variant: "success",
         });
         navigate("/dashboard");
+        return;
+      }
+      if (result.user?.isVerified === "false") {
+        // Redirect to verify email
+        navigate("/verify", { state: { email: data.email } });
+      } else if (result.user?.isProfileComplete === "false") {
+        console.log(result.user?.isProfileComplete === "false");
+        // Redirect to complete profile
+        navigate("/createProfile");
       } else {
+        navigate("/dashboard");
         toast({
           title: "Error",
           description: result.error || "Login failed",
@@ -50,12 +73,30 @@ const Login = () => {
         });
       }
     } catch (error) {
-      toast.error("An error occurred during login");
+      // Error handling
       console.error(error);
+      toast({
+        title: "Error",
+        description: "An error occurred during login",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
   };
+  // if (
+  //   result.error?.toLowerCase().includes("verify") ||
+  //   result.error?.toLowerCase().includes("verification")
+  // ) {
+  //   toast({
+  //     title: "Verification Required",
+  //     description: "Please verify your email to continue",
+  //     variant: "warning",
+  //   });
+
+  //   navigate("/verify", { state: { email: data.email } });
+  //   return;
+  // }
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">

@@ -85,7 +85,7 @@ const VerifyEmail = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: user.email,
+          email: email,
           verifyToken: verificationCode,
         }),
         credentials: "include",
@@ -94,11 +94,14 @@ const VerifyEmail = () => {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(data.message || "Email verified successfully!");
-        navigate("/createProfile");
+        toast({
+          title: "Success",
+          description: "Email verified successfully! You can now log in.",
+          variant: "success",
+        });
+        navigate("/login");
       } else {
         toast.error(data.message || "Verification failed. Please try again.");
-        // Clear code fields on error
         setCode(["", "", "", ""]);
         inputRefs.current[0]?.focus();
       }
@@ -130,7 +133,7 @@ const VerifyEmail = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: user.email,
+            email: email,
           }),
           credentials: "include",
         }

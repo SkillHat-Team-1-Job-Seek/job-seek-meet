@@ -4,6 +4,7 @@ import authRoutes from "./user-management/auth.routes";
 import userRoutes from "./user-management/user.routes";
 import groupRoutes from "./group-management/gruop.routes";
 import connectionRoutes from "./connection-management/connection.routes";
+import notificationRoutes from "./user-management/notification.routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./util/error.handler";
 import morgan from "morgan";
@@ -53,6 +54,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/connections", connectionRoutes);
 app.use("/api/v1/groups", groupRoutes);
+app.use("/api/v1/notifications", notificationRoutes);
 
 app.use(errorHandler);
 

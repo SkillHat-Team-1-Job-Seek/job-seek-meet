@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,39 +8,40 @@ datasource db {
 }
 
 model User {
-  id                         String            @id @default(uuid())
-  name                       String
-  email                      String            @unique
-  password                   String
-  profession                 String?
-  location                   String?
-  age                        Int?
-  bio                        String?
-  profileImageUrl            String?
-  industry                   String?
-  tags                       Tag[]
-  isVerified                 String            @default("false")
-  showAge                    Boolean           @default(true)
-  showProfile                Boolean           @default(true)
-  verificationToken          String?
-  verificationTokenExpiresAt DateTime?
-  registrationDate           DateTime          @default(now())
-  sentConnections            Connection[]      @relation("SentConnections")
-  receivedConnections        Connection[]      @relation("ReceivedConnections")
-  GroupMembership            GroupMembership[]
-  Notification               Notification[]
-  Message                    Message[]
-  UserChat                   UserChat[]
+  id                                       String            @id @default(uuid())
+  name                                     String
+  email                                    String            @unique
+  password                                 String
+  profession                               String?
+  location                                 String?
+  age                                      Int?
+  bio                                      String?
+  profileImageUrl                          String?
+  isVerified                               String            @default("false")
+  verificationToken                        String?
+  verificationTokenExpiresAt               DateTime?
+  registrationDate                         DateTime          @default(now())
+  showAge                                  Boolean           @default(true)
+  showProfile                              Boolean           @default(true)
+  industry                                 String?
+  sentConnections                          Connection[]      @relation("SentConnections")
+  receivedConnections                      Connection[]      @relation("ReceivedConnections")
+  GroupMembership                          GroupMembership[]
+  Message                                  Message[]
+  Notification_Notification_senderIdToUser Notification[]    @relation("Notification_senderIdToUser")
+  Notification                             Notification[]
+  UserChat                                 UserChat[]
+  tags                                     Tag[]             @relation("TagToUser")
 }
+
 model Connection {
   userId1     String
   userId2     String
   status      ConnectionStatus @default(PENDING)
   connectedAt DateTime?        @default(now())
   updatedAt   DateTime         @updatedAt
-
-  user1 User @relation("SentConnections", fields: [userId1], references: [id])
-  user2 User @relation("ReceivedConnections", fields: [userId2], references: [id])
+  user1       User             @relation("SentConnections", fields: [userId1], references: [id])
+  user2       User             @relation("ReceivedConnections", fields: [userId2], references: [id])
 
   @@id([userId1, userId2])
 }
@@ -54,44 +49,48 @@ model Connection {
 model Group {
   id            String            @id @default(uuid())
   name          String
-  description   String?           @db.Text
+  description   String?
   groupImageUrl String?
-  members       GroupMembership[]
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
+  members       GroupMembership[]
 }
 
 model GroupMembership {
   id       String   @id @default(uuid())
-  user     User     @relation(fields: [userId], references: [id])
   userId   String
-  group    Group    @relation(fields: [groupId], references: [id])
   groupId  String
   isAdmin  Boolean  @default(false)
   joinedAt DateTime @default(now())
+  group    Group    @relation(fields: [groupId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, groupId])
 }
 
 model Notification {
-  id        String           @id @default(uuid())
-  userId    String
-  type      NotificationType
-  message   String
-  isRead    Boolean          @default(false)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  id                               String           @id @default(uuid())
+  userId                           String
+  type                             NotificationType
+  message                          String
+  isRead                           Boolean          @default(false)
+  createdAt                        DateTime         @default(now())
+  updatedAt                        DateTime         @updatedAt
+  metadata                         Json?
+  senderId                         String?
+  sourceId                         String?
+  sourceType                       String?
+  User_Notification_senderIdToUser User?            @relation("Notification_senderIdToUser", fields: [senderId], references: [id])
+  user                             User             @relation(fields: [userId], references: [id])
 }
 
 model Chat {
   id        String     @id @default(uuid())
-  messages  Message[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  users     UserChat[]
   isGroup   Boolean    @default(false)
+  messages  Message[]
+  users     UserChat[]
 }
 
 model Message {
@@ -101,24 +100,24 @@ model Message {
   containsBadword Boolean   @default(false)
   oldMessages     Json?
   senderId        String
-  sender          User      @relation(fields: [senderId], references: [id])
   type            String    @default("message")
   isRead          Boolean   @default(false)
   replyToId       String?
-  replyTo         Message?  @relation("ReplyRelation", fields: [replyToId], references: [id])
-  replies         Message[] @relation("ReplyRelation")
-  chat            Chat      @relation(fields: [chatId], references: [id])
   chatId          String
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  chat            Chat      @relation(fields: [chatId], references: [id])
+  replyTo         Message?  @relation("ReplyRelation", fields: [replyToId], references: [id])
+  replies         Message[] @relation("ReplyRelation")
+  sender          User      @relation(fields: [senderId], references: [id])
 }
 
 model UserChat {
-  user     User     @relation(fields: [userId], references: [id])
   userId   String
-  chat     Chat     @relation(fields: [chatId], references: [id])
   chatId   String
   joinedAt DateTime @default(now())
+  chat     Chat     @relation(fields: [chatId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
 
   @@id([userId, chatId])
 }
@@ -126,8 +125,8 @@ model UserChat {
 model Tag {
   id        String   @id @default(uuid())
   name      String   @unique
-  users     User[]
   createdAt DateTime @default(now())
+  users     User[]   @relation("TagToUser")
 }
 
 enum ConnectionStatus {

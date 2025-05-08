@@ -36,7 +36,6 @@ export const signup = async (req: Request, res: Response) => {
     token = generateToken().toString();
     emailFirstName = name;
 
-    //Verification time span
     const time = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     // create user
@@ -204,29 +203,14 @@ export const verifyEmail = async (req: Request, res: Response) => {
   try {
     const { id, email, verifyToken } = req.body;
 
-    let verifyUser;
-    if (id) {
-      verifyUser = await prisma.user.findUnique({
-        where: { id },
-        select: {
-          id: true,
-          verificationToken: true,
-          verificationTokenExpiresAt: true,
-        },
-      });
-    } else if (email) {
-      verifyUser = await prisma.user.findUnique({
-        where: { email },
-        select: {
-          id: true,
-          verificationToken: true,
-          verificationTokenExpiresAt: true,
-        },
-      });
-    } else {
-      fail(res, 400, "Email or user ID is required");
-      return;
-    }
+    const verifyUser = await prisma.user.findUnique({
+      where: id ? { id } : { email },
+      select: {
+        id: true,
+        verificationToken: true,
+        verificationTokenExpiresAt: true,
+      },
+    });
     const dateNow = new Date(Date.now());
     const date = new Date(dateNow + " UTC");
     let tokenExpiryDate = new Date(
@@ -236,10 +220,11 @@ export const verifyEmail = async (req: Request, res: Response) => {
     if (tokenExpiryDate > date) {
       if (verifyToken == verifyUser?.verificationToken) {
         console.log(verifyToken == verifyUser?.verificationToken);
+        // update verify User(isVerified to "true")
         console.log(verifyToken, verifyUser?.verificationToken);
         await prisma.user.update({
           where: {
-            id: id,
+            id: verifyUser?.id,
           },
           data: {
             isVerified: "true",

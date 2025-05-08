@@ -7,6 +7,7 @@ import {
   getCurrentUserProfile,
   getUserById,
   getRecommendedUsers,
+  markProfileComplete,
 } from "./user.controller";
 import { upload } from "../util/multer";
 
@@ -19,6 +20,7 @@ router.get("/:id", getUserById);
 
 router.get("/", getAllUsers);
 router.patch("/", upload.single("profileImage"), verifyUserToken, updateUser);
+router.patch("/profile", verifyUserToken, markProfileComplete);
 router.delete("/", verifyUserToken, deleteAccount);
 
 export default router;
