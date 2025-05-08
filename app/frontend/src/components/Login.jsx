@@ -59,9 +59,9 @@ const Login = () => {
           {/* JB Logo */}
           <div className="mb-6">
             <img
-              src="/assets/image 104.png"
+              src="/assets/image 180.png"
               alt="JB Logo"
-              className="w-16 h-16"
+              className="w-27 h-9"
             />
           </div>
 

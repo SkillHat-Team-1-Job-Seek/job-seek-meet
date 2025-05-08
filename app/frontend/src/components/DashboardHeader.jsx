@@ -4,7 +4,7 @@ const DashboardHeader = () => {
   return (
     <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow mb-6">
       {/* Logo */}
-      <img src="/assets/image 103.png" alt="Logo" className="w-20 h-20" />
+      <img src="/assets/image 180.png" alt="JB Logo" className="w-27 h-9" />
 
       {/* Search Bar */}
       <div className="flex items-center bg-gray-100 rounded-lg px-3 py-2 w-1/2">

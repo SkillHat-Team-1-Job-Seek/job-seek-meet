@@ -13,7 +13,7 @@ const NavigationBar = ({ scrollTo }) => {
         {/* Logo */}
         <img
           className="w-20 h-20"
-          src="/assets/image 103.png"
+          src="/assets/image 180.png"
           alt="JobBuddies Logo"
         />
 
