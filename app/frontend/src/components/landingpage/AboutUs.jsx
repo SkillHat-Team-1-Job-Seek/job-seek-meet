@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PrimaryButton from '../ui/PrimaryButton'; // Adjust the import path if necessary
 
 const AboutUsSection = () => {
   return (
@@ -89,11 +90,17 @@ const AboutUsSection = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="w-full max-w-xs sm:max-w-sm lg:max-w-96 p-4 sm:p-6 bg-yellow-300 rounded-[10px] flex justify-center items-center gap-2.5 mt-6 sm:mt-8 lg:mt-10">
+        {/* <div className="w-full max-w-xs sm:max-w-sm lg:max-w-96 p-4 sm:p-6 bg-yellow-300 rounded-[10px] flex justify-center items-center gap-2.5 mt-6 sm:mt-8 lg:mt-10">
           <div className="flex-1 text-center text-cyan-950 text-lg sm:text-xl font-semibold font-['Poppins']">
             Why JobBuddies
           </div>
-        </div>
+        </div> */}
+         <PrimaryButton
+          text="Why JobBuddies"
+          onClick={() => {
+            window.location.href = '/signup';
+          }}
+        />
       </div>
     </div>
   );

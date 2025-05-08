@@ -1,4 +1,6 @@
 import React from 'react';
+import PrimaryButton from '../ui/PrimaryButton';
+
 
 const FeatureSection = () => {
   return (
@@ -49,12 +51,14 @@ const FeatureSection = () => {
           </figure>
         </div>
       </div>
-      <div className="CtaButton w-96 max-w-96 p-6 bg-yellow-300 rounded-[10px]  justify-center flex items-center gap-2.5 overflow-hidden">
-        <div className="CtaText flex-1 text-center justify-start text-cyan-950 text-xl font-semibold ">
-          Get Matched Now
-        </div>
-      </div>
-    {/* </div> */}
+
+      <PrimaryButton
+          text="Get Matched Now"
+          onClick={() => {
+            window.location.href = '/signup';
+          }}
+        />
+    
     </section>
   );
 };

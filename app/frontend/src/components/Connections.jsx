@@ -12,8 +12,12 @@ const Connections = () => {
   };
 
   const connections = [
-    { name: 'Alice Brown', role: 'Software Engineer', description: 'Collaborating on projects', status: 'Active', img: '/assets/photoWrapper 3.png' },
-    { name: 'Bob Smith', role: 'Product Manager', description: 'Working on strategy planning', status: 'Inactive', img: '/assets/photoWrapper 2.png' },
+    { name: 'John Smith', role: 'Software Engineer', description: 'Collaborating on projects', status: 'Active', img: '/assets/John Smith.png' },
+    { name: 'Esther Howard', role: 'Marketing Specialist', description: 'Looking for internships', status: 'Inactive', img: '/assets/Esther Howard.png' },
+    { name: 'Jacob Jones', role: 'Product Designer', description: 'Open to mentorship', status: 'Active', img: '/assets/Jacob Jones.png' },
+    { name: 'Lovelyn Mars', role: 'Data Analyst', description: 'Open to mentorship', status: 'Active', img: '/assets/Lovelyn Mars.png' },
+    { name: 'Kelvin Hunt', role: 'Software  Engineer ', description: 'Looking for internships', status: 'Active', img: '/assets/Kelvin Hunt.png' },
+    { name: 'Bianca Hugs', role: 'Software  Engineer ', description: 'Looking for internships', status: 'Active', img: '/assets/Bianca Hugs.png' },
   ];
 
   return (

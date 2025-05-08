@@ -8,7 +8,7 @@ import Testimonials from "./Testimonials";
 import AboutUsSection from "./AboutUs";
 import HowItWorkSection from "./HowItWorks";
 import FAQSection from "./FAQs";
-import FooterSection from "./Footer";
+import FooterSection from "../Footer.jsx";
 
 const LandingPage = () => {
   const navigate = useNavigate();
