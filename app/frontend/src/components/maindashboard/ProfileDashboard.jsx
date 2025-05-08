@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 import { useQuery } from "@tanstack/react-query";
-import Header from "./Header";
+import Header from "../Header";
 import { BookOpen, Bookmark, ChevronDown, Loader2 } from "lucide-react";
-import { useToast } from "../hook/useToast";
-import { useAuth } from "../hook/useAuth";
+import { useToast } from "../../hook/useToast";
+import { useAuth } from "../../hook/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
-import { Progress } from "../components/ui/progress";
+} from "../../components/ui/dropdown-menu";
+import { Progress } from "../../components/ui/progress";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

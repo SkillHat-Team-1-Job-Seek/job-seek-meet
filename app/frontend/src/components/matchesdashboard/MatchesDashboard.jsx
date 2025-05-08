@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
+import { Card, CardContent } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -10,11 +10,11 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "./ui/pagination";
+} from "../../components/ui/pagination";
 import { Loader2 } from "lucide-react";
-import { ProfileCard } from "./ProfileCard";
-import { useAuth } from "../hook/useAuth";
-import { useToast } from "../hook/useToast";
+import { ProfileCard } from "../ProfileCard";
+import { useAuth } from "../../hook/useAuth";
+import { useToast } from "../../hook/useToast";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const sendConnectionRequest = async (recipientId) => {
