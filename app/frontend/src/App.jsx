@@ -12,6 +12,7 @@ import ProfileDashboard from "./components/maindashboard/ProfileDashboard";
 import MatchesDashboard from "./components/matchesdashboard/MatchesDashboard";
 import Connections from "./components/Connections";
 import Messages from "./components/Messages";
+import Profile from './components/Profile'; 
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <Route path="/matchesDashboard" element={<MatchesDashboard />} />
       <Route path="/connections" element={<Connections />} />
       <Route path="/messages" element={<Messages />} />
+      <Route path="/profile" element={<Profile />} />
       
       
       {/* <Route path="/findbuddies" element={<FindBuddies />} /> */}

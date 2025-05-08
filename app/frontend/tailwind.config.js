@@ -22,7 +22,10 @@ module.exports = {
         'light-teal': '#138797',
         'secondary-warm-yellow': '#FCDB32',
         'custom-primary-teal': '#138797',
-        'custom-primary-yellow':'#FCDB32'
+        'custom-primary-yellow':'#FCDB32',
+        'custom-teal-2': '#26A69A',
+        'custom-teal-border': '#26A69A'
+
       },
     },
   },
