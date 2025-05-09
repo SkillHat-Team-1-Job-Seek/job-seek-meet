@@ -89,7 +89,7 @@ export const login = async (req: Request, res: Response) => {
 
     if (!(await validatePassword(password, user.password!, res))) return;
 
-    const accessToken = createAccessToken(user.id);
+    const accessToken = createAccessToken(user?.id);
     setAccessTokenCookie(res, accessToken);
 
     const userData = await getUserData(email);
@@ -98,6 +98,7 @@ export const login = async (req: Request, res: Response) => {
       code: "201",
       message: "Login Successfully",
       data: userData,
+      token: accessToken,
     });
   } catch (error: any) {
     console.error("Login error:", error.message);
@@ -178,9 +179,8 @@ const setAccessTokenCookie = (res: Response, accessToken: string) => {
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     expires: expiryDate,
-    sameSite: NODE_ENV === "production" ? "none" : "lax",
-    secure: NODE_ENV === "production",
-    path: "/",
+    sameSite: "none",
+    secure: true,
   });
 };
 
