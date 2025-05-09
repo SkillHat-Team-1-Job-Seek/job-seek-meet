@@ -12,7 +12,7 @@ export const verifyUserToken = async (
   console.log(token);
   if (!token) {
     res.status(401).json({
-      sucess: false,
+      success: false,
       error: {
         message: "Unauthorized user",
       },

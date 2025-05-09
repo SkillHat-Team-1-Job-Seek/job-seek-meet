@@ -173,8 +173,8 @@ const validatePassword = async (
 const createAccessToken = (userID: string) => createJWT({ userID });
 
 const setAccessTokenCookie = (res: Response, accessToken: string) => {
-  const date = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000); // 14 days
-  const expiryDate = new Date(date + " UTC");
+  const expiryDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     expires: expiryDate,
