@@ -14,7 +14,7 @@ import ProfileDashboard from "./components/maindashboard/ProfileDashboard";
 import MatchesDashboard from "./components/matchesdashboard/MatchesDashboard";
 import Connections from "./components/Connections";
 import VerifyEmail from "./components/verifyEmail";
-// import Messages from "./components/Messages";
+import Messages from "./components/Messages";
 import AuthGuard from "/src/hook/authGuard.jsx";
 
 const App = () => {
@@ -25,7 +25,16 @@ const App = () => {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<VerifyEmail />} />
-        <Route path="/createProfile" element={<CreateProfile />} />
+        <Route path="/messages" element={<Messages />} />
+
+        <Route
+          path="/createProfile"
+          element={
+            <AuthGuard>
+              <CreateProfile />
+            </AuthGuard>
+          }
+        />
         <Route
           path="/dashboard"
           element={

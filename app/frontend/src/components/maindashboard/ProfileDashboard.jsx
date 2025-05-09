@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { useQuery } from "@tanstack/react-query";
-import Header from "../Header";
+import DashBoardHeader from "../DashboardHeader";
 import { BookOpen, Bookmark, ChevronDown, Loader2 } from "lucide-react";
 import { useToast } from "../../hook/useToast";
 import { useAuth } from "../../hook/useAuth";
@@ -12,7 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-import { Progress } from "../../components/ui/progress";
+// import { Progress } from "../../components/ui/progress";
+import ProgressBar from "../Progress";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -254,8 +255,8 @@ const ProfileDashboard = () => {
   ];
 
   return (
-    <div className="flex-1 p-8 overflow-y-auto">
-      <Header />
+    <div className="flex-1 p-8 overflow-y-auto ">
+      <DashBoardHeader />
       <div className="flex min-h-screen bg-gray-100">
         <Sidebar onLogout={handleLogout} />
         <div className="flex-1 px-8">
@@ -266,37 +267,43 @@ const ProfileDashboard = () => {
             <p className="text-gray-600 mb-4">
               Here's what's new for you today
             </p>
+            <section className="mb-12">
+              <div className="flex flex-col items-center">
+                <h1 className="text-3xl font-bold mb-2">
+                  Welcome back {user?.name || "there"}!
+                </h1>
+                <p className="text-gray-600 mb-16">
+                  Here's what's new for you today
+                </p>
 
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-gray-600">
-                  Profile Completion
-                </span>
-                <span className="text-sm font-medium">58%</span>
-              </div>
-              <Progress value={58} className="h-2" />
-            </div>
+                <ProgressBar className="mb-12" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-white p-4 rounded-lg border-2 border-transparent bg-gradient-to-r from-[#0B8B8B]/20 to-yellow-400/20"
-                >
-                  <div className="text-2xl font-bold text-[#0B8B8B]">
-                    {stat.value}
-                  </div>
-                  <div className="text-gray-600">{stat.label}</div>
+                <p className="text-gray-600 mb-8"></p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+                  {stats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="flex flex-col justify-center items-center p-6 sm:p-8 w-full min-h-[200px]bg-white rounded-tr-3xl rounded-bl-3xl border-2 border-t-teal-600 border-r-yellow-400 border-b-yellow-400 border-l-teal-600 shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <div className="text-3xl font-bold text-gray-800">
+                        {stat.value}
+                      </div>
+                      <div className="text-sm text-gray-600 mt-2">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            </section>
           </section>
 
           <section className="mb-12">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Profile Matches</h2>
               <Link
-                to="/matches"
+                to="/matchesDashboard"
                 className="bg-yellow-400 px-6 py-2 rounded-lg font-medium"
               >
                 Meet Your Buddy
@@ -324,35 +331,47 @@ const ProfileDashboard = () => {
                 {previewMatches.map((profile) => (
                   <div
                     key={profile.id}
-                    className="bg-white p-6 rounded-lg shadow relative overflow-hidden"
+                    className="bg-white rounded-xl shadow overflow-hidden flex flex-col p-6"
                   >
-                    <div className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold px-2 py-1">
-                      {profile.matchScore}% Match
-                    </div>
-                    <div className="flex items-center gap-3 mb-3">
+                    {/* Profile header with image, name, profession, and match score */}
+                    <div className="flex items-start gap-4 mb-4">
                       <img
                         src={
                           profile.profileImageUrl ||
                           "https://via.placeholder.com/150"
                         }
                         alt={profile.name}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-16 h-16 rounded-full object-cover border-2 border-gray-100"
                       />
                       <div>
-                        <h3 className="font-bold text-lg">{profile.name}</h3>
-                        <p className="text-gray-600 mb-1">
+                        <h3 className="font-bold text-lg text-gray-900">
+                          {profile.name}
+                        </h3>
+                        <p className="text-teal-700 font-medium">
                           {profile.profession || "Professional"}
                         </p>
-                        <p className="text-gray-500 text-sm">
-                          {profile.tags?.map((tag) => tag.name).join(", ") ||
-                            "No tags"}
-                        </p>
+                        <span className="inline-block mt-1 bg-yellow-400 text-sm font-semibold px-3 py-0.5 rounded-full">
+                          {profile.matchScore}% Match
+                        </span>
                       </div>
                     </div>
-                    <div className="flex mt-4">
+
+                    {/* Skills/tags with limited display */}
+                    <div className="mb-6">
+                      <p className="text-gray-600 text-sm line-clamp-3">
+                        {profile.tags
+                          ?.slice(0, 5)
+                          .map((tag) => tag.name)
+                          .join(", ")}
+                        {profile.tags?.length > 5 ? "..." : ""}
+                      </p>
+                    </div>
+
+                    {/* Action button - full width */}
+                    <div className="mt-auto w-full">
                       <Link
-                        to="/matches"
-                        className="inline-block bg-yellow-400 px-4 py-2 rounded-lg text-sm"
+                        to={`/matchesDashboard/${profile.id}`}
+                        className="block w-full bg-yellow-400 hover:bg-yellow-500 text-center py-2 rounded-lg font-medium transition-colors"
                       >
                         View Profile
                       </Link>

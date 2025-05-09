@@ -8,7 +8,6 @@ import * as EmailValidator from "email-validator";
 import prisma from "../util/db";
 import { success, fail } from "../util/response";
 import sendVerificationEmail from "../util/sendVerificationEmail";
-import { data } from "react-router-dom";
 
 let token: string;
 let emailFirstName: string;

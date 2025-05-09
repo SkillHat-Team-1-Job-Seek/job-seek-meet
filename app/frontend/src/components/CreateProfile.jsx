@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterSection from "./Footer";
-import Header from "./Header";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Switch } from "../components/ui/switch";
 import { Upload } from "lucide-react";
+import ProfileHeader from "./Header";
 import {
   Select,
   SelectContent,
@@ -213,7 +213,7 @@ const CreateProfile = () => {
   return (
     <div className="w-half min-h-screen bg-white">
       {/* Header Section */}
-      <Header />
+      <ProfileHeader />
 
       {/* Main Content */}
       <div className="w-full py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
