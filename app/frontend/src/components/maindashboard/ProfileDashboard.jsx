@@ -261,44 +261,35 @@ const ProfileDashboard = () => {
         <Sidebar onLogout={handleLogout} />
         <div className="flex-1 px-8">
           <section className="mb-12">
-            <h1 className="text-3xl font-bold mb-2">
-              Welcome back {user?.name.split(" ")[0] || "there"}!
-            </h1>
-            <p className="text-gray-600 mb-4">
-              Here's what's new for you today
-            </p>
-            <section className="mb-12">
-              <div className="flex flex-col items-center">
-                <h1 className="text-3xl font-bold mb-2">
-                  Welcome back {user?.name || "there"}!
-                </h1>
-                <p className="text-gray-600 mb-16">
-                  Here's what's new for you today
-                </p>
+            <div className="flex flex-col items-center">
+              <h1 className="text-3xl font-bold mb-2">
+                Welcome back {user?.name.split(" ")[0] || "there"}!
+              </h1>
+              <p className="text-gray-600 mb-16">
+                Here's what's new for you today
+              </p>
 
-                <ProgressBar className="mb-12" />
+              <ProgressBar className="mb-12" />
 
-                <p className="text-gray-600 mb-8"></p>
+              <p className="text-gray-600 mb-8"></p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-                  {stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="flex flex-col justify-center items-center p-6 sm:p-8 w-full min-h-[200px]bg-white rounded-tr-3xl rounded-bl-3xl border-2 border-t-teal-600 border-r-yellow-400 border-b-yellow-400 border-l-teal-600 shadow-md hover:shadow-lg transition-shadow"
-                    >
-                      <div className="text-3xl font-bold text-gray-800">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-gray-600 mt-2">
-                        {stat.label}
-                      </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+                {stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="flex flex-col justify-center items-center p-6 sm:p-8 w-full min-h-[200px]bg-white rounded-tr-3xl rounded-bl-3xl border-2 border-t-teal-600 border-r-yellow-400 border-b-yellow-400 border-l-teal-600 shadow-md hover:shadow-lg transition-shadow"
+                  >
+                    <div className="text-3xl font-bold text-gray-800">
+                      {stat.value}
                     </div>
-                  ))}
-                </div>
+                    <div className="text-sm text-gray-600 mt-2">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </section>
+            </div>
           </section>
-
           <section className="mb-12">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Profile Matches</h2>
