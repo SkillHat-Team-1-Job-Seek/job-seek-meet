@@ -4,11 +4,13 @@ import NotificationBell from "./Notification";
 
 const DashboardHeader = () => {
   const { user } = useAuth();
+  console.log(user);
 
   // Use default values if user data is not available
   const userName = user?.name || "Guest User";
   const userProfession = user?.profession || "No profession set";
   const profileImageUrl = user?.profileImageUrl;
+  console.log(profileImageUrl);
 
   return (
     <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow mb-6">

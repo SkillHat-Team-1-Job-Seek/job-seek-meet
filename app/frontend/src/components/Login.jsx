@@ -27,54 +27,47 @@ const Login = () => {
       };
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const result = await login(data.email, data.password);
-
-      // If login was successful but user is not verified
-      if (result.success && result.user && result.user.isVerified === "false") {
-        toast({
-          title: "Verification Required",
-          description: "Please verify your email to continue",
-          variant: "warning",
-        });
-
-        navigate("/verify", { state: { email: data.email } });
-        return;
-      }
-
-      // Normal login success flow
-      if (result.success) {
-        toast({
-          title: "Success",
-          description: "Login successful!",
-          variant: "success",
-        });
-        navigate("/dashboard");
-        return;
-      }
-      if (result.user?.isVerified === "false") {
-        // Redirect to verify email
-        navigate("/verify", { state: { email: data.email } });
-      } else if (result.user?.isProfileComplete === "false") {
-        console.log(result.user?.isProfileComplete === "false");
-        // Redirect to complete profile
-        navigate("/createProfile");
-      } else {
-        navigate("/dashboard");
+      console.log("Login result:", result);
+      if (!result.success) {
         toast({
           title: "Error",
           description: result.error || "Login failed",
           variant: "destructive",
         });
+        return;
       }
+      toast({
+        title: "Success",
+        description: "Login successful!",
+        variant: "success",
+      });
+
+      const userData = result.user || result.data;
+      // Second check: Email verification
+      if (userData?.isVerified === "false") {
+        console.log("User not verified, redirecting to verification");
+        navigate("/verify", { state: { email: data.email } });
+        return;
+      }
+
+      // Third check: Profile completion
+      if (userData?.isProfileComplete === "false") {
+        console.log("Profile not complete, redirecting to profile creation");
+        navigate("/createProfile");
+        return;
+      }
+
+      // All checks passed: go to dashboard
+      console.log("All checks passed, going to dashboard");
+      navigate("/dashboard");
     } catch (error) {
-      // Error handling
-      console.error(error);
+      console.error("Login error:", error);
       toast({
         title: "Error",
         description: "An error occurred during login",
@@ -84,6 +77,62 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+
+  //   try {
+  //     const result = await login(data.email, data.password);
+
+  //     // If login was successful but user is not verified
+  //     if (result.success && result.user && result.user.isVerified === "false") {
+  //       toast({
+  //         title: "Verification Required",
+  //         description: "Please verify your email to continue",
+  //         variant: "warning",
+  //       });
+
+  //       navigate("/verify", { state: { email: data.email } });
+  //       return;
+  //     }
+
+  //     // Normal login success flow
+  //     if (result.success) {
+  //       toast({
+  //         title: "Success",
+  //         description: "Login successful!",
+  //         variant: "success",
+  //       });
+  //       navigate("/dashboard");
+  //       return;
+  //     }
+  //     if (result.user?.isVerified === "false") {
+  //       // Redirect to verify email
+  //       navigate("/verify", { state: { email: data.email } });
+  //     } else if (result.user?.isProfileComplete === "false") {
+  //       console.log(result.user?.isProfileComplete === "false");
+  //       // Redirect to complete profile
+  //       navigate("/createProfile");
+  //     } else {
+  //       navigate("/dashboard");
+  //       toast({
+  //         title: "Error",
+  //         description: result.error || "Login failed",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     // Error handling
+  //     console.error(error);
+  //     toast({
+  //       title: "Error",
+  //       description: "An error occurred during login",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   // if (
   //   result.error?.toLowerCase().includes("verify") ||
   //   result.error?.toLowerCase().includes("verification")

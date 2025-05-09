@@ -232,6 +232,7 @@ export const updateUser = async (
 
     // Get validated data
     const {
+      name,
       profession,
       location,
       age,
@@ -246,7 +247,7 @@ export const updateUser = async (
     const updateData: any = {};
 
     // Only add fields that were actually provided
-
+    if (name !== undefined) updateData.name = name;
     if (profession !== undefined) updateData.profession = profession;
     if (location !== undefined) updateData.location = location;
     if (age !== undefined) updateData.age = Number(age);

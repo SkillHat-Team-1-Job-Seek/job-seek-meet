@@ -39,7 +39,10 @@ app.use(morgan("dev"));
 app.use(function (_, res, next) {
   res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
 
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, PATCH , POST, PUT, DELETE"
+  );
 
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 

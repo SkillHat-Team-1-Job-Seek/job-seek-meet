@@ -8,6 +8,7 @@ import * as EmailValidator from "email-validator";
 import prisma from "../util/db";
 import { success, fail } from "../util/response";
 import sendVerificationEmail from "../util/sendVerificationEmail";
+import { data } from "react-router-dom";
 
 let token: string;
 let emailFirstName: string;
@@ -186,7 +187,13 @@ const setAccessTokenCookie = (res: Response, accessToken: string) => {
 const getUserData = async (email: string) => {
   return prisma.user.findUnique({
     where: { email },
-    select: { id: true, name: true, email: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      isVerified: true,
+      isProfileComplete: true,
+    },
   });
 };
 export const logout = (req: Request, res: Response) => {

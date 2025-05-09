@@ -19,7 +19,7 @@ import { useToast } from "../hook/useToast";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CreateProfile = () => {
   const navigate = useNavigate();
-  const { user, getCurrentUser } = useAuth();
+  const { getCurrentUser } = useAuth();
   const { toast } = useToast();
   const [profileImage, setProfileImage] = useState(null);
   const [profileImagePreview, setProfileImagePreview] = useState(null);
@@ -157,7 +157,9 @@ const CreateProfile = () => {
       formDataToSend.append("showAge", privacy.showAge);
       formDataToSend.append("showProfile", privacy.showProfile);
 
-      formDataToSend.append("tags", JSON.stringify(tagArray));
+      tagArray.forEach((tag) => {
+        formDataToSend.append("tags[]", tag);
+      });
 
       // Add profile image if selected
       if (profileImage) {
@@ -171,6 +173,7 @@ const CreateProfile = () => {
       });
 
       const data = await response.json();
+      console.log("Response:", data);
 
       if (response.ok) {
         await fetch(`${API_BASE_URL}/api/v1/users/profile`, {
@@ -180,15 +183,12 @@ const CreateProfile = () => {
           },
           credentials: "include",
         });
-
+        await getCurrentUser();
         toast({
           title: "Success",
           description: "Profile updated successfully!",
           variant: "success",
         });
-
-        // Update the user in context if you're using auth context
-        getCurrentUser?.();
 
         navigate("/dashboard");
       } else {

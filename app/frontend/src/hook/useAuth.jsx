@@ -9,29 +9,37 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check authentication status on mount
+  const getCurrentUser = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/users/me`, {
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Refreshed user data:", data);
+        if (data.success && data.payload) {
+          setUser(data.payload);
+          setIsAuthenticated(true);
+          return data.payload;
+        } else {
+          console.warn("User data structure not as expected:", data);
+          return null;
+        }
+      } else {
+        console.warn("Failed to refresh user data, status:", response.status);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error refreshing user data:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/users/me`, {
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log("User data from API:", data);
-
-          // Store the payload object as user data
-          if (data.success && data.payload) {
-            setUser(data.payload);
-            setIsAuthenticated(true);
-          } else {
-            setUser(null);
-            setIsAuthenticated(false);
-          }
-        } else {
-          setUser(null);
-          setIsAuthenticated(false);
-        }
+        await getCurrentUser();
       } catch (error) {
         console.error("Error checking authentication status:", error);
         setUser(null);
@@ -49,22 +57,22 @@ export function AuthProvider({ children }) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
         credentials: "include",
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok && data.status === "success") {
-        console.log("✅ Authenticated User Data:", data.data);
-        // The cookie is automatically saved by the browser
-        setUser(data.data);
-        setIsAuthenticated(true);
-        return { success: true, message: data.message };
+        // After successful login, get the complete user profile
+        const userData = await getCurrentUser();
+
+        return {
+          success: true,
+          message: data.message,
+          user: userData, // Include full user data
+        };
       } else {
         return { success: false, error: data.message || "Login failed" };
       }
@@ -89,11 +97,17 @@ export function AuthProvider({ children }) {
       const data = await response.json();
       console.log("Signup response:", data);
 
-      if (response.ok && data.success) {
-        toast.success(data.message || "Registration successful");
-        return { success: true };
+      if (response.ok && data.status === "success") {
+        toast({
+          title: "Success",
+          description: data.message || "Registration successful",
+          variant: "success",
+        });
+        return {
+          success: true,
+          email: userData.email,
+        };
       } else if (data.message === "User already exists") {
-        // User exists but not verified - still redirect to verification
         toast({
           title: "Account exists",
           description:
@@ -104,6 +118,7 @@ export function AuthProvider({ children }) {
           success: false,
           error: data.message,
           emailExists: true,
+          email: userData.email,
         };
       } else {
         toast.error(data.message || "Registration failed");

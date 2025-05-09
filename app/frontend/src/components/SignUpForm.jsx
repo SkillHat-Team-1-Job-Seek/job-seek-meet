@@ -6,8 +6,6 @@ import { toast } from "react-toastify";
 
 import { useAuth } from "../hook/useAuth";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -56,14 +54,21 @@ const SignUpForm = () => {
       email: formData.email,
       password: formData.password,
     });
+    console.log("Signup result:", result);
 
-    if (result.success) {
+    if (result.success || result.emailExists) {
       toast({
-        title: "Success",
-        description: "Account created successfully",
-        variant: "success",
+        title: result.success ? "Success" : "Verification Needed",
+        description: result.success
+          ? "Account created successfully! Please verify your email."
+          : "This email is registered but needs verification.",
+        variant: result.success ? "success" : "warning",
       });
-      navigate("/verify", { state: { email: formData.email } });
+
+      // Navigate to verification page in either case
+      navigate("/verify", {
+        state: { email: formData.email },
+      });
     }
 
     // if (formData.password === formData.confirmPassword) {
@@ -90,47 +95,6 @@ const SignUpForm = () => {
     //   toast.error("Please check your password ");
     // }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Basic validation for password match
-  //   if (formData.password !== formData.confirmPassword) {
-  //     alert("Passwords do not match!");
-  //     return;
-  //   }
-
-  //   if (!formData.agreeToTerms) {
-  //     alert("You must agree to the Terms and Conditions!");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         fullName: formData.fullName,
-  //         email: formData.email,
-  //         password: formData.password,
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log("Response data:", data);
-
-  //     if (!response.ok) {
-  //       throw new Error(data.detail || "Sign-up failed");
-  //     }
-
-  //     console.log("User registered successfully:", data);
-  //     alert(`Sign Up Successful! ${data.message}`);
-  //     navigate("/"); // Redirect to homepage
-  //   } catch (error) {
-  //     console.error("Error:", error.message);
-  //     alert(`Sign-up failed: ${error.message}`);
-  //   }
-  // };
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">

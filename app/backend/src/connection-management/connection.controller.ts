@@ -164,6 +164,7 @@ export const getUserConnections = async (
 
       return {
         connectionId: connection.userId1, // Fix: Use connection.id instead of userId1
+        status: connection.status,
         user: connectedUser,
         connectedSince: connection.updatedAt, // Fix: Use updatedAt instead of connectedAt
       };

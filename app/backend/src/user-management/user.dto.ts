@@ -37,12 +37,13 @@ export const createUserDTO = Joi.object({
 
 // User profile update validation schema
 export const updateUserProfileDTO = Joi.object({
+  name: Joi.string().required().min(2).max(50),
   profession: Joi.string().trim().max(100).optional(),
   industry: Joi.string().trim().max(100).optional(),
   location: Joi.string().trim().max(100).optional(),
   age: Joi.number().integer().min(18).max(120).optional(),
   bio: Joi.string().trim().max(500).optional(),
-  tags: Joi.array().items(Joi.string()).max(10).optional(),
+  tags: Joi.array().items(Joi.string()).max(120).optional(),
   showAge: Joi.boolean().optional(), // Allow showAge as a boolean
   showProfile: Joi.boolean().optional(), // Allow showProfile as a boolean
 });

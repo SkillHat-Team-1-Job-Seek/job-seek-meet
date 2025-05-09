@@ -28,7 +28,7 @@ const fetchPeerConnections = async (search = "") => {
     console.log("Connections API response:", result);
 
     // Filter the connections to only include accepted ones
-    const connectedUsers = result.data
+    const connectedUsers = result.payload
       .filter((connection) => connection.status === "ACCEPTED")
       .map((connection) => ({
         id: connection.connectionId || connection.id,
@@ -36,7 +36,7 @@ const fetchPeerConnections = async (search = "") => {
         role: connection.user.profession || "Professional",
         imageUrl:
           connection.user.profileImageUrl || "https://via.placeholder.com/150",
-        lastActive: "Recently", // This could be calculated if API provides lastActive
+        lastActive: formatDate(connection.connectedSince),
         connectionCount: connection.user.connections?.length || 0,
         userId: connection.user.id, // Add user ID for messaging
       }));
@@ -57,6 +57,24 @@ const fetchPeerConnections = async (search = "") => {
   } catch (error) {
     console.error("Error fetching connections:", error);
     throw error;
+  }
+};
+const formatDate = (dateString) => {
+  if (!dateString) return "Recently";
+
+  try {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+    if (diffInDays < 1) return "Today";
+    if (diffInDays === 1) return "Yesterday";
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+
+    return date.toLocaleDateString();
+  } catch {
+    return "Recently";
   }
 };
 

@@ -15,7 +15,7 @@ import MatchesDashboard from "./components/matchesdashboard/MatchesDashboard";
 import Connections from "./components/Connections";
 import VerifyEmail from "./components/verifyEmail";
 // import Messages from "./components/Messages";
-import { AuthGuard } from "./hook/authGurad";
+import AuthGuard from "/src/hook/authGuard.jsx";
 
 const App = () => {
   return (
@@ -26,9 +26,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<VerifyEmail />} />
         <Route path="/createProfile" element={<CreateProfile />} />
-
-        <Route path="/editProfile" element={<EditProfile />} />
-
         <Route
           path="/dashboard"
           element={
@@ -37,11 +34,38 @@ const App = () => {
             </AuthGuard>
           }
         />
-        <Route path="/matchesDashboard" element={<MatchesDashboard />} />
-        <Route path="/connections" element={<Connections />} />
-        {/* <Route path="/messages" element={<Messages />} /> */}
-
-        <Route path="/connections/peers" element={<PeerConnections />} />
+        <Route
+          path="/matchesDashboard"
+          element={
+            <AuthGuard>
+              <MatchesDashboard />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/connections"
+          element={
+            <AuthGuard>
+              <Connections />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/connections/peers"
+          element={
+            <AuthGuard>
+              <PeerConnections />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/editProfile"
+          element={
+            <AuthGuard>
+              <EditProfile />
+            </AuthGuard>
+          }
+        />
       </Routes>
     </ToastContextProvider>
   );

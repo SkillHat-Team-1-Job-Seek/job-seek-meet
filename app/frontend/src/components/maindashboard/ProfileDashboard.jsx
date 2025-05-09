@@ -225,13 +225,13 @@ const ProfileDashboard = () => {
 
   // Extract data for UI
   const previewMatches = recommendedMatchesData?.payload?.slice(0, 3) || [];
-  const userConnections = connectionsData?.data?.slice(0, 3) || [];
-  const userGroups = userGroupsData?.data?.slice(0, 3) || [];
+  const userConnections = connectionsData?.payload?.slice(0, 3) || [];
+  const userGroups = userGroupsData?.payload?.slice(0, 3) || [];
 
   // Get groups to join (filter out groups user is already in)
   const userGroupIds = new Set(userGroups.map((group) => group.id));
   const groupsToJoin =
-    allGroupsData?.data
+    allGroupsData?.payload
       ?.filter((group) => !userGroupIds.has(group.id))
       .slice(0, 3) || [];
   const stats = [
@@ -241,11 +241,11 @@ const ProfileDashboard = () => {
     },
     {
       label: "1 on 1 peer(s)",
-      value: connectionsData?.data?.length || 0,
+      value: connectionsData?.payload?.length || 0,
     },
     {
       label: "Group joined",
-      value: userGroupsData?.data?.length || 0,
+      value: userGroupsData?.payload?.length || 0,
     },
     {
       label: "Saved Jobs",
@@ -261,7 +261,7 @@ const ProfileDashboard = () => {
         <div className="flex-1 px-8">
           <section className="mb-12">
             <h1 className="text-3xl font-bold mb-2">
-              Welcome back {user?.name || "there"}!
+              Welcome back {user?.name.split(" ")[0] || "there"}!
             </h1>
             <p className="text-gray-600 mb-4">
               Here's what's new for you today
