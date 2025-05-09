@@ -35,27 +35,21 @@ const io = new Server(httpServer, {
 app.use(express.json());
 
 app.use(morgan("dev"));
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  })
-);
-// app.use(function (_, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
 
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, PATCH , POST, PUT, DELETE"
-//   );
+app.use(function (_, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", ACCESS_ORIGIN as string);
 
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, PATCH , POST, PUT, DELETE"
+  );
 
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-//   next();
-// });
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  next();
+});
 
 app.use(cookieParser());
 
