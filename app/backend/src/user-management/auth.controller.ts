@@ -178,8 +178,9 @@ const setAccessTokenCookie = (res: Response, accessToken: string) => {
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     expires: expiryDate,
-    sameSite: "lax",
+    sameSite: NODE_ENV === "production" ? "none" : "lax",
     secure: NODE_ENV === "production",
+    path: "/",
   });
 };
 
