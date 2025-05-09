@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { useAuth } from "../hook/useAuth";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassowrd, setShowConfirmPassword] = useState(false);
+  const { signup } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "", // Changed from firstName to fullName
@@ -30,71 +31,70 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password === formData.confirmPassword) {
-      console.log("apiSummary.signUp.url", apiSummary.signUp.url);
-      const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.agreeToTerms) {
+      toast({
+        title: "Error",
+        description: "You must agree to the Terms and Conditions",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const result = await signup({
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    });
+    console.log("Signup result:", result);
+
+    if (result.success || result.emailExists) {
+      toast({
+        title: result.success ? "Success" : "Verification Needed",
+        description: result.success
+          ? "Account created successfully! Please verify your email."
+          : "This email is registered but needs verification.",
+        variant: result.success ? "success" : "warning",
       });
 
-      const dataApi = await dataResponse.json();
-
-      if (dataApi.success) {
-        toast.success(dataApi.message);
-        navigate("/verify");
-      }
-
-      if (dataApi.error) {
-        toast.error(dataApi.message);
-      }
-    } else {
-      toast.error("Please check your password ");
+      // Navigate to verification page in either case
+      navigate("/verify", {
+        state: { email: formData.email },
+      });
     }
+
+    // if (formData.password === formData.confirmPassword) {
+    //   console.log("apiSummary.signUp.url", apiSummary.signUp.url);
+    //   const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
+    //     method: "post",
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //     body: JSON.stringify(formData),
+    //   });
+
+    //   const dataApi = await dataResponse.json();
+
+    //   if (dataApi.success) {
+    //     toast.success(dataApi.message);
+    //     navigate("/verify");
+    //   }
+
+    //   if (dataApi.error) {
+    //     toast.error(dataApi.message);
+    //   }
+    // } else {
+    //   toast.error("Please check your password ");
+    // }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Basic validation for password match
-  //   if (formData.password !== formData.confirmPassword) {
-  //     alert("Passwords do not match!");
-  //     return;
-  //   }
-
-  //   if (!formData.agreeToTerms) {
-  //     alert("You must agree to the Terms and Conditions!");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         fullName: formData.fullName,
-  //         email: formData.email,
-  //         password: formData.password,
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log("Response data:", data);
-
-  //     if (!response.ok) {
-  //       throw new Error(data.detail || "Sign-up failed");
-  //     }
-
-  //     console.log("User registered successfully:", data);
-  //     alert(`Sign Up Successful! ${data.message}`);
-  //     navigate("/"); // Redirect to homepage
-  //   } catch (error) {
-  //     console.error("Error:", error.message);
-  //     alert(`Sign-up failed: ${error.message}`);
-  //   }
-  // };
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
@@ -138,7 +138,7 @@ const SignUpForm = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                value={data.value}
+                value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your Password"
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -192,7 +192,6 @@ const SignUpForm = () => {
             {/* Sign Up Button */}
             {/* <button */}
             <button
-              onClick={() => navigate("/createProfile")}
               type="submit"
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
             >
@@ -203,10 +202,20 @@ const SignUpForm = () => {
           {/* Apple and Google Buttons */}
           <div className="flex justify-between gap-4 mt-6">
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🍎</span> Apple
+              <img
+                src="/assets/Vector.png"
+                alt="Apple Logo"
+                className="w-5 h-5"
+              />{" "}
+              Apple
             </button>
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🌐</span> Google
+              <img
+                src="/assets/Group 1000003419.png"
+                alt="Google Logo"
+                className="w-5 h-5"
+              /> 
+              Google
             </button>
           </div>
 

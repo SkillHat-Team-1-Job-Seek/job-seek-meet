@@ -19,7 +19,10 @@ module.exports = {
     extend: {
       colors: {
         'custom-teal': '#83C4CC',
-        'light-teal': '#138797'
+        'light-teal': '#138797',
+        'secondary-warm-yellow': '#FCDB32',
+        'custom-primary-teal': '#138797',
+        'custom-primary-yellow':'#FCDB32'
       },
     },
   },

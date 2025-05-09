@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { useAuth } from "../hook/useAuth";
+import { useToast } from "../hook/useToast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
-    email: " ",
+    email: "",
     password: "",
-    keepLoggedIn: false, // Added for the "Keep me logged in" toggle
+    keepLoggedIn: false,
   });
 
   const handleOnChange = (e) => {
@@ -24,31 +27,125 @@ const Login = () => {
       };
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    const dataResponse = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
-      method: "post",
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const result = await login(data.email, data.password);
+      console.log("Login result:", result);
+      if (!result.success) {
+        toast({
+          title: "Error",
+          description: result.error || "Login failed",
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "Success",
+        description: "Login successful!",
+        variant: "success",
+      });
 
-    const dataApi = await dataResponse.json();
-    console.log(dataApi);
+      const userData = result.user || result.data;
+      // Second check: Email verification
+      if (userData?.isVerified === "false") {
+        console.log("User not verified, redirecting to verification");
+        navigate("/verify", { state: { email: data.email } });
+        return;
+      }
 
-    if (dataApi.success) {
-      toast.success(dataApi.message);
-      navigate("/");
-    }
-    if (dataApi.error) {
-      toast.error(dataApi.message);
+      // Third check: Profile completion
+      if (userData?.isProfileComplete === "false") {
+        console.log("Profile not complete, redirecting to profile creation");
+        navigate("/createProfile");
+        return;
+      }
+
+      // All checks passed: go to dashboard
+      console.log("All checks passed, going to dashboard");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred during login",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
-  console.log("data login", data);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+
+  //   try {
+  //     const result = await login(data.email, data.password);
+
+  //     // If login was successful but user is not verified
+  //     if (result.success && result.user && result.user.isVerified === "false") {
+  //       toast({
+  //         title: "Verification Required",
+  //         description: "Please verify your email to continue",
+  //         variant: "warning",
+  //       });
+
+  //       navigate("/verify", { state: { email: data.email } });
+  //       return;
+  //     }
+
+  //     // Normal login success flow
+  //     if (result.success) {
+  //       toast({
+  //         title: "Success",
+  //         description: "Login successful!",
+  //         variant: "success",
+  //       });
+  //       navigate("/dashboard");
+  //       return;
+  //     }
+  //     if (result.user?.isVerified === "false") {
+  //       // Redirect to verify email
+  //       navigate("/verify", { state: { email: data.email } });
+  //     } else if (result.user?.isProfileComplete === "false") {
+  //       console.log(result.user?.isProfileComplete === "false");
+  //       // Redirect to complete profile
+  //       navigate("/createProfile");
+  //     } else {
+  //       navigate("/dashboard");
+  //       toast({
+  //         title: "Error",
+  //         description: result.error || "Login failed",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     // Error handling
+  //     console.error(error);
+  //     toast({
+  //       title: "Error",
+  //       description: "An error occurred during login",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  // if (
+  //   result.error?.toLowerCase().includes("verify") ||
+  //   result.error?.toLowerCase().includes("verification")
+  // ) {
+  //   toast({
+  //     title: "Verification Required",
+  //     description: "Please verify your email to continue",
+  //     variant: "warning",
+  //   });
+
+  //   navigate("/verify", { state: { email: data.email } });
+  //   return;
+  // }
 
   return (
     <div className="w-full min-h-screen bg-teal-900 py-20">
@@ -77,7 +174,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
-                value={data.value}
+                value={data.password}
                 onChange={handleOnChange}
                 required
                 className="px-5 py-3 bg-white rounded-lg text-base text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -106,18 +203,29 @@ const Login = () => {
             <button
               type="submit"
               className="w-full py-4 bg-yellow-400 rounded-lg text-teal-900 font-semibold text-lg hover:bg-yellow-500 transition-colors"
+              disabled={isLoading}
             >
-              Log In
+              {isLoading ? "Logging in..." : "Log In"}
             </button>
           </form>
 
           {/* Apple and Google Buttons */}
           <div className="flex justify-between gap-4 mt-6">
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🍎</span> Apple
+              <img
+                src="/assets/Vector.png"
+                alt="Apple Logo"
+                className="w-5 h-5"
+              />
+              Apple
             </button>
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🌐</span> Google
+              <img
+                src="/assets/Group 1000003419.png"
+                alt="Google Logo"
+                className="w-5 h-5"
+              />
+              Google
             </button>
           </div>
 
