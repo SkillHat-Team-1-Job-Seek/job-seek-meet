@@ -4,7 +4,6 @@ import Sidebar from "./Sidebar";
 
 import DashboardHeader from "./DashboardHeader";
 
-// Mock API functions - Simulate fetching conversations
 
 const fetchConversations = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));

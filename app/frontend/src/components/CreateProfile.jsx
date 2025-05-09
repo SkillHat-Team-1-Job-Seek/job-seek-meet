@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterSection from "./Footer";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Switch } from "../components/ui/switch";
+import { Button } from "./ui/button";
+import { Input } from "./ui/button";
+import { Textarea } from "./ui/textarea";
+import { Switch } from "./ui/switch";
 import { Upload } from "lucide-react";
 import ProfileHeader from "./Header";
 import {

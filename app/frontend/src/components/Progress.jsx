@@ -1,3 +1,4 @@
+import React from "react";
 const ProgressBar = () => {
   return (
     <div className="w-60 h-2 bg-gray-200 rounded-2xl flex items-center relative">

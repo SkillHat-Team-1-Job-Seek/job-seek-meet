@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "../components/ui/card";
-import { Button } from "../components/ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
 import { MessageSquare, Search, User, Loader2 } from "lucide-react";
-import { Input } from "../components/ui/input";
-import { ScrollArea } from "../components/ui/scroll-area";
+import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
