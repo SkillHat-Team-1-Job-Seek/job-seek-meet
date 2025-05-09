@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "./ui/button";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { Button } from "./ui/button";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const VerifyEmail = () => {
