@@ -235,13 +235,24 @@ const SignUpForm = () => {
             </button>
           </form>
 
+          
           {/* Apple and Google Buttons */}
           <div className="flex justify-between gap-4 mt-6">
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🍎</span> Apple
+              <img
+                src="/assets/Vector.png"
+                alt="Apple Logo"
+                className="w-5 h-5"
+              />
+              Apple
             </button>
             <button className="w-1/2 py-3 rounded-lg border-2 border-teal-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-teal-800 transition-colors">
-              <span className="text-xl">🌐</span> Google
+              <img
+                src="/assets/Group 1000003419.png"
+                alt="Google Logo"
+                className="w-5 h-5"
+              />
+              Google
             </button>
           </div>
 
